@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30204.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArmHMI_WinForms", "ArmHMI_WinForms.csproj", "{CC9544CB-E633-47F7-ADB1-19DF52F8D178}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CC9544CB-E633-47F7-ADB1-19DF52F8D178}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC9544CB-E633-47F7-ADB1-19DF52F8D178}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC9544CB-E633-47F7-ADB1-19DF52F8D178}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC9544CB-E633-47F7-ADB1-19DF52F8D178}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {656FE38F-7D8E-4307-8F13-BD572778DD44}
+	EndGlobalSection
+EndGlobal

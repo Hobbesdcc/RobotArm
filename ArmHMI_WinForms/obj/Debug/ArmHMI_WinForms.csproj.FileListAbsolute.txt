@@ -1,0 +1,9 @@
+D:\[Current] DAVES STUFF\DAVES PROJECTS\Programing\Arduino\RobotArm\RobotArm CodeBase 2\ArmHMI_WinForms\bin\Debug\ArmHMI_WinForms.exe.config
+D:\[Current] DAVES STUFF\DAVES PROJECTS\Programing\Arduino\RobotArm\RobotArm CodeBase 2\ArmHMI_WinForms\bin\Debug\ArmHMI_WinForms.exe
+D:\[Current] DAVES STUFF\DAVES PROJECTS\Programing\Arduino\RobotArm\RobotArm CodeBase 2\ArmHMI_WinForms\bin\Debug\ArmHMI_WinForms.pdb
+D:\[Current] DAVES STUFF\DAVES PROJECTS\Programing\Arduino\RobotArm\RobotArm CodeBase 2\ArmHMI_WinForms\obj\Debug\ArmHMI_WinForms.csprojAssemblyReference.cache
+D:\[Current] DAVES STUFF\DAVES PROJECTS\Programing\Arduino\RobotArm\RobotArm CodeBase 2\ArmHMI_WinForms\obj\Debug\ArmHMI_WinForms.Properties.Resources.resources
+D:\[Current] DAVES STUFF\DAVES PROJECTS\Programing\Arduino\RobotArm\RobotArm CodeBase 2\ArmHMI_WinForms\obj\Debug\ArmHMI_WinForms.csproj.GenerateResource.cache
+D:\[Current] DAVES STUFF\DAVES PROJECTS\Programing\Arduino\RobotArm\RobotArm CodeBase 2\ArmHMI_WinForms\obj\Debug\ArmHMI_WinForms.csproj.CoreCompileInputs.cache
+D:\[Current] DAVES STUFF\DAVES PROJECTS\Programing\Arduino\RobotArm\RobotArm CodeBase 2\ArmHMI_WinForms\obj\Debug\ArmHMI_WinForms.exe
+D:\[Current] DAVES STUFF\DAVES PROJECTS\Programing\Arduino\RobotArm\RobotArm CodeBase 2\ArmHMI_WinForms\obj\Debug\ArmHMI_WinForms.pdb
