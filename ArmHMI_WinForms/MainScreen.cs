@@ -15,41 +15,47 @@ namespace ArmHMI_WinForms
 	{
 		string serialDataIn;
 
+		// Command Strings, Same KeyWords used on both sides (serial to Ardunio to C# Form)
+		string CMD_Home_All				= "HOME_ALL";
+		string CMD_Home_AxisA			= "HOME_AXIS_A";
+		string CMD_Home_AxisB			= "HOME_AXIS_B";
+		string CMD_Home_Base			= "HOME_Base";
 
-		// Command Strings to send over serial to Ardunio 
-		string CMD_Home_All			= "HOME_ALL";
-		string CMD_Home_AxisA		= "HOME_AXIS_A";
-		string CMD_Home_AxisB		= "HOME_AXIS_B";
-		string CMD_Home_Base		= "HOME_Base";
+		string CMD_State_Idel			= "STATE_IDEL";
+		string CMD_State_Started		= "STATE_STARTED";
+		string CMD_State_Stopped		= "STATE_STOPPED";
 
-		string CMD_State_Start		= "STATE_START";
-		string CMD_State_Stop		= "STATE_STOP";
-		string CMD_State_Reset		= "STATE_RESET";
+		string CMD_State_Start			= "STATE_START";
+		string CMD_State_Stop			= "STATE_STOP";
+		string CMD_State_Reset			= "STATE_RESET";
 
-		string CMD_Mode_Manual		= "MODE_MANUAL";
-		string CMD_Mode_Auto		= "MODE_AUTO";
+		string CMD_Mode_Init			= "MODE_INIT";
+		string CMD_Mode_Manual			= "MODE_MANUAL";
+		string CMD_Mode_Auto			= "MODE_AUTO";
 
-		string CMD_Servos_Attach	= "SERVOS_ATTACH";
-		string CMD_Servos_Detach	= "SERVOS_DETACH";
+		string CMD_Servos_Attach		= "SERVOS_ATTACH";
+		string CMD_Servos_Detach		= "SERVOS_DETACH";
+
+		string CMD_Status_GetState		= "STATUS_GETSTATE";
+		string CMD_Status_GetMode		= "STATUS_GETMODE";
+		string CMD_Status_UpdateState	= "STATUS_UPDATESTATE";
+		string CMD_Status_UpdateMode	= "STATUS_UPDATEMODE";
 
 
+		//FORM ----------------------------------------------------------------------------------------------------------- 
 		public MainScreen()
 		{
 			InitializeComponent();
 		}
-
 		private void MainScreen_Load(object sender, EventArgs e)
 		{
 			//add defult settings
 			Bnt_Serial_StartListen.Enabled = true;
 			Bnt_Serial_StopListen.Enabled = false;
+			textBox_StatusBar.Text = "DISCONNECTED";
 			label_status.Text = "DISCONNECTED";
 			label_status.ForeColor = Color.Red;
-
-			OutputText_BaudRate.Enabled = false;
-			OutputText_PortName.Enabled = false;
 		}
-
 		private void MainScreen_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			//On form close, close open serial port
@@ -67,7 +73,7 @@ namespace ArmHMI_WinForms
 		}
 
 
-		// Fuction ==================================================================
+		// Fuction =======================================================================================================
 		private void IssueSerialCommand(String cmd)
 		{
 			//Check if port is open, if so send the inputed string coming from the fuction call
@@ -84,7 +90,7 @@ namespace ArmHMI_WinForms
 			}
 			else
 			{
-				label_status.Text = "NOT CONNECTED, CANT ISSUE COMMANDS!";
+				textBox_StatusBar.Text = "NOT CONNECTED, CANT ISSUE COMMANDS!";
 			}
 		}
 
@@ -106,13 +112,32 @@ namespace ArmHMI_WinForms
 			IssueSerialCommand(CMD_Home_Base);
 		}
 
+		//Events: Mode & State Command buttons ---------------------------------------------------------------------------
+		private void Bnt_Mode_Auto_Click(object sender, EventArgs e)
+		{
+			IssueSerialCommand(CMD_Mode_Auto);
+		}
+		private void Bnt_Mode_Manual_Click(object sender, EventArgs e)
+		{
+			IssueSerialCommand(CMD_Status_GetMode);
+		}
+		private void Bnt_GetState_Click(object sender, EventArgs e)
+		{
+			IssueSerialCommand(CMD_Status_GetState);
+		}
+		private void Bnt_GetMode_Click(object sender, EventArgs e)
+		{
+			IssueSerialCommand(CMD_Status_GetMode);
+		}
 
 
 		//Events: Serial listener & Connect/disconnect Buttons -----------------------------------------------------------
-		private void Bnt_Serial_StartListen_Click(object sender, EventArgs e)
+		private void Bnt_Serial_Connect_Click(object sender, EventArgs e)
 		{
 			try
 			{
+				Bnt_ClearTextReceiver.PerformClick(); //clear text box
+
 				//Open Serial Port
 				serialPort1.BaudRate = 9600;
 				serialPort1.PortName = "COM5";
@@ -126,18 +151,24 @@ namespace ArmHMI_WinForms
 				//GUI status
 				Bnt_Serial_StartListen.Enabled = false;
 				Bnt_Serial_StopListen.Enabled = true;
+				textBox_StatusBar.Text = "CONNECTED";
 				label_status.Text = "CONNECTED";
 				label_status.ForeColor = Color.Green;
+
+				//Get Machine State & Mode
+				IssueSerialCommand(CMD_Status_GetState);
+				IssueSerialCommand(CMD_Status_GetMode);
+
 			}
 			catch (Exception error)
 			{
 				MessageBox.Show(error.Message);
-				label_status.Text = "FAILED TO CONNECT!";
+				textBox_StatusBar.Text = "FAILED TO CONNECT!";
 			}
 
 		}
 
-		private void Bnt_Serial_StopListen_Click(object sender, EventArgs e)
+		private void Bnt_Serial_Disconnect_Click(object sender, EventArgs e)
 		{
 			//Check if port is open, if so try to close, and update UI
 			if (serialPort1.IsOpen)
@@ -151,6 +182,7 @@ namespace ArmHMI_WinForms
 					OutputText_PortName.Text = "";
 					Bnt_Serial_StartListen.Enabled = true;
 					Bnt_Serial_StopListen.Enabled = false;
+					textBox_StatusBar.Text = "DISCONNECTED";
 					label_status.Text = "DISCONNECTED";
 					label_status.ForeColor = Color.Red;
 
@@ -158,17 +190,15 @@ namespace ArmHMI_WinForms
 				catch (Exception error)
 				{
 					MessageBox.Show(error.Message);
-					label_status.Text = "FAILED TO CLOSE PORT!";
+					textBox_StatusBar.Text = "FAILED TO CLOSE PORT!";
 				}
 			}
 		}
 
 		private void serialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)
 		{
-			Console.WriteLine("HEY");
 			serialDataIn = serialPort1.ReadExisting();
 			this.Invoke(new EventHandler(ShowData));
-			Console.WriteLine(serialDataIn);
 		}
 
 		private void ShowData(object sender, EventArgs e)
@@ -194,5 +224,12 @@ namespace ArmHMI_WinForms
 				MessageBox.Show(error.Message);
 			}
 		}
+
+		private void Bnt_ClearTextReceiver_Click(object sender, EventArgs e)
+		{
+			richTextBox_textReceiver.Text = "";
+		}
+
+
 	}
 }
