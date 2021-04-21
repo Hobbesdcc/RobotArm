@@ -16,6 +16,23 @@ namespace ArmHMI_WinForms
 		string serialDataIn;
 
 
+		// Command Strings to send over serial to Ardunio 
+		string CMD_Home_All			= "HOME_ALL";
+		string CMD_Home_AxisA		= "HOME_AXIS_A";
+		string CMD_Home_AxisB		= "HOME_AXIS_B";
+		string CMD_Home_Base		= "HOME_Base";
+
+		string CMD_State_Start		= "STATE_START";
+		string CMD_State_Stop		= "STATE_STOP";
+		string CMD_State_Reset		= "STATE_RESET";
+
+		string CMD_Mode_Manual		= "MODE_MANUAL";
+		string CMD_Mode_Auto		= "MODE_AUTO";
+
+		string CMD_Servos_Attach	= "SERVOS_ATTACH";
+		string CMD_Servos_Detach	= "SERVOS_DETACH";
+
+
 		public MainScreen()
 		{
 			InitializeComponent();
@@ -28,6 +45,9 @@ namespace ArmHMI_WinForms
 			Bnt_Serial_StopListen.Enabled = false;
 			label_status.Text = "DISCONNECTED";
 			label_status.ForeColor = Color.Red;
+
+			OutputText_BaudRate.Enabled = false;
+			OutputText_PortName.Enabled = false;
 		}
 
 		private void MainScreen_FormClosing(object sender, FormClosingEventArgs e)
@@ -47,32 +67,48 @@ namespace ArmHMI_WinForms
 		}
 
 
-		//Homing Buttons  --------------------------------------------------------------------------------------- 
+		// Fuction ==================================================================
+		private void IssueSerialCommand(String cmd)
+		{
+			//Check if port is open, if so send the inputed string coming from the fuction call
+			if (serialPort1.IsOpen)
+			{
+				try
+				{
+					serialPort1.Write(cmd + "#");
+				}
+				catch (Exception error)
+				{
+					MessageBox.Show(error.Message);
+				}
+			}
+			else
+			{
+				label_status.Text = "NOT CONNECTED, CANT ISSUE COMMANDS!";
+			}
+		}
+
+		//Events: Buttons Commands --------------------------------------------------------------------------------------- 
 		private void Bnt_Home_All_Click(object sender, EventArgs e)
 		{
-			serialPort1.WriteLine("10");
+			IssueSerialCommand(CMD_Home_All);
 		}
-
 		private void Bnt_Home_AxisA_Click(object sender, EventArgs e)
 		{
-			
+			IssueSerialCommand(CMD_Home_AxisA);
 		}
-
 		private void Bnt_Home_AxisB_Click(object sender, EventArgs e)
 		{
-			
+			IssueSerialCommand(CMD_Home_AxisB);
 		}
-
 		private void Bnt_Home_Base_Click(object sender, EventArgs e)
-		{   /*
-			//serialPort1.WriteLine("\r\n");
-			textBox1.Text = textBox1.Text + serialPort1.ReadLine() + Environment.NewLine;
-			textBox1.SelectionStart = textBox1.TextLength;
-			textBox1.ScrollToCaret();
-			//*/
+		{
+			IssueSerialCommand(CMD_Home_Base);
 		}
 
-		// Serial Listen Buttons --------------------------------------------------------------------------------------- 
+
+
+		//Events: Serial listener & Connect/disconnect Buttons -----------------------------------------------------------
 		private void Bnt_Serial_StartListen_Click(object sender, EventArgs e)
 		{
 			try
@@ -83,6 +119,7 @@ namespace ArmHMI_WinForms
 				serialPort1.Open();
 
 				//GUI Output info about comms
+
 				OutputText_BaudRate.Text = serialPort1.BaudRate.ToString();
 				OutputText_PortName.Text = serialPort1.PortName.ToString();
 

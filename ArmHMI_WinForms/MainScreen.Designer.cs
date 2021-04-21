@@ -33,9 +33,11 @@
 			this.bnt_Home_AxisA = new System.Windows.Forms.Button();
 			this.bnt_Home_AxisB = new System.Windows.Forms.Button();
 			this.bnt_Home_Base = new System.Windows.Forms.Button();
-			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.groupBox3 = new System.Windows.Forms.GroupBox();
+			this.groupBox_ModeSelect = new System.Windows.Forms.GroupBox();
+			this.Bnt_State_Stop = new System.Windows.Forms.Button();
+			this.Bnt_State_Start = new System.Windows.Forms.Button();
+			this.groupBox_ManualControls = new System.Windows.Forms.GroupBox();
+			this.Bnt_DetachServos = new System.Windows.Forms.Button();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
 			this.label2 = new System.Windows.Forms.Label();
 			this.OutputText_PortName = new System.Windows.Forms.TextBox();
@@ -49,16 +51,23 @@
 			this.textBox_textSent = new System.Windows.Forms.TextBox();
 			this.Bnt_Serial_Send = new System.Windows.Forms.Button();
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
-			this.groupBox1.SuspendLayout();
+			this.groupBox_MahineStates = new System.Windows.Forms.GroupBox();
+			this.button3 = new System.Windows.Forms.Button();
+			this.Bnt_State_Reset = new System.Windows.Forms.Button();
+			this.Bnt_Mode_Manaul = new System.Windows.Forms.Button();
+			this.Bnt_Mode_Auto = new System.Windows.Forms.Button();
+			this.groupBox_ModeSelect.SuspendLayout();
+			this.groupBox_ManualControls.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.groupBox5.SuspendLayout();
+			this.groupBox_MahineStates.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// bnt_Home_All
 			// 
-			this.bnt_Home_All.Location = new System.Drawing.Point(10, 20);
+			this.bnt_Home_All.Location = new System.Drawing.Point(6, 19);
 			this.bnt_Home_All.Name = "bnt_Home_All";
-			this.bnt_Home_All.Size = new System.Drawing.Size(150, 50);
+			this.bnt_Home_All.Size = new System.Drawing.Size(100, 40);
 			this.bnt_Home_All.TabIndex = 0;
 			this.bnt_Home_All.Text = "Home All";
 			this.bnt_Home_All.UseVisualStyleBackColor = true;
@@ -66,9 +75,9 @@
 			// 
 			// bnt_Home_AxisA
 			// 
-			this.bnt_Home_AxisA.Location = new System.Drawing.Point(10, 76);
+			this.bnt_Home_AxisA.Location = new System.Drawing.Point(6, 65);
 			this.bnt_Home_AxisA.Name = "bnt_Home_AxisA";
-			this.bnt_Home_AxisA.Size = new System.Drawing.Size(150, 40);
+			this.bnt_Home_AxisA.Size = new System.Drawing.Size(100, 30);
 			this.bnt_Home_AxisA.TabIndex = 1;
 			this.bnt_Home_AxisA.Text = "Home Axis A";
 			this.bnt_Home_AxisA.UseVisualStyleBackColor = true;
@@ -76,9 +85,9 @@
 			// 
 			// bnt_Home_AxisB
 			// 
-			this.bnt_Home_AxisB.Location = new System.Drawing.Point(10, 121);
+			this.bnt_Home_AxisB.Location = new System.Drawing.Point(6, 101);
 			this.bnt_Home_AxisB.Name = "bnt_Home_AxisB";
-			this.bnt_Home_AxisB.Size = new System.Drawing.Size(150, 40);
+			this.bnt_Home_AxisB.Size = new System.Drawing.Size(100, 30);
 			this.bnt_Home_AxisB.TabIndex = 2;
 			this.bnt_Home_AxisB.Text = "Home Axis B";
 			this.bnt_Home_AxisB.UseVisualStyleBackColor = true;
@@ -86,44 +95,67 @@
 			// 
 			// bnt_Home_Base
 			// 
-			this.bnt_Home_Base.Location = new System.Drawing.Point(10, 167);
+			this.bnt_Home_Base.Location = new System.Drawing.Point(6, 137);
 			this.bnt_Home_Base.Name = "bnt_Home_Base";
-			this.bnt_Home_Base.Size = new System.Drawing.Size(150, 40);
+			this.bnt_Home_Base.Size = new System.Drawing.Size(100, 30);
 			this.bnt_Home_Base.TabIndex = 6;
 			this.bnt_Home_Base.Text = "Home Base";
 			this.bnt_Home_Base.UseVisualStyleBackColor = true;
 			this.bnt_Home_Base.Click += new System.EventHandler(this.Bnt_Home_Base_Click);
 			// 
-			// groupBox1
+			// groupBox_ModeSelect
 			// 
-			this.groupBox1.Controls.Add(this.bnt_Home_All);
-			this.groupBox1.Controls.Add(this.bnt_Home_Base);
-			this.groupBox1.Controls.Add(this.bnt_Home_AxisA);
-			this.groupBox1.Controls.Add(this.bnt_Home_AxisB);
-			this.groupBox1.Location = new System.Drawing.Point(15, 118);
-			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(170, 220);
-			this.groupBox1.TabIndex = 7;
-			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "Homeing";
+			this.groupBox_ModeSelect.Controls.Add(this.Bnt_Mode_Auto);
+			this.groupBox_ModeSelect.Controls.Add(this.Bnt_Mode_Manaul);
+			this.groupBox_ModeSelect.Location = new System.Drawing.Point(499, 118);
+			this.groupBox_ModeSelect.Name = "groupBox_ModeSelect";
+			this.groupBox_ModeSelect.Size = new System.Drawing.Size(442, 100);
+			this.groupBox_ModeSelect.TabIndex = 8;
+			this.groupBox_ModeSelect.TabStop = false;
+			this.groupBox_ModeSelect.Text = "Mode Selection";
 			// 
-			// groupBox2
+			// Bnt_State_Stop
 			// 
-			this.groupBox2.Location = new System.Drawing.Point(15, 12);
-			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(442, 100);
-			this.groupBox2.TabIndex = 8;
-			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "Mode Selection";
+			this.Bnt_State_Stop.Location = new System.Drawing.Point(112, 17);
+			this.Bnt_State_Stop.Name = "Bnt_State_Stop";
+			this.Bnt_State_Stop.Size = new System.Drawing.Size(100, 40);
+			this.Bnt_State_Stop.TabIndex = 1;
+			this.Bnt_State_Stop.Text = "Stop";
+			this.Bnt_State_Stop.UseVisualStyleBackColor = true;
 			// 
-			// groupBox3
+			// Bnt_State_Start
 			// 
-			this.groupBox3.Location = new System.Drawing.Point(191, 118);
-			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(266, 220);
-			this.groupBox3.TabIndex = 9;
-			this.groupBox3.TabStop = false;
-			this.groupBox3.Text = "Manual Move";
+			this.Bnt_State_Start.Location = new System.Drawing.Point(6, 17);
+			this.Bnt_State_Start.Name = "Bnt_State_Start";
+			this.Bnt_State_Start.Size = new System.Drawing.Size(100, 40);
+			this.Bnt_State_Start.TabIndex = 0;
+			this.Bnt_State_Start.Text = "Start";
+			this.Bnt_State_Start.UseVisualStyleBackColor = true;
+			this.Bnt_State_Start.Click += new System.EventHandler(this.Bnt_Home_All_Click);
+			// 
+			// groupBox_ManualControls
+			// 
+			this.groupBox_ManualControls.Controls.Add(this.button3);
+			this.groupBox_ManualControls.Controls.Add(this.Bnt_DetachServos);
+			this.groupBox_ManualControls.Controls.Add(this.bnt_Home_Base);
+			this.groupBox_ManualControls.Controls.Add(this.bnt_Home_All);
+			this.groupBox_ManualControls.Controls.Add(this.bnt_Home_AxisB);
+			this.groupBox_ManualControls.Controls.Add(this.bnt_Home_AxisA);
+			this.groupBox_ManualControls.Location = new System.Drawing.Point(499, 224);
+			this.groupBox_ManualControls.Name = "groupBox_ManualControls";
+			this.groupBox_ManualControls.Size = new System.Drawing.Size(442, 193);
+			this.groupBox_ManualControls.TabIndex = 9;
+			this.groupBox_ManualControls.TabStop = false;
+			this.groupBox_ManualControls.Text = "Manual Controls";
+			// 
+			// Bnt_DetachServos
+			// 
+			this.Bnt_DetachServos.Location = new System.Drawing.Point(336, 19);
+			this.Bnt_DetachServos.Name = "Bnt_DetachServos";
+			this.Bnt_DetachServos.Size = new System.Drawing.Size(100, 40);
+			this.Bnt_DetachServos.TabIndex = 2;
+			this.Bnt_DetachServos.Text = "Detach Servos";
+			this.Bnt_DetachServos.UseVisualStyleBackColor = true;
 			// 
 			// groupBox4
 			// 
@@ -179,7 +211,7 @@
 			this.Bnt_Serial_StartListen.Name = "Bnt_Serial_StartListen";
 			this.Bnt_Serial_StartListen.Size = new System.Drawing.Size(150, 30);
 			this.Bnt_Serial_StartListen.TabIndex = 12;
-			this.Bnt_Serial_StartListen.Text = "Start Listening";
+			this.Bnt_Serial_StartListen.Text = "Connect";
 			this.Bnt_Serial_StartListen.UseVisualStyleBackColor = true;
 			this.Bnt_Serial_StartListen.Click += new System.EventHandler(this.Bnt_Serial_StartListen_Click);
 			// 
@@ -189,7 +221,7 @@
 			this.Bnt_Serial_StopListen.Name = "Bnt_Serial_StopListen";
 			this.Bnt_Serial_StopListen.Size = new System.Drawing.Size(150, 30);
 			this.Bnt_Serial_StopListen.TabIndex = 13;
-			this.Bnt_Serial_StopListen.Text = "Stop Listening";
+			this.Bnt_Serial_StopListen.Text = "Disconnect";
 			this.Bnt_Serial_StopListen.UseVisualStyleBackColor = true;
 			this.Bnt_Serial_StopListen.Click += new System.EventHandler(this.Bnt_Serial_StopListen_Click);
 			// 
@@ -243,33 +275,84 @@
 			this.groupBox5.Controls.Add(this.Bnt_Serial_StopListen);
 			this.groupBox5.Controls.Add(this.label_status);
 			this.groupBox5.Controls.Add(this.richTextBox_textReceiver);
-			this.groupBox5.Location = new System.Drawing.Point(463, 14);
+			this.groupBox5.Location = new System.Drawing.Point(12, 12);
 			this.groupBox5.Name = "groupBox5";
-			this.groupBox5.Size = new System.Drawing.Size(481, 416);
+			this.groupBox5.Size = new System.Drawing.Size(481, 405);
 			this.groupBox5.TabIndex = 18;
 			this.groupBox5.TabStop = false;
 			this.groupBox5.Text = "Serial Listener";
+			// 
+			// groupBox_MahineStates
+			// 
+			this.groupBox_MahineStates.Controls.Add(this.Bnt_State_Reset);
+			this.groupBox_MahineStates.Controls.Add(this.Bnt_State_Stop);
+			this.groupBox_MahineStates.Controls.Add(this.Bnt_State_Start);
+			this.groupBox_MahineStates.Location = new System.Drawing.Point(499, 12);
+			this.groupBox_MahineStates.Name = "groupBox_MahineStates";
+			this.groupBox_MahineStates.Size = new System.Drawing.Size(442, 100);
+			this.groupBox_MahineStates.TabIndex = 9;
+			this.groupBox_MahineStates.TabStop = false;
+			this.groupBox_MahineStates.Text = "Machine State";
+			// 
+			// button3
+			// 
+			this.button3.Location = new System.Drawing.Point(230, 19);
+			this.button3.Name = "button3";
+			this.button3.Size = new System.Drawing.Size(100, 40);
+			this.button3.TabIndex = 2;
+			this.button3.Text = "Attach Servos";
+			this.button3.UseVisualStyleBackColor = true;
+			// 
+			// Bnt_State_Reset
+			// 
+			this.Bnt_State_Reset.Location = new System.Drawing.Point(218, 17);
+			this.Bnt_State_Reset.Name = "Bnt_State_Reset";
+			this.Bnt_State_Reset.Size = new System.Drawing.Size(100, 40);
+			this.Bnt_State_Reset.TabIndex = 1;
+			this.Bnt_State_Reset.Text = "Reset";
+			this.Bnt_State_Reset.UseVisualStyleBackColor = true;
+			// 
+			// Bnt_Mode_Manaul
+			// 
+			this.Bnt_Mode_Manaul.Location = new System.Drawing.Point(6, 23);
+			this.Bnt_Mode_Manaul.Name = "Bnt_Mode_Manaul";
+			this.Bnt_Mode_Manaul.Size = new System.Drawing.Size(100, 40);
+			this.Bnt_Mode_Manaul.TabIndex = 0;
+			this.Bnt_Mode_Manaul.Text = "Manaul";
+			this.Bnt_Mode_Manaul.UseVisualStyleBackColor = true;
+			this.Bnt_Mode_Manaul.Click += new System.EventHandler(this.Bnt_Home_All_Click);
+			// 
+			// Bnt_Mode_Auto
+			// 
+			this.Bnt_Mode_Auto.Location = new System.Drawing.Point(112, 23);
+			this.Bnt_Mode_Auto.Name = "Bnt_Mode_Auto";
+			this.Bnt_Mode_Auto.Size = new System.Drawing.Size(100, 40);
+			this.Bnt_Mode_Auto.TabIndex = 1;
+			this.Bnt_Mode_Auto.Text = "Automatic";
+			this.Bnt_Mode_Auto.UseVisualStyleBackColor = true;
 			// 
 			// MainScreen
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.SystemColors.ControlDark;
-			this.ClientSize = new System.Drawing.Size(973, 475);
+			this.ClientSize = new System.Drawing.Size(953, 429);
+			this.Controls.Add(this.groupBox_MahineStates);
 			this.Controls.Add(this.groupBox5);
-			this.Controls.Add(this.groupBox3);
-			this.Controls.Add(this.groupBox2);
-			this.Controls.Add(this.groupBox1);
+			this.Controls.Add(this.groupBox_ManualControls);
+			this.Controls.Add(this.groupBox_ModeSelect);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
 			this.Name = "MainScreen";
 			this.Text = "Robot Arm HMI";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainScreen_FormClosing);
 			this.Load += new System.EventHandler(this.MainScreen_Load);
-			this.groupBox1.ResumeLayout(false);
+			this.groupBox_ModeSelect.ResumeLayout(false);
+			this.groupBox_ManualControls.ResumeLayout(false);
 			this.groupBox4.ResumeLayout(false);
 			this.groupBox4.PerformLayout();
 			this.groupBox5.ResumeLayout(false);
 			this.groupBox5.PerformLayout();
+			this.groupBox_MahineStates.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -280,9 +363,8 @@
 		private System.Windows.Forms.Button bnt_Home_AxisA;
 		private System.Windows.Forms.Button bnt_Home_AxisB;
 		private System.Windows.Forms.Button bnt_Home_Base;
-		private System.Windows.Forms.GroupBox groupBox1;
-		private System.Windows.Forms.GroupBox groupBox2;
-		private System.Windows.Forms.GroupBox groupBox3;
+		private System.Windows.Forms.GroupBox groupBox_ModeSelect;
+		private System.Windows.Forms.GroupBox groupBox_ManualControls;
 		private System.Windows.Forms.GroupBox groupBox4;
 		private System.Windows.Forms.TextBox OutputText_BaudRate;
 		private System.Windows.Forms.Label label1;
@@ -296,6 +378,14 @@
 		private System.Windows.Forms.TextBox textBox_textSent;
 		private System.Windows.Forms.Button Bnt_Serial_Send;
 		private System.Windows.Forms.GroupBox groupBox5;
+		private System.Windows.Forms.GroupBox groupBox_MahineStates;
+		public System.Windows.Forms.Button Bnt_State_Start;
+		public System.Windows.Forms.Button Bnt_State_Stop;
+		public System.Windows.Forms.Button Bnt_DetachServos;
+		public System.Windows.Forms.Button button3;
+		public System.Windows.Forms.Button Bnt_State_Reset;
+		public System.Windows.Forms.Button Bnt_Mode_Auto;
+		public System.Windows.Forms.Button Bnt_Mode_Manaul;
 	}
 }
 
