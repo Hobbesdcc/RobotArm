@@ -73,17 +73,17 @@ void setup() {
 	Serial.println(); 
 
 	//Servo Motors Pins
-	myServo1.attach(10);	// attaches the servo on pin 10 to the servo object, Big Arm
-	myServo2.attach(9);		// attaches the servo on pin 09 to the servo object, Small Arm
-  myServo3.attach(8);		// attaches the servo on pin 08 to the servo object, Base
+	myServo1.attach(8);   // attaches the servo on pin 10 to the servo object, BASE
+	myServo2.attach(9);		// attaches the servo on pin 09 to the servo object, BIG ARM 
+  myServo3.attach(10);	// attaches the servo on pin 08 to the servo object, SMALL ARM
 
   Serial.println(Servo1_RangeLimitMin); 
   Serial.println(Servo1_RangeLimitMax); 
 
-  //Go home all servos (runs once on start)
+  //Go home all servos (runs once on start) //parms SetServoAnagle(Servo servo, float ServoAnagle, float RangeLimitMin, float RangeLimitMax)
   SetServoAnagle(myServo1, 90, Servo1_RangeLimitMin, Servo1_RangeLimitMax); 
-  SetServoAnagle(myServo2, 90, Servo2_RangeLimitMin, Servo2_RangeLimitMax);
-  SetServoAnagle(myServo3, 90, Servo3_RangeLimitMin, Servo3_RangeLimitMax);
+  SetServoAnagle(myServo2, 90-JointA_CalibrationOffset, Servo2_RangeLimitMin, Servo2_RangeLimitMax);
+  SetServoAnagle(myServo3, 90-JointC_CalibrationOffset, Servo3_RangeLimitMin, Servo3_RangeLimitMax);
 }
 
 
@@ -124,8 +124,8 @@ void loop() {
 
   } else {
     //Writes the FINAL joint values into the servos
-    myServo1.write(JointA_degree-JointA_CalibrationOffset);
-    myServo2.write(180-JointC_degree-JointC_CalibrationOffset); //must use 180-Value due to how the servo is mounted (inverted)
+    SetServoAnagle(myServo2, JointA_degree-JointA_CalibrationOffset, Servo2_RangeLimitMin, Servo2_RangeLimitMax);
+    SetServoAnagle(myServo3, 180-JointC_degree-JointC_CalibrationOffset, Servo2_RangeLimitMin, Servo2_RangeLimitMax);
 
     Serial.println("< Servos set to Joint Values >");
     Serial.println("");
@@ -174,24 +174,6 @@ int funcGetGOTO(String description){
   return result; 
   }
 
-
-
-// == Function ================================
-void SetServoAnagle(Servo servo, float ServoAnagle, float RangeLimitMin, float RangeLimitMax){
-    //Functions to set servo if its in limits
-    if(JointC_degree > Servo2_RangeLimitMin ||  JointC_degree < Servo2_RangeLimitMax){
-      servo.write(ServoAnagle);
-      Serial.println("< Function: Set servo angle > ");
-      Serial.println("");
-    }else
-    {
-      Serial.print("[Function Error] ServoAnagle value: ");
-      Serial.print(ServoAnagle);
-      Serial.println(" out of min/max range!");
-      Serial.println("");
-    }  
-   
-  }
 
 
 
