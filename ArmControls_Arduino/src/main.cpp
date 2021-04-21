@@ -58,11 +58,14 @@ double TriE_SideA = 0; double TriE_SideB = 0; double TriE_SideC = 0;
 double JointA = 0;        double JointB = 0;        double JointC = 0;
 double JointA_degree = 0; double JointB_degree = 0; double JointC_degree = 0;
 
+//Serial Command varibles
+String commandReceived = "";
+
 //Fuctions Declarations
 int funcGetGOTO(String);
 void SetServoAnagle(Servo, float, float, float);
 void JointCalculations();
-
+String SerialInterface_Receiving();
 
 //= SETUP ===========================
 void setup() {
@@ -98,6 +101,9 @@ void loop() {
   //Get Inputs X an Y goto locations
   GotoX = funcGetGOTO("GOTO X");
   GotoY = funcGetGOTO("GOTO Y");
+
+  //HMI Serial Command Interface
+  commandReceived = SerialInterface_Receiving();
   
   //Run Joint math
   JointCalculations(); 
@@ -174,6 +180,14 @@ int funcGetGOTO(String description){
   return result; 
   }
 
+// == Function ================================
+String SerialInterface_Receiving(){
+  String cmdReceived;
+
+
+
+  return cmdReceived; 
+}
 
 
 
