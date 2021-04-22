@@ -43,7 +43,13 @@ void loop() {
 
   //HMI Serial Command Interface
   commandReceived = SerialInterface_Receiving();
-  Serial.print(">> CMD Received: [ "); Serial.print(commandReceived); Serial.println(" ]");
+
+  //Remove special characters from string, and print to serial for user feedback
+  String feedback = commandReceived;
+  int start = feedback.indexOf('$');
+  int end = feedback.indexOf('#');
+  feedback = feedback.substring(start+1, end);
+  Serial.print(">> Arduino Received: [ "); Serial.print(feedback); Serial.println(" ]");
 
 
   //Detect what command was sent
@@ -196,20 +202,28 @@ void ReceiveCommands_RequestStatus(){
 void ReceiveCommands_RequestModeChange(){
   //Check if message request a mode chanage, then check if thats possible
   if (-1 != commandReceived.indexOf(CMD_Mode_Manual)){
-    if(state == Idel && mode == Auto){
+    if((state == Stopped || state == Idel) && mode == Auto){
       mode = Manual;
       Serial.println(CMD_Mode_Manual);
-    }else{
-      Serial.println("[ERROR: Must Be stopped AND in Auto mode to change to Manaul Mode]"); 
+    }
+    else if(mode == Manual){
+    Serial.println("[ERROR: Already in Manual Mode]"); 
+    }
+    else{
+      Serial.println("[ERROR: Must Be in Idel/Stopped AND in Auto mode to change to Manaul Mode]"); 
     }
   }
   //Check if message request a mode chanage, then check if thats possible
   if (-1 != commandReceived.indexOf(CMD_Mode_Auto)){
-    if(state == Idel && mode == Manual){
+    if((state == Stopped || state == Idel)  && mode == Manual){
       mode = Auto;
       Serial.println(CMD_Mode_Auto);
-    }else{
-      Serial.println("[ERROR: Must Be stopped AND in Manual mode to change to Auto Mode]"); 
+    }
+    else if(mode == Auto){
+      Serial.println("[ERROR: Already in Auto Mode]"); 
+    }
+    else{
+      Serial.println("[ERROR: Must Be in Idel/Stopped AND in Auto mode to change to Auto Mode]"); 
     }
   }
 }

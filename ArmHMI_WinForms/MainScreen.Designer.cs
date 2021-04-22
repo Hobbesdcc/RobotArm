@@ -146,6 +146,7 @@
 			// 
 			this.textBox_Status_Mode.Location = new System.Drawing.Point(112, 19);
 			this.textBox_Status_Mode.Name = "textBox_Status_Mode";
+			this.textBox_Status_Mode.ReadOnly = true;
 			this.textBox_Status_Mode.Size = new System.Drawing.Size(206, 20);
 			this.textBox_Status_Mode.TabIndex = 17;
 			this.textBox_Status_Mode.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -291,6 +292,7 @@
 			// 
 			this.richTextBox_textReceiver.Location = new System.Drawing.Point(13, 140);
 			this.richTextBox_textReceiver.Name = "richTextBox_textReceiver";
+			this.richTextBox_textReceiver.ReadOnly = true;
 			this.richTextBox_textReceiver.Size = new System.Drawing.Size(450, 250);
 			this.richTextBox_textReceiver.TabIndex = 14;
 			this.richTextBox_textReceiver.Text = "";
@@ -390,6 +392,7 @@
 			// 
 			this.textBox_Status_State.Location = new System.Drawing.Point(112, 21);
 			this.textBox_Status_State.Name = "textBox_Status_State";
+			this.textBox_Status_State.ReadOnly = true;
 			this.textBox_Status_State.Size = new System.Drawing.Size(206, 20);
 			this.textBox_Status_State.TabIndex = 16;
 			this.textBox_Status_State.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
