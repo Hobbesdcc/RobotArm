@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <Servo.h> 
 #include <header.h>
+
 /*
 Started: 2017-01-23
 Current: 2021-04-xx
@@ -42,62 +43,77 @@ void loop() {
 
   //HMI Serial Command Interface
   commandReceived = SerialInterface_Receiving();
-
-  Serial.print("Commands Received from HMI: "); Serial.println(commandReceived); 
-
-  ParseMessage();
+  Serial.print(">> CMD Received: [ "); Serial.print(commandReceived); Serial.println(" ]");
 
 
-  switch(mode) {
-   case Manual :
-      Serial.println("Im in manaul!"); 
-      //break; //optional
-
-   case Auto :
-      Serial.println("IM IN AUTO MODE!"); 
-      
-      //Get Inputs X an Y goto locations
-      //GotoX = funcGetGOTO("GOTO X");
-      //GotoY = funcGetGOTO("GOTO Y");
-
-      //Run Joint math
-      JointCalculations(); 
-
-      //Prints JointA and JointC final values:
-      Serial.print("JointA degree: ");  Serial.println(JointA_degree);
-      //Serial.print("JointB degree: ");  Serial.println(JointB_degree);
-      Serial.print("JointC degree: ");  Serial.println(JointC_degree);
-      Serial.println("");
+  //Detect what command was sent
+  ReceiveCommands_RequestStatus();        //Check if messages are Request Status
+  ReceiveCommands_RequestModeChange();    //Check if messages are Request Mode Change
+  ReceiveCommands_RequestStateChange();   //Check if messages are Request State Change
 
 
-      //Check if Joint Values found are Real Numbers & Within Servo min/max limits
-      if (isnan(JointA_degree) || isnan(JointA_degree)){
-        Serial.println("< ERRROR: Input values Invalid >");
+
+  //Only Run if Started
+  if (state == Started){
+    
+    switch(mode) {
+      case Manual:
+        //Serial.println("Im in Manual!");
+
+        //Get Inputs X an Y goto locations
+        GotoX = funcGetGOTO("GOTO X");
+        GotoY = funcGetGOTO("GOTO Y");
+
+        //Run Joint math
+        JointCalculations(); 
+
+        //Prints JointA and JointC final values:
+        Serial.print("JointA degree: ");  Serial.println(JointA_degree);
+        //Serial.print("JointB degree: ");  Serial.println(JointB_degree);
+        Serial.print("JointC degree: ");  Serial.println(JointC_degree);
         Serial.println("");
 
-      } else if(JointA_degree < Servo1_RangeLimitMin ||  JointA_degree > Servo1_RangeLimitMax)  {
-        Serial.println("< ERROR: Joint A Value out of min/max range >");
-        Serial.println("");
 
-      } else if(JointC_degree < Servo2_RangeLimitMin ||  JointC_degree > Servo2_RangeLimitMax)  {
-        Serial.println("< ERROR: Joint B Value out of min/max range >");
-        Serial.println("");
+        //Check if Joint Values found are Real Numbers & Within Servo min/max limits
+        if (isnan(JointA_degree) || isnan(JointA_degree)){
+          Serial.println("< ERRROR: Input values Invalid >");
+          Serial.println("");
 
-      } else {
-        //Writes the FINAL joint values into the servos
-        SetServoAnagle(myServo2, JointA_degree-JointA_CalibrationOffset, Servo2_RangeLimitMin, Servo2_RangeLimitMax);
-        SetServoAnagle(myServo3, 180-JointC_degree-JointC_CalibrationOffset, Servo2_RangeLimitMin, Servo2_RangeLimitMax);
+        } else if(JointA_degree < Servo1_RangeLimitMin ||  JointA_degree > Servo1_RangeLimitMax)  {
+          Serial.println("< ERROR: Joint A Value out of min/max range >");
+          Serial.println("");
 
-        Serial.println("< Servos set to Joint Values >");
-        Serial.println("");
-        delay(ServoDelayTime);  //delay for servo to move
-      }
+        } else if(JointC_degree < Servo2_RangeLimitMin ||  JointC_degree > Servo2_RangeLimitMax)  {
+          Serial.println("< ERROR: Joint B Value out of min/max range >");
+          Serial.println("");
 
-   default : //Optional
-      Serial.println("INIT Mode");
+        } else {
+          //Writes the FINAL joint values into the servos
+          SetServoAnagle(myServo2, JointA_degree-JointA_CalibrationOffset, Servo2_RangeLimitMin, Servo2_RangeLimitMax);
+          SetServoAnagle(myServo3, 180-JointC_degree-JointC_CalibrationOffset, Servo2_RangeLimitMin, Servo2_RangeLimitMax);
+
+          Serial.println("< Servos set to Joint Values >");
+          Serial.println("");
+          delay(ServoDelayTime);  //delay for servo to move
+        }
+
+        break;
+
+      case Auto:
+          //Serial.println("IM IN AUTO MODE!"); 
+          break;
+
+
+      default : //Optional
+          Serial.println("[ERROR: No Mode detected]");
+          break;
+    }
+
+  }else{
+    Serial.println("[Nothing can be run when machine in Stopped State]");
   }
-
-}
+  
+}//<EndOfLoop>
 
 
 // ================================== = = = = = = = = = = = = = = = = ===
@@ -136,14 +152,10 @@ int funcGetGOTO(String description){
   }
 
 // == Function ================================
-void ParseMessage(){
+void ReceiveCommands_RequestStatus(){
   //Publish Mode Status to Serial Port (for HMI to read) 
-  if (-1 != commandReceived.indexOf("STATUS_GETMODE#")){ //indexOf returns the index of val within the String, or -1 if not found.
+  if (-1 != commandReceived.indexOf(CMD_Status_GetMode)){ //indexOf returns the index of val within the String, or -1 if not found.
     switch(mode) {
-      case Init:
-        Serial.println(CMD_Mode_Init);
-        break;
-
       case Manual:
         Serial.println(CMD_Mode_Manual);
         break;
@@ -153,13 +165,13 @@ void ParseMessage(){
         break;
 
       default:
-        Serial.println("ERROR: NO MODE DETECTED"); 
+        Serial.println("[ERROR: NO MODE DETECTED]"); 
         break;
     }
   }
 
   //Publish State Status to Serial Port (for HMI to read)
-  if (-1 != commandReceived.indexOf("STATUS_GETSTATE#")){ //indexOf returns the index of val within the String, or -1 if not found.
+  if (-1 != commandReceived.indexOf(CMD_Status_GetState)){ //indexOf returns the index of val within the String, or -1 if not found.
     switch(state) {
       case Idel:
         Serial.println(CMD_State_Idel);
@@ -174,12 +186,64 @@ void ParseMessage(){
         break;
 
       default:
-        Serial.println("ERROR: NO STATE DETECTED"); 
+        Serial.println("[ERROR: NO STATE DETECTED]"); 
         break;
     }
   }
 }
 
+// == Function ================================
+void ReceiveCommands_RequestModeChange(){
+  //Check if message request a mode chanage, then check if thats possible
+  if (-1 != commandReceived.indexOf(CMD_Mode_Manual)){
+    if(state == Idel && mode == Auto){
+      mode = Manual;
+      Serial.println(CMD_Mode_Manual);
+    }else{
+      Serial.println("[ERROR: Must Be stopped AND in Auto mode to change to Manaul Mode]"); 
+    }
+  }
+  //Check if message request a mode chanage, then check if thats possible
+  if (-1 != commandReceived.indexOf(CMD_Mode_Auto)){
+    if(state == Idel && mode == Manual){
+      mode = Auto;
+      Serial.println(CMD_Mode_Auto);
+    }else{
+      Serial.println("[ERROR: Must Be stopped AND in Manual mode to change to Auto Mode]"); 
+    }
+  }
+}
+
+// == Function ================================
+void ReceiveCommands_RequestStateChange(){
+  //Check if message request a State chanage, then check if thats possible
+  if (-1 != commandReceived.indexOf(CMD_State_Reset)){
+    if(state == Stopped || state == Idel){
+      state = Idel;
+       Serial.println(CMD_State_Idel);
+    }else{
+      Serial.println("[ERROR: Must Be stopped/Idel State AND in Auto/Manual mode to reset to Idel]"); 
+    }
+  }
+  //Check if message request a State chanage, then check if thats possible
+  if (-1 != commandReceived.indexOf(CMD_State_Start)){
+    if(state == Idel){
+      state = Started;
+      Serial.println(CMD_State_Started);
+    }else{
+      Serial.println("[ERROR: Must Be in Idel State to move to Started]"); 
+    }
+  }
+  //Check if message request a State chanage, then check if thats possible
+  if (-1 != commandReceived.indexOf(CMD_State_Stop)){
+    if(state != Stopped){
+      state = Stopped;
+      Serial.println(CMD_State_Stopped);
+    }else{
+      Serial.println("[ERROR: you are already stopped]"); 
+    }
+  }
+}
 
 
 

@@ -6,8 +6,8 @@ void SetServoAnagle(Servo servo, float ServoAnagle, float RangeLimitMin, float R
     //Functions to set servo if its in limits
     if(ServoAnagle > RangeLimitMin || ServoAnagle < RangeLimitMax){
       servo.write(ServoAnagle);
-      Serial.println("< Function: Set servo angle > ");
-      Serial.println("");
+      //Serial.println("< Function: Set servo angle > ");
+      //Serial.println("");
     }else
     {
       Serial.print("[Function Error] ServoAnagle value: ");

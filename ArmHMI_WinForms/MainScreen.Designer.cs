@@ -34,6 +34,8 @@
 			this.bnt_Home_AxisB = new System.Windows.Forms.Button();
 			this.bnt_Home_Base = new System.Windows.Forms.Button();
 			this.groupBox_ModeSelect = new System.Windows.Forms.GroupBox();
+			this.Bnt_GetMode = new System.Windows.Forms.Button();
+			this.Bnt_Mode_Manual = new System.Windows.Forms.Button();
 			this.textBox_Status_Mode = new System.Windows.Forms.TextBox();
 			this.Bnt_Mode_Auto = new System.Windows.Forms.Button();
 			this.Bnt_State_Stop = new System.Windows.Forms.Button();
@@ -54,14 +56,12 @@
 			this.textBox_textSent = new System.Windows.Forms.TextBox();
 			this.Bnt_Serial_Send = new System.Windows.Forms.Button();
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
+			this.textBox_StatusBar = new System.Windows.Forms.TextBox();
+			this.Bnt_ClearTextReceiver = new System.Windows.Forms.Button();
 			this.groupBox_MahineStates = new System.Windows.Forms.GroupBox();
+			this.Bnt_GetState = new System.Windows.Forms.Button();
 			this.textBox_Status_State = new System.Windows.Forms.TextBox();
 			this.Bnt_State_Reset = new System.Windows.Forms.Button();
-			this.Bnt_ClearTextReceiver = new System.Windows.Forms.Button();
-			this.textBox_StatusBar = new System.Windows.Forms.TextBox();
-			this.Bnt_Mode_Manual = new System.Windows.Forms.Button();
-			this.Bnt_GetState = new System.Windows.Forms.Button();
-			this.Bnt_GetMode = new System.Windows.Forms.Button();
 			this.groupBox_ModeSelect.SuspendLayout();
 			this.groupBox_ManualControls.SuspendLayout();
 			this.groupBox4.SuspendLayout();
@@ -122,12 +122,33 @@
 			this.groupBox_ModeSelect.TabStop = false;
 			this.groupBox_ModeSelect.Text = "Mode Selection";
 			// 
+			// Bnt_GetMode
+			// 
+			this.Bnt_GetMode.Location = new System.Drawing.Point(6, 18);
+			this.Bnt_GetMode.Name = "Bnt_GetMode";
+			this.Bnt_GetMode.Size = new System.Drawing.Size(100, 20);
+			this.Bnt_GetMode.TabIndex = 19;
+			this.Bnt_GetMode.Text = "Get Mode";
+			this.Bnt_GetMode.UseVisualStyleBackColor = true;
+			this.Bnt_GetMode.Click += new System.EventHandler(this.Bnt_GetMode_Click);
+			// 
+			// Bnt_Mode_Manual
+			// 
+			this.Bnt_Mode_Manual.Location = new System.Drawing.Point(7, 46);
+			this.Bnt_Mode_Manual.Name = "Bnt_Mode_Manual";
+			this.Bnt_Mode_Manual.Size = new System.Drawing.Size(100, 40);
+			this.Bnt_Mode_Manual.TabIndex = 18;
+			this.Bnt_Mode_Manual.Text = "Manual";
+			this.Bnt_Mode_Manual.UseVisualStyleBackColor = true;
+			this.Bnt_Mode_Manual.Click += new System.EventHandler(this.Bnt_Mode_Manual_Click);
+			// 
 			// textBox_Status_Mode
 			// 
 			this.textBox_Status_Mode.Location = new System.Drawing.Point(112, 19);
 			this.textBox_Status_Mode.Name = "textBox_Status_Mode";
 			this.textBox_Status_Mode.Size = new System.Drawing.Size(206, 20);
 			this.textBox_Status_Mode.TabIndex = 17;
+			this.textBox_Status_Mode.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			// 
 			// Bnt_Mode_Auto
 			// 
@@ -147,6 +168,7 @@
 			this.Bnt_State_Stop.TabIndex = 1;
 			this.Bnt_State_Stop.Text = "Stop";
 			this.Bnt_State_Stop.UseVisualStyleBackColor = true;
+			this.Bnt_State_Stop.Click += new System.EventHandler(this.Bnt_State_Stop_Click);
 			// 
 			// Bnt_State_Start
 			// 
@@ -156,7 +178,7 @@
 			this.Bnt_State_Start.TabIndex = 0;
 			this.Bnt_State_Start.Text = "Start";
 			this.Bnt_State_Start.UseVisualStyleBackColor = true;
-			this.Bnt_State_Start.Click += new System.EventHandler(this.Bnt_Home_All_Click);
+			this.Bnt_State_Start.Click += new System.EventHandler(this.Bnt_State_Start_Click);
 			// 
 			// groupBox_ManualControls
 			// 
@@ -320,6 +342,26 @@
 			this.groupBox5.TabStop = false;
 			this.groupBox5.Text = "Serial Listener";
 			// 
+			// textBox_StatusBar
+			// 
+			this.textBox_StatusBar.BackColor = System.Drawing.SystemColors.ActiveCaption;
+			this.textBox_StatusBar.Location = new System.Drawing.Point(13, 399);
+			this.textBox_StatusBar.Name = "textBox_StatusBar";
+			this.textBox_StatusBar.ReadOnly = true;
+			this.textBox_StatusBar.Size = new System.Drawing.Size(369, 20);
+			this.textBox_StatusBar.TabIndex = 19;
+			this.textBox_StatusBar.Text = "DISCONNECTED";
+			// 
+			// Bnt_ClearTextReceiver
+			// 
+			this.Bnt_ClearTextReceiver.Location = new System.Drawing.Point(388, 396);
+			this.Bnt_ClearTextReceiver.Name = "Bnt_ClearTextReceiver";
+			this.Bnt_ClearTextReceiver.Size = new System.Drawing.Size(75, 25);
+			this.Bnt_ClearTextReceiver.TabIndex = 18;
+			this.Bnt_ClearTextReceiver.Text = "Clear";
+			this.Bnt_ClearTextReceiver.UseVisualStyleBackColor = true;
+			this.Bnt_ClearTextReceiver.Click += new System.EventHandler(this.Bnt_ClearTextReceiver_Click);
+			// 
 			// groupBox_MahineStates
 			// 
 			this.groupBox_MahineStates.Controls.Add(this.Bnt_GetState);
@@ -334,52 +376,6 @@
 			this.groupBox_MahineStates.TabStop = false;
 			this.groupBox_MahineStates.Text = "Machine State";
 			// 
-			// textBox_Status_State
-			// 
-			this.textBox_Status_State.Location = new System.Drawing.Point(112, 21);
-			this.textBox_Status_State.Name = "textBox_Status_State";
-			this.textBox_Status_State.Size = new System.Drawing.Size(206, 20);
-			this.textBox_Status_State.TabIndex = 16;
-			// 
-			// Bnt_State_Reset
-			// 
-			this.Bnt_State_Reset.Location = new System.Drawing.Point(218, 47);
-			this.Bnt_State_Reset.Name = "Bnt_State_Reset";
-			this.Bnt_State_Reset.Size = new System.Drawing.Size(100, 40);
-			this.Bnt_State_Reset.TabIndex = 1;
-			this.Bnt_State_Reset.Text = "Reset";
-			this.Bnt_State_Reset.UseVisualStyleBackColor = true;
-			// 
-			// Bnt_ClearTextReceiver
-			// 
-			this.Bnt_ClearTextReceiver.Location = new System.Drawing.Point(388, 396);
-			this.Bnt_ClearTextReceiver.Name = "Bnt_ClearTextReceiver";
-			this.Bnt_ClearTextReceiver.Size = new System.Drawing.Size(75, 25);
-			this.Bnt_ClearTextReceiver.TabIndex = 18;
-			this.Bnt_ClearTextReceiver.Text = "Clear";
-			this.Bnt_ClearTextReceiver.UseVisualStyleBackColor = true;
-			this.Bnt_ClearTextReceiver.Click += new System.EventHandler(this.Bnt_ClearTextReceiver_Click);
-			// 
-			// textBox_StatusBar
-			// 
-			this.textBox_StatusBar.BackColor = System.Drawing.SystemColors.ActiveCaption;
-			this.textBox_StatusBar.Location = new System.Drawing.Point(13, 399);
-			this.textBox_StatusBar.Name = "textBox_StatusBar";
-			this.textBox_StatusBar.ReadOnly = true;
-			this.textBox_StatusBar.Size = new System.Drawing.Size(369, 20);
-			this.textBox_StatusBar.TabIndex = 19;
-			this.textBox_StatusBar.Text = "DISCONNECTED";
-			// 
-			// Bnt_Mode_Manual
-			// 
-			this.Bnt_Mode_Manual.Location = new System.Drawing.Point(7, 46);
-			this.Bnt_Mode_Manual.Name = "Bnt_Mode_Manual";
-			this.Bnt_Mode_Manual.Size = new System.Drawing.Size(100, 40);
-			this.Bnt_Mode_Manual.TabIndex = 18;
-			this.Bnt_Mode_Manual.Text = "Manual";
-			this.Bnt_Mode_Manual.UseVisualStyleBackColor = true;
-			this.Bnt_Mode_Manual.Click += new System.EventHandler(this.Bnt_Mode_Manual_Click);
-			// 
 			// Bnt_GetState
 			// 
 			this.Bnt_GetState.Location = new System.Drawing.Point(6, 21);
@@ -390,15 +386,23 @@
 			this.Bnt_GetState.UseVisualStyleBackColor = true;
 			this.Bnt_GetState.Click += new System.EventHandler(this.Bnt_GetState_Click);
 			// 
-			// Bnt_GetMode
+			// textBox_Status_State
 			// 
-			this.Bnt_GetMode.Location = new System.Drawing.Point(6, 18);
-			this.Bnt_GetMode.Name = "Bnt_GetMode";
-			this.Bnt_GetMode.Size = new System.Drawing.Size(100, 20);
-			this.Bnt_GetMode.TabIndex = 19;
-			this.Bnt_GetMode.Text = "Get Mode";
-			this.Bnt_GetMode.UseVisualStyleBackColor = true;
-			this.Bnt_GetMode.Click += new System.EventHandler(this.Bnt_GetMode_Click);
+			this.textBox_Status_State.Location = new System.Drawing.Point(112, 21);
+			this.textBox_Status_State.Name = "textBox_Status_State";
+			this.textBox_Status_State.Size = new System.Drawing.Size(206, 20);
+			this.textBox_Status_State.TabIndex = 16;
+			this.textBox_Status_State.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			// 
+			// Bnt_State_Reset
+			// 
+			this.Bnt_State_Reset.Location = new System.Drawing.Point(218, 47);
+			this.Bnt_State_Reset.Name = "Bnt_State_Reset";
+			this.Bnt_State_Reset.Size = new System.Drawing.Size(100, 40);
+			this.Bnt_State_Reset.TabIndex = 1;
+			this.Bnt_State_Reset.Text = "Reset";
+			this.Bnt_State_Reset.UseVisualStyleBackColor = true;
+			this.Bnt_State_Reset.Click += new System.EventHandler(this.Bnt_State_Reset_Click);
 			// 
 			// MainScreen
 			// 

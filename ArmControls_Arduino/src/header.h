@@ -56,36 +56,33 @@ String commandReceived = "";
 
 //Setup Enums for mode and state, and there defualt states
 enum State {Idel,Started,Stopped};
-enum Mode {Init,Manual,Auto};
+enum Mode {Manual,Auto};
 
 State state = Idel;
-Mode mode = Init;
+Mode mode = Manual;
 
 // Command Strings, Same KeyWords used on both sides (serial to Ardunio to C# Form)
-String CMD_Home_All			    = "HOME_ALL";
-String CMD_Home_AxisA		    = "HOME_AXIS_A";
-String CMD_Home_AxisB		    = "HOME_AXIS_B";
-String CMD_Home_Base		    = "HOME_Base";
+String CMD_Home_All				= "$HOME_ALL#";
+String CMD_Home_AxisA			= "$HOME_AXIS_A#";
+String CMD_Home_AxisB			= "$HOME_AXIS_B#";
+String CMD_Home_Base			= "$HOME_Base#";
 
-String CMD_State_Idel 	        = "STATE_IDEL";
-String CMD_State_Started 	    = "STATE_STARTED";
-String CMD_State_Stopped	    = "STATE_STOPPED";
+String CMD_State_Idel			= "$STATE_IDEL#";
+String CMD_State_Started		= "$STATE_STARTED#";
+String CMD_State_Stopped		= "$STATE_STOPPED#";
 
-String CMD_State_Start	        = "STATE_START";
-String CMD_State_Stop		    = "STATE_STOP";
-String CMD_State_Reset	        = "STATE_RESET";
+String CMD_State_Start			= "$STATE_START#";
+String CMD_State_Stop			= "$STATE_STOP#";
+String CMD_State_Reset			= "$STATE_RESET#";
 
-String CMD_Mode_Init            = "MODE_INIT";
-String CMD_Mode_Manual          = "MODE_MANUAL";
-String CMD_Mode_Auto		    = "MODE_AUTO";
+String CMD_Mode_Manual			= "$MODE_MANUAL#";
+String CMD_Mode_Auto			= "$MODE_AUTO#";
 
-String CMD_Servos_Attach	    = "SERVOS_ATTACH";
-String CMD_Servos_Detach	    = "SERVOS_DETACH";
+String CMD_Servos_Attach		= "$SERVOS_ATTACH#";
+String CMD_Servos_Detach		= "$SERVOS_DETACH#";
 
-String CMD_Status_GetState      = "STATUS_GETSTATE";
-String CMD_Status_GetMode	    = "STATUS_GETMODE";
-String CMD_Status_UpdateState   = "STATUS_UPDATESTATE";
-String CMD_Status_UpdateMode	= "STATUS_UPDATEMODE";
+String CMD_Status_GetState		= "$STATUS_GETSTATE#";
+String CMD_Status_GetMode		= "$STATUS_GETMODE#";
 
 
 //Fuctions Declarations
@@ -93,4 +90,7 @@ int funcGetGOTO(String);
 void SetServoAnagle(Servo, float, float, float);
 void JointCalculations();
 String SerialInterface_Receiving();
-void ParseMessage();
+void ReceiveCommands_RequestStatus();
+void ReceiveCommands_RequestModeChange();
+void ReceiveCommands_RequestModeChange();
+void ReceiveCommands_RequestStateChange();

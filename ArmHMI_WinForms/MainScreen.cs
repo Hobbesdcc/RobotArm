@@ -14,32 +14,34 @@ namespace ArmHMI_WinForms
 	public partial class MainScreen : Form
 	{
 		string serialDataIn;
+		bool bulidingStringInProgress;
+		char endCharacter = (char)35; //"#"
+		char startCharacter = (char)36; //"$"
+		StringBuilder stringBuilder = new StringBuilder();
+		string currentLine = string.Empty;
 
 		// Command Strings, Same KeyWords used on both sides (serial to Ardunio to C# Form)
-		string CMD_Home_All				= "HOME_ALL";
-		string CMD_Home_AxisA			= "HOME_AXIS_A";
-		string CMD_Home_AxisB			= "HOME_AXIS_B";
-		string CMD_Home_Base			= "HOME_Base";
+		string CMD_Home_All				= "$HOME_ALL#";
+		string CMD_Home_AxisA			= "$HOME_AXIS_A#";
+		string CMD_Home_AxisB			= "$HOME_AXIS_B#";
+		string CMD_Home_Base			= "$HOME_Base#";
 
-		string CMD_State_Idel			= "STATE_IDEL";
-		string CMD_State_Started		= "STATE_STARTED";
-		string CMD_State_Stopped		= "STATE_STOPPED";
+		string CMD_State_Idel			= "$STATE_IDEL#";
+		string CMD_State_Started		= "$STATE_STARTED#";
+		string CMD_State_Stopped		= "$STATE_STOPPED#";
 
-		string CMD_State_Start			= "STATE_START";
-		string CMD_State_Stop			= "STATE_STOP";
-		string CMD_State_Reset			= "STATE_RESET";
+		string CMD_State_Start			= "$STATE_START#";
+		string CMD_State_Stop			= "$STATE_STOP#";
+		string CMD_State_Reset			= "$STATE_RESET#";
 
-		string CMD_Mode_Init			= "MODE_INIT";
-		string CMD_Mode_Manual			= "MODE_MANUAL";
-		string CMD_Mode_Auto			= "MODE_AUTO";
+		string CMD_Mode_Manual			= "$MODE_MANUAL#";
+		string CMD_Mode_Auto			= "$MODE_AUTO#";
 
-		string CMD_Servos_Attach		= "SERVOS_ATTACH";
-		string CMD_Servos_Detach		= "SERVOS_DETACH";
+		string CMD_Servos_Attach		= "$SERVOS_ATTACH#";
+		string CMD_Servos_Detach		= "$SERVOS_DETACH#";
 
-		string CMD_Status_GetState		= "STATUS_GETSTATE";
-		string CMD_Status_GetMode		= "STATUS_GETMODE";
-		string CMD_Status_UpdateState	= "STATUS_UPDATESTATE";
-		string CMD_Status_UpdateMode	= "STATUS_UPDATEMODE";
+		string CMD_Status_GetState		= "$STATUS_GETSTATE#";
+		string CMD_Status_GetMode		= "$STATUS_GETMODE#";
 
 
 		//FORM ----------------------------------------------------------------------------------------------------------- 
@@ -55,6 +57,10 @@ namespace ArmHMI_WinForms
 			textBox_StatusBar.Text = "DISCONNECTED";
 			label_status.Text = "DISCONNECTED";
 			label_status.ForeColor = Color.Red;
+
+			textBox_Status_State.Text = "null";
+			textBox_Status_Mode.Text = "null";
+
 		}
 		private void MainScreen_FormClosing(object sender, FormClosingEventArgs e)
 		{
@@ -81,7 +87,7 @@ namespace ArmHMI_WinForms
 			{
 				try
 				{
-					serialPort1.Write(cmd + "#");
+					serialPort1.Write(cmd); // +"#"
 				}
 				catch (Exception error)
 				{
@@ -91,6 +97,38 @@ namespace ArmHMI_WinForms
 			else
 			{
 				textBox_StatusBar.Text = "NOT CONNECTED, CANT ISSUE COMMANDS!";
+			}
+		}
+		
+		private void PaseSerialCommand(String Serialdata)
+		{
+			Console.WriteLine("currentLine: " + Serialdata);
+
+			//Check for mode change modes, if found, change text and remove that string from the string concat
+			//So bc called this fuction/method from another thread "Cross thread operation not valid"
+			//you have to do some vodo magic Invoke stuff to get the method to trigger an event in another thread
+		
+			if (-1 != Serialdata.IndexOf(CMD_Mode_Manual))
+			{
+				textBox_Status_Mode.Invoke((MethodInvoker)(() => textBox_Status_Mode.Text = "MANUAL"));
+			}
+			if (-1 != Serialdata.IndexOf(CMD_Mode_Auto))
+			{
+				textBox_Status_Mode.Invoke((MethodInvoker)(() => textBox_Status_Mode.Text = "AUTOMATIC"));
+			}
+
+			//Check for mode change modes, if found, change text and remove that string from the string concat
+			if (-1 != Serialdata.IndexOf(CMD_State_Idel))
+			{
+				textBox_Status_State.Invoke((MethodInvoker)(() => textBox_Status_State.Text = "IDEL"));
+			}
+			if (-1 != Serialdata.IndexOf(CMD_State_Started))
+			{
+				textBox_Status_State.Invoke((MethodInvoker)(() => textBox_Status_State.Text = "STARTED"));
+			}
+			if (-1 != Serialdata.IndexOf(CMD_State_Stopped))
+			{
+				textBox_Status_State.Invoke((MethodInvoker)(() => textBox_Status_State.Text = "STOPPED"));
 			}
 		}
 
@@ -119,7 +157,7 @@ namespace ArmHMI_WinForms
 		}
 		private void Bnt_Mode_Manual_Click(object sender, EventArgs e)
 		{
-			IssueSerialCommand(CMD_Status_GetMode);
+			IssueSerialCommand(CMD_Mode_Manual);
 		}
 		private void Bnt_GetState_Click(object sender, EventArgs e)
 		{
@@ -128,6 +166,18 @@ namespace ArmHMI_WinForms
 		private void Bnt_GetMode_Click(object sender, EventArgs e)
 		{
 			IssueSerialCommand(CMD_Status_GetMode);
+		}
+		private void Bnt_State_Start_Click(object sender, EventArgs e)
+		{
+			IssueSerialCommand(CMD_State_Start);
+		}
+		private void Bnt_State_Stop_Click(object sender, EventArgs e)
+		{
+			IssueSerialCommand(CMD_State_Stop);
+		}
+		private void Bnt_State_Reset_Click(object sender, EventArgs e)
+		{
+			IssueSerialCommand(CMD_State_Reset);
 		}
 
 
@@ -199,6 +249,35 @@ namespace ArmHMI_WinForms
 		{
 			serialDataIn = serialPort1.ReadExisting();
 			this.Invoke(new EventHandler(ShowData));
+
+			//Loop through each char that is coming in to serial
+			foreach (char c in serialDataIn)
+			{
+				//Check if see special START Character, if so start buliding string
+				if (c == startCharacter)
+				{
+					stringBuilder.Clear();
+					stringBuilder.Append(c);
+					bulidingStringInProgress = true;
+				}
+				//Check if see special END Character, if end string, pass it to "currentLine" and send have cmd parsed
+				else if (c == endCharacter)
+				{
+					stringBuilder.Append(c);
+
+					currentLine = stringBuilder.ToString();
+					stringBuilder.Clear();
+					bulidingStringInProgress = false;
+
+					//Console.WriteLine("currentLine: " + currentLine);
+					PaseSerialCommand(currentLine);
+				}
+				//if not start or end Character & bulidingStringInProgress is set true, just keep on buliding
+				else if (bulidingStringInProgress)
+				{
+					stringBuilder.Append(c);
+				}
+			}
 		}
 
 		private void ShowData(object sender, EventArgs e)
@@ -217,7 +296,7 @@ namespace ArmHMI_WinForms
 			//Try to send what ever is in "textBox_textSent" on click
 			try
 			{
-				serialPort1.Write(textBox_textSent.Text + "#");
+				serialPort1.Write(textBox_textSent.Text); //+ "#"
 			}
 			catch (Exception error)
 			{
@@ -229,6 +308,7 @@ namespace ArmHMI_WinForms
 		{
 			richTextBox_textReceiver.Text = "";
 		}
+
 
 
 	}
