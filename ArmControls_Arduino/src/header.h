@@ -17,9 +17,14 @@ double ArmB_Length = 12; //Arm B Length
 double JointA_CalibrationOffset = 0; //mounting plate for Servo might not be 90degrees, so this is the offset
 double JointC_CalibrationOffset = 5; //mounting plate for Servo might not be 90degrees, so this is the offset
 
+double positionXYZ[3]; //PostionArray to allow command parseing in same function
 double GotoX = 0; //Goto X postion
 double GotoY = 0; //Goto Y postion
 double GotoZ = 0; //Goto Y postion
+
+double GotoX_Old = 0; //Goto X postion OLD for detecting change
+double GotoY_Old = 0; //Goto Y postion OLD for detecting change
+double GotoZ_Old = 0; //Goto Y postion OLD for detecting change
 
 //Servo Min/Max Range in degrees:
 float Servo1_RangeLimitMin = 0;
@@ -80,17 +85,20 @@ String CMD_Mode_Auto			= "$MODE_AUTO#";
 
 String CMD_Servos_Attach		= "$SERVOS_ATTACH#";
 String CMD_Servos_Detach		= "$SERVOS_DETACH#";
+String CMD_Servos_GOTO			= "$SERVOS_GOTO_X,Y,Z#";
 
 String CMD_Status_GetState		= "$STATUS_GETSTATE#";
 String CMD_Status_GetMode		= "$STATUS_GETMODE#";
 
 
 //Fuctions Declarations
-int funcGetGOTO(String);
+void Action_GOTO_Positon();
 void SetServoAnagle(Servo, float, float, float);
 void JointCalculations();
 String SerialInterface_Receiving();
+
 void ReceiveCommands_RequestStatus();
 void ReceiveCommands_RequestModeChange();
 void ReceiveCommands_RequestModeChange();
 void ReceiveCommands_RequestStateChange();
+void ReceiveCommands_GotoPositon(double[]);

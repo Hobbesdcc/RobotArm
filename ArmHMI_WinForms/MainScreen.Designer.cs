@@ -62,18 +62,35 @@
 			this.Bnt_GetState = new System.Windows.Forms.Button();
 			this.textBox_Status_State = new System.Windows.Forms.TextBox();
 			this.Bnt_State_Reset = new System.Windows.Forms.Button();
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.Bnt_IssueGoToCommand = new System.Windows.Forms.Button();
+			this.textBox_goto_posX = new System.Windows.Forms.TextBox();
+			this.textBox_goto_posY = new System.Windows.Forms.TextBox();
+			this.textBox_goto_posZ = new System.Windows.Forms.TextBox();
+			this.label3 = new System.Windows.Forms.Label();
+			this.label4 = new System.Windows.Forms.Label();
+			this.label5 = new System.Windows.Forms.Label();
+			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.label6 = new System.Windows.Forms.Label();
+			this.label7 = new System.Windows.Forms.Label();
+			this.label8 = new System.Windows.Forms.Label();
+			this.textBox4 = new System.Windows.Forms.TextBox();
+			this.textBox5 = new System.Windows.Forms.TextBox();
+			this.textBox6 = new System.Windows.Forms.TextBox();
 			this.groupBox_ModeSelect.SuspendLayout();
 			this.groupBox_ManualControls.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.groupBox5.SuspendLayout();
 			this.groupBox_MahineStates.SuspendLayout();
+			this.groupBox1.SuspendLayout();
+			this.groupBox2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// bnt_Home_All
 			// 
 			this.bnt_Home_All.Location = new System.Drawing.Point(6, 19);
 			this.bnt_Home_All.Name = "bnt_Home_All";
-			this.bnt_Home_All.Size = new System.Drawing.Size(100, 40);
+			this.bnt_Home_All.Size = new System.Drawing.Size(312, 40);
 			this.bnt_Home_All.TabIndex = 0;
 			this.bnt_Home_All.Text = "Home All";
 			this.bnt_Home_All.UseVisualStyleBackColor = true;
@@ -91,7 +108,7 @@
 			// 
 			// bnt_Home_AxisB
 			// 
-			this.bnt_Home_AxisB.Location = new System.Drawing.Point(6, 101);
+			this.bnt_Home_AxisB.Location = new System.Drawing.Point(112, 65);
 			this.bnt_Home_AxisB.Name = "bnt_Home_AxisB";
 			this.bnt_Home_AxisB.Size = new System.Drawing.Size(100, 30);
 			this.bnt_Home_AxisB.TabIndex = 2;
@@ -101,7 +118,7 @@
 			// 
 			// bnt_Home_Base
 			// 
-			this.bnt_Home_Base.Location = new System.Drawing.Point(6, 137);
+			this.bnt_Home_Base.Location = new System.Drawing.Point(218, 65);
 			this.bnt_Home_Base.Name = "bnt_Home_Base";
 			this.bnt_Home_Base.Size = new System.Drawing.Size(100, 30);
 			this.bnt_Home_Base.TabIndex = 6;
@@ -189,16 +206,16 @@
 			this.groupBox_ManualControls.Controls.Add(this.bnt_Home_All);
 			this.groupBox_ManualControls.Controls.Add(this.bnt_Home_AxisB);
 			this.groupBox_ManualControls.Controls.Add(this.bnt_Home_AxisA);
-			this.groupBox_ManualControls.Location = new System.Drawing.Point(495, 224);
+			this.groupBox_ManualControls.Location = new System.Drawing.Point(12, 449);
 			this.groupBox_ManualControls.Name = "groupBox_ManualControls";
-			this.groupBox_ManualControls.Size = new System.Drawing.Size(330, 193);
+			this.groupBox_ManualControls.Size = new System.Drawing.Size(477, 115);
 			this.groupBox_ManualControls.TabIndex = 9;
 			this.groupBox_ManualControls.TabStop = false;
 			this.groupBox_ManualControls.Text = "Manual Controls";
 			// 
 			// button3
 			// 
-			this.button3.Location = new System.Drawing.Point(112, 19);
+			this.button3.Location = new System.Drawing.Point(363, 19);
 			this.button3.Name = "button3";
 			this.button3.Size = new System.Drawing.Size(100, 40);
 			this.button3.TabIndex = 2;
@@ -207,7 +224,7 @@
 			// 
 			// Bnt_DetachServos
 			// 
-			this.Bnt_DetachServos.Location = new System.Drawing.Point(218, 19);
+			this.Bnt_DetachServos.Location = new System.Drawing.Point(363, 65);
 			this.Bnt_DetachServos.Name = "Bnt_DetachServos";
 			this.Bnt_DetachServos.Size = new System.Drawing.Size(100, 40);
 			this.Bnt_DetachServos.TabIndex = 2;
@@ -407,12 +424,160 @@
 			this.Bnt_State_Reset.UseVisualStyleBackColor = true;
 			this.Bnt_State_Reset.Click += new System.EventHandler(this.Bnt_State_Reset_Click);
 			// 
+			// groupBox1
+			// 
+			this.groupBox1.Controls.Add(this.label5);
+			this.groupBox1.Controls.Add(this.label4);
+			this.groupBox1.Controls.Add(this.label3);
+			this.groupBox1.Controls.Add(this.textBox_goto_posZ);
+			this.groupBox1.Controls.Add(this.textBox_goto_posY);
+			this.groupBox1.Controls.Add(this.Bnt_IssueGoToCommand);
+			this.groupBox1.Controls.Add(this.textBox_goto_posX);
+			this.groupBox1.Location = new System.Drawing.Point(498, 224);
+			this.groupBox1.Name = "groupBox1";
+			this.groupBox1.Size = new System.Drawing.Size(330, 102);
+			this.groupBox1.TabIndex = 19;
+			this.groupBox1.TabStop = false;
+			this.groupBox1.Text = "Manual Go To Postion";
+			// 
+			// Bnt_IssueGoToCommand
+			// 
+			this.Bnt_IssueGoToCommand.Location = new System.Drawing.Point(200, 34);
+			this.Bnt_IssueGoToCommand.Name = "Bnt_IssueGoToCommand";
+			this.Bnt_IssueGoToCommand.Size = new System.Drawing.Size(100, 40);
+			this.Bnt_IssueGoToCommand.TabIndex = 18;
+			this.Bnt_IssueGoToCommand.Text = "Issue GoTo Postion Command";
+			this.Bnt_IssueGoToCommand.UseVisualStyleBackColor = true;
+			this.Bnt_IssueGoToCommand.Click += new System.EventHandler(this.Bnt_IssueGoToCommand_Click);
+			// 
+			// textBox_goto_posX
+			// 
+			this.textBox_goto_posX.Location = new System.Drawing.Point(66, 19);
+			this.textBox_goto_posX.Name = "textBox_goto_posX";
+			this.textBox_goto_posX.Size = new System.Drawing.Size(100, 20);
+			this.textBox_goto_posX.TabIndex = 17;
+			this.textBox_goto_posX.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			// 
+			// textBox_goto_posY
+			// 
+			this.textBox_goto_posY.Location = new System.Drawing.Point(66, 45);
+			this.textBox_goto_posY.Name = "textBox_goto_posY";
+			this.textBox_goto_posY.Size = new System.Drawing.Size(100, 20);
+			this.textBox_goto_posY.TabIndex = 20;
+			this.textBox_goto_posY.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			// 
+			// textBox_goto_posZ
+			// 
+			this.textBox_goto_posZ.Location = new System.Drawing.Point(66, 71);
+			this.textBox_goto_posZ.Name = "textBox_goto_posZ";
+			this.textBox_goto_posZ.Size = new System.Drawing.Size(100, 20);
+			this.textBox_goto_posZ.TabIndex = 21;
+			this.textBox_goto_posZ.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(8, 22);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(57, 13);
+			this.label3.TabIndex = 22;
+			this.label3.Text = "X Position:";
+			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(8, 48);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(57, 13);
+			this.label4.TabIndex = 23;
+			this.label4.Text = "Y Position:";
+			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.Location = new System.Drawing.Point(8, 74);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(57, 13);
+			this.label5.TabIndex = 24;
+			this.label5.Text = "Z Position:";
+			// 
+			// groupBox2
+			// 
+			this.groupBox2.Controls.Add(this.label6);
+			this.groupBox2.Controls.Add(this.label7);
+			this.groupBox2.Controls.Add(this.label8);
+			this.groupBox2.Controls.Add(this.textBox4);
+			this.groupBox2.Controls.Add(this.textBox5);
+			this.groupBox2.Controls.Add(this.textBox6);
+			this.groupBox2.Location = new System.Drawing.Point(498, 332);
+			this.groupBox2.Name = "groupBox2";
+			this.groupBox2.Size = new System.Drawing.Size(330, 102);
+			this.groupBox2.TabIndex = 20;
+			this.groupBox2.TabStop = false;
+			this.groupBox2.Text = "Current Positons";
+			// 
+			// label6
+			// 
+			this.label6.AutoSize = true;
+			this.label6.Location = new System.Drawing.Point(8, 74);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(57, 13);
+			this.label6.TabIndex = 24;
+			this.label6.Text = "Z Position:";
+			// 
+			// label7
+			// 
+			this.label7.AutoSize = true;
+			this.label7.Location = new System.Drawing.Point(8, 48);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(57, 13);
+			this.label7.TabIndex = 23;
+			this.label7.Text = "Y Position:";
+			// 
+			// label8
+			// 
+			this.label8.AutoSize = true;
+			this.label8.Location = new System.Drawing.Point(8, 22);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(57, 13);
+			this.label8.TabIndex = 22;
+			this.label8.Text = "X Position:";
+			// 
+			// textBox4
+			// 
+			this.textBox4.Location = new System.Drawing.Point(66, 71);
+			this.textBox4.Name = "textBox4";
+			this.textBox4.ReadOnly = true;
+			this.textBox4.Size = new System.Drawing.Size(100, 20);
+			this.textBox4.TabIndex = 21;
+			this.textBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			// 
+			// textBox5
+			// 
+			this.textBox5.Location = new System.Drawing.Point(66, 45);
+			this.textBox5.Name = "textBox5";
+			this.textBox5.ReadOnly = true;
+			this.textBox5.Size = new System.Drawing.Size(100, 20);
+			this.textBox5.TabIndex = 20;
+			this.textBox5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			// 
+			// textBox6
+			// 
+			this.textBox6.Location = new System.Drawing.Point(66, 19);
+			this.textBox6.Name = "textBox6";
+			this.textBox6.ReadOnly = true;
+			this.textBox6.Size = new System.Drawing.Size(100, 20);
+			this.textBox6.TabIndex = 17;
+			this.textBox6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			// 
 			// MainScreen
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.SystemColors.ControlDark;
-			this.ClientSize = new System.Drawing.Size(840, 455);
+			this.ClientSize = new System.Drawing.Size(840, 573);
+			this.Controls.Add(this.groupBox2);
+			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.groupBox_MahineStates);
 			this.Controls.Add(this.groupBox5);
 			this.Controls.Add(this.groupBox_ManualControls);
@@ -431,6 +596,10 @@
 			this.groupBox5.PerformLayout();
 			this.groupBox_MahineStates.ResumeLayout(false);
 			this.groupBox_MahineStates.PerformLayout();
+			this.groupBox1.ResumeLayout(false);
+			this.groupBox1.PerformLayout();
+			this.groupBox2.ResumeLayout(false);
+			this.groupBox2.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -470,6 +639,21 @@
 		public System.Windows.Forms.Button Bnt_Mode_Manual;
 		private System.Windows.Forms.Button Bnt_GetState;
 		private System.Windows.Forms.Button Bnt_GetMode;
+		private System.Windows.Forms.GroupBox groupBox1;
+		private System.Windows.Forms.Label label5;
+		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.TextBox textBox_goto_posZ;
+		private System.Windows.Forms.TextBox textBox_goto_posY;
+		public System.Windows.Forms.Button Bnt_IssueGoToCommand;
+		private System.Windows.Forms.TextBox textBox_goto_posX;
+		private System.Windows.Forms.GroupBox groupBox2;
+		private System.Windows.Forms.Label label6;
+		private System.Windows.Forms.Label label7;
+		private System.Windows.Forms.Label label8;
+		private System.Windows.Forms.TextBox textBox4;
+		private System.Windows.Forms.TextBox textBox5;
+		private System.Windows.Forms.TextBox textBox6;
 	}
 }
 

@@ -46,10 +46,11 @@ void loop() {
 
   //Remove special characters from string, and print to serial for user feedback
   String feedback = commandReceived;
-  int start = feedback.indexOf('$');
+
+  int begin = feedback.indexOf('$');
   int end = feedback.indexOf('#');
-  feedback = feedback.substring(start+1, end);
-  Serial.print(">> Arduino Received: [ "); Serial.print(feedback); Serial.println(" ]");
+  feedback = feedback.substring(begin+1, end);
+  Serial.print(">> Arduino Received: ["); Serial.print(feedback); Serial.println("]");
 
 
   //Detect what command was sent
@@ -57,60 +58,40 @@ void loop() {
   ReceiveCommands_RequestModeChange();    //Check if messages are Request Mode Change
   ReceiveCommands_RequestStateChange();   //Check if messages are Request State Change
 
+  ReceiveCommands_GotoPositon(positionXYZ);   //Check if goto postion message sent, if so parse the XYZ from it.
+  GotoX = positionXYZ[1]; //Load parsed value into Goto X postion
+  GotoY = positionXYZ[2]; //Load parsed value into Goto Y postion
+  GotoZ = positionXYZ[3]; //Load parsed value into Goto Z postion
+
+  Serial.println(GotoX); 
+  Serial.println(GotoY); 
+  Serial.println(GotoZ); 
 
 
   //Only Run if Started
   if (state == Started){
     
     switch(mode) {
+
+      //###############################
       case Manual:
-        //Serial.println("Im in Manual!");
-
-        //Get Inputs X an Y goto locations
-        GotoX = funcGetGOTO("GOTO X");
-        GotoY = funcGetGOTO("GOTO Y");
-
-        //Run Joint math
-        JointCalculations(); 
-
-        //Prints JointA and JointC final values:
-        Serial.print("JointA degree: ");  Serial.println(JointA_degree);
-        //Serial.print("JointB degree: ");  Serial.println(JointB_degree);
-        Serial.print("JointC degree: ");  Serial.println(JointC_degree);
-        Serial.println("");
-
-
-        //Check if Joint Values found are Real Numbers & Within Servo min/max limits
-        if (isnan(JointA_degree) || isnan(JointA_degree)){
-          Serial.println("< ERRROR: Input values Invalid >");
-          Serial.println("");
-
-        } else if(JointA_degree < Servo1_RangeLimitMin ||  JointA_degree > Servo1_RangeLimitMax)  {
-          Serial.println("< ERROR: Joint A Value out of min/max range >");
-          Serial.println("");
-
-        } else if(JointC_degree < Servo2_RangeLimitMin ||  JointC_degree > Servo2_RangeLimitMax)  {
-          Serial.println("< ERROR: Joint B Value out of min/max range >");
-          Serial.println("");
-
-        } else {
-          //Writes the FINAL joint values into the servos
-          SetServoAnagle(myServo2, JointA_degree-JointA_CalibrationOffset, Servo2_RangeLimitMin, Servo2_RangeLimitMax);
-          SetServoAnagle(myServo3, 180-JointC_degree-JointC_CalibrationOffset, Servo2_RangeLimitMin, Servo2_RangeLimitMax);
-
-          Serial.println("< Servos set to Joint Values >");
-          Serial.println("");
-          delay(ServoDelayTime);  //delay for servo to move
+        if (GotoX_Old != GotoX || GotoY_Old != GotoY || GotoZ_Old != GotoZ){
+          Action_GOTO_Positon();
         }
+
+        //Old Value for edge detect
+        GotoX_Old = GotoX;
+        GotoY_Old = GotoY;
+        GotoZ_Old = GotoZ;
 
         break;
 
+      //###############################
       case Auto:
-          //Serial.println("IM IN AUTO MODE!"); 
           break;
 
-
-      default : //Optional
+      //###############################
+      default :
           Serial.println("[ERROR: No Mode detected]");
           break;
     }
@@ -127,35 +108,41 @@ void loop() {
 // ================================== = = = = = = = = = = = = = = = = ===
 
 // == Function ================================
-int funcGetGOTO(String description){
+void Action_GOTO_Positon(){
+  //Run Joint math
+  JointCalculations(); 
 
-	//Functions that gets inputs and filters them to make sure they are in range
-	int result = 0;
-	String incomingByte;
-
-	//Print prompts:
-	Serial.print("Input " + description + ": ");
-	Serial.println("");
-
-	//Loop waiting for input
-	while(incomingByte.length() < 1) 
-	{
-	  if (Serial.available() > 0) 
-	  { 
-		incomingByte = Serial.readString();
-	  }
-	}
-
-	//Convert Input string to int, and place into "result"
-	result = incomingByte.toInt(); 
-
-	//Print result values
-	Serial.print("Result: ");
-	Serial.println(result);
+  //Prints JointA and JointC final values:
+  Serial.print("JointA degree: ");  Serial.println(JointA_degree);
+  //Serial.print("JointB degree: ");  Serial.println(JointB_degree);
+  Serial.print("JointC degree: ");  Serial.println(JointC_degree);
+  Serial.print("GOTO: X"); Serial.print(GotoX); Serial.print(", Y"); Serial.print(GotoY); Serial.print(", Z"); Serial.println(GotoZ); 
   Serial.println("");
-  
-  return result; 
+
+
+  //Check if Joint Values found are Real Numbers & Within Servo min/max limits
+  if (isnan(JointA_degree) || isnan(JointA_degree)){
+    Serial.println("< ERRROR: Input values Invalid >");
+    Serial.println("");
+
+  } else if(JointA_degree < Servo1_RangeLimitMin ||  JointA_degree > Servo1_RangeLimitMax)  {
+    Serial.println("< ERROR: Joint A Value out of min/max range >");
+    Serial.println("");
+
+  } else if(JointC_degree < Servo2_RangeLimitMin ||  JointC_degree > Servo2_RangeLimitMax)  {
+    Serial.println("< ERROR: Joint B Value out of min/max range >");
+    Serial.println("");
+
+  } else {
+    //Writes the FINAL joint values into the servos
+    SetServoAnagle(myServo2, JointA_degree-JointA_CalibrationOffset, Servo2_RangeLimitMin, Servo2_RangeLimitMax);
+    SetServoAnagle(myServo3, 180-JointC_degree-JointC_CalibrationOffset, Servo2_RangeLimitMin, Servo2_RangeLimitMax);
+
+    Serial.println("< Arduino: Servos Axis Values Set >");
+    Serial.println("");
+    delay(ServoDelayTime);  //delay for servo to move
   }
+}
 
 // == Function ================================
 void ReceiveCommands_RequestStatus(){
@@ -245,7 +232,7 @@ void ReceiveCommands_RequestStateChange(){
       state = Started;
       Serial.println(CMD_State_Started);
     }else{
-      Serial.println("[ERROR: Must Be in Idel State to move to Started]"); 
+      //Serial.println("[ERROR: Must Be in Idel State to move to Started]"); //TODO need error handeler instead, this brekes the code some how
     }
   }
   //Check if message request a State chanage, then check if thats possible
@@ -254,9 +241,35 @@ void ReceiveCommands_RequestStateChange(){
       state = Stopped;
       Serial.println(CMD_State_Stopped);
     }else{
-      Serial.println("[ERROR: you are already stopped]"); 
+    //Serial.println("[ERROR: you are already stopped]"); 
     }
   }
+
+}
+
+// == Function ================================
+void ReceiveCommands_GotoPositon(double p_PositionXYZ[]){
+  int posStart;
+  int posEnd;
+
+  posStart = commandReceived.indexOf("x", 0);
+  posEnd = commandReceived.indexOf(",", posStart);
+
+  p_PositionXYZ[1] = commandReceived.substring(posStart, posEnd).toDouble(); //Assign X postion
+
+  posStart = commandReceived.indexOf("Y", posEnd);
+  posEnd = commandReceived.indexOf(",", posStart);
+
+  p_PositionXYZ[2] = commandReceived.substring(posStart, posEnd).toDouble(); //Assign Y postion
+
+  posStart = commandReceived.indexOf("Z", posEnd);
+  posEnd = commandReceived.indexOf(",", posStart);
+
+  p_PositionXYZ[3] = commandReceived.substring(posStart, posEnd).toDouble(); //Assign Z postion
+  
+  //p_PositionXYZ[2] = 14; //Assign Y postion
+  //p_PositionXYZ[2] = 14; //Assign Y postion
+  //p_PositionXYZ[3] = 0; //Assign Z postion  
 }
 
 

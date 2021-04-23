@@ -39,9 +39,12 @@ namespace ArmHMI_WinForms
 
 		string CMD_Servos_Attach		= "$SERVOS_ATTACH#";
 		string CMD_Servos_Detach		= "$SERVOS_DETACH#";
+		string CMD_Servos_GOTO			= "$SERVOS_GOTO_X,Y,Z#";
 
 		string CMD_Status_GetState		= "$STATUS_GETSTATE#";
 		string CMD_Status_GetMode		= "$STATUS_GETMODE#";
+
+		
 
 
 		//FORM ----------------------------------------------------------------------------------------------------------- 
@@ -60,6 +63,10 @@ namespace ArmHMI_WinForms
 
 			textBox_Status_State.Text = "null";
 			textBox_Status_Mode.Text = "null";
+
+			textBox_goto_posX.Text = "12";
+			textBox_goto_posY.Text = "12";
+			textBox_goto_posZ.Text = "0";
 
 		}
 		private void MainScreen_FormClosing(object sender, FormClosingEventArgs e)
@@ -87,7 +94,8 @@ namespace ArmHMI_WinForms
 			{
 				try
 				{
-					serialPort1.Write(cmd); // +"#"
+					serialPort1.Write(cmd);
+					textBox_StatusBar.Text = cmd;
 				}
 				catch (Exception error)
 				{
@@ -178,6 +186,15 @@ namespace ArmHMI_WinForms
 		private void Bnt_State_Reset_Click(object sender, EventArgs e)
 		{
 			IssueSerialCommand(CMD_State_Reset);
+		}
+		private void Bnt_IssueGoToCommand_Click(object sender, EventArgs e)
+		{
+			//Modify the CMD_Servos_GOTO command to insert the X,Y,Z positons
+			String cmdModified = CMD_Servos_GOTO.Insert(CMD_Servos_GOTO.IndexOf('X') + 1, textBox_goto_posX.Text);
+			cmdModified = cmdModified.Insert(cmdModified.IndexOf('Y') + 1, textBox_goto_posY.Text);
+			cmdModified = cmdModified.Insert(cmdModified.IndexOf('Z') + 1, textBox_goto_posZ.Text);
+
+			IssueSerialCommand(cmdModified);
 		}
 
 
@@ -308,7 +325,6 @@ namespace ArmHMI_WinForms
 		{
 			richTextBox_textReceiver.Text = "";
 		}
-
 
 
 	}
