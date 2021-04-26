@@ -253,6 +253,9 @@ namespace ArmHMI_WinForms
 					label_status.Text = "DISCONNECTED";
 					label_status.ForeColor = Color.Red;
 
+					textBox_Status_State.Text = "null";
+					textBox_Status_Mode.Text = "null";
+
 				}
 				catch (Exception error)
 				{

@@ -63,9 +63,9 @@ void loop() {
   GotoY = positionXYZ[2]; //Load parsed value into Goto Y postion
   GotoZ = positionXYZ[3]; //Load parsed value into Goto Z postion
 
-  Serial.println(GotoX); 
-  Serial.println(GotoY); 
-  Serial.println(GotoZ); 
+  //Serial.print("GotoX:"); Serial.println(GotoX); 
+  //Serial.print("GotoY:"); Serial.println(GotoY); 
+  //Serial.print("GotoZ:"); Serial.println(GotoZ); 
 
 
   //Only Run if Started
@@ -249,11 +249,14 @@ void ReceiveCommands_RequestStateChange(){
 
 // == Function ================================
 void ReceiveCommands_GotoPositon(double p_PositionXYZ[]){
+
   int posStart;
   int posEnd;
 
   posStart = commandReceived.indexOf("x", 0);
   posEnd = commandReceived.indexOf(",", posStart);
+
+  //Serial.print("p_PositionXYZ 1: "); Serial.println(commandReceived); 
 
   p_PositionXYZ[1] = commandReceived.substring(posStart, posEnd).toDouble(); //Assign X postion
 
