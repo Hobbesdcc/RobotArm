@@ -56,13 +56,9 @@ double TriE_SideA = 0; double TriE_SideB = 0; double TriE_SideC = 0;
 double JointA = 0;        double JointB = 0;        double JointC = 0;
 double JointA_degree = 0; double JointB_degree = 0; double JointC_degree = 0;
 
-//Serial Command varibles
-String commandReceived = "";
-
 //Setup Enums for mode and state, and there defualt states
 enum State {Idel,Started,Stopped};
 enum Mode {Manual,Auto};
-
 State state = Idel;
 Mode mode = Manual;
 
@@ -102,3 +98,13 @@ void ReceiveCommands_RequestModeChange();
 void ReceiveCommands_RequestModeChange();
 void ReceiveCommands_RequestStateChange();
 void ReceiveCommands_GotoPositon(double[]);
+
+
+//Serial Command varibles - HMI Commands from Serial Interface
+String commandReceived = "";
+boolean newData = false;
+String bulidMessageString;
+char endMarker = '#';
+char receivedChar;
+String feedback;
+

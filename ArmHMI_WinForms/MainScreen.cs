@@ -316,7 +316,8 @@ namespace ArmHMI_WinForms
 			//Try to send what ever is in "textBox_textSent" on click
 			try
 			{
-				serialPort1.Write(textBox_textSent.Text); //+ "#"
+				//serialPort1.Write(textBox_textSent.Text); //+ "#"
+				IssueSerialCommand(textBox_textSent.Text);
 			}
 			catch (Exception error)
 			{

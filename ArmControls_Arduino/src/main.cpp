@@ -41,31 +41,49 @@ void setup() {
 //================================== <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 void loop() {
 
-  //HMI Serial Command Interface
-  commandReceived = SerialInterface_Receiving();
+  //HMI Commands from Serial Interface -
+  // Read each char coming in and add it to bulidMessageString until endMarker seen
+  while (Serial.available() > 0 && newData == false) {
+        receivedChar = Serial.read();
 
-  //Remove special characters from string, and print to serial for user feedback
-  String feedback = commandReceived;
+        if (receivedChar != endMarker) {
+            bulidMessageString += receivedChar;
+        }
+        else {
+            bulidMessageString += receivedChar;
+            newData = true;
+        }
+  }
 
-  int begin = feedback.indexOf('$');
-  int end = feedback.indexOf('#');
-  feedback = feedback.substring(begin+1, end);
-  Serial.print(">> Arduino Received: ["); Serial.print(feedback); Serial.println("]");
+  //Once new command found, Run it thought all checks to understand and process it
+  if (newData == true) {
+    
+    commandReceived = bulidMessageString; //Load new command into "commandReceived"
+    bulidMessageString = ""; //Clear bulid Message String for next message
+    newData = false;
+
+    //load into feedback, Remove special characters from string, and print to serial for user feedback
+    //feedback = commandReceived;
+
+    //int begin = feedback.indexOf('$');
+    //int end = feedback.indexOf('#');
+    //feedback = feedback.substring(begin+1, end);
+    //Serial.print(">> Arduino Received: ["); Serial.print(feedback); Serial.println("]");
+    Serial.print(">> Arduino Received: ["); Serial.print(commandReceived); Serial.println("]");
 
 
-  //Detect what command was sent
-  ReceiveCommands_RequestStatus();        //Check if messages are Request Status
-  ReceiveCommands_RequestModeChange();    //Check if messages are Request Mode Change
-  ReceiveCommands_RequestStateChange();   //Check if messages are Request State Change
+    //Detect and process what command was sent
+    ReceiveCommands_RequestStatus();        //Check if messages are Request Status
+    ReceiveCommands_RequestModeChange();    //Check if messages are Request Mode Change
+    ReceiveCommands_RequestStateChange();   //Check if messages are Request State Change
+    
+    ReceiveCommands_GotoPositon(positionXYZ);   //Check if goto postion message sent, if so parse the XYZ from it.
+    GotoX = positionXYZ[1]; //Load parsed value into Goto X postion
+    GotoY = positionXYZ[2]; //Load parsed value into Goto Y postion
+    GotoZ = positionXYZ[3]; //Load parsed value into Goto Z postion
 
-  ReceiveCommands_GotoPositon(positionXYZ);   //Check if goto postion message sent, if so parse the XYZ from it.
-  GotoX = positionXYZ[1]; //Load parsed value into Goto X postion
-  GotoY = positionXYZ[2]; //Load parsed value into Goto Y postion
-  GotoZ = positionXYZ[3]; //Load parsed value into Goto Z postion
-
-  //Serial.print("GotoX:"); Serial.println(GotoX); 
-  //Serial.print("GotoY:"); Serial.println(GotoY); 
-  //Serial.print("GotoZ:"); Serial.println(GotoZ); 
+    //Serial.print("GotoX:"); Serial.println(GotoX); Serial.print("GotoY:"); Serial.println(GotoY); Serial.print("GotoZ:"); Serial.println(GotoZ); 
+  }
 
 
   //Only Run if Started
@@ -97,7 +115,7 @@ void loop() {
     }
 
   }else{
-    Serial.println("[Nothing can be run when machine in Stopped State]");
+    //Serial.println("[Nothing can be run when machine in Stopped State]");
   }
   
 }//<EndOfLoop>
@@ -249,30 +267,37 @@ void ReceiveCommands_RequestStateChange(){
 
 // == Function ================================
 void ReceiveCommands_GotoPositon(double p_PositionXYZ[]){
-
-  int posStart;
-  int posEnd;
-
-  posStart = commandReceived.indexOf("x", 0);
-  posEnd = commandReceived.indexOf(",", posStart);
-
-  //Serial.print("p_PositionXYZ 1: "); Serial.println(commandReceived); 
-
-  p_PositionXYZ[1] = commandReceived.substring(posStart, posEnd).toDouble(); //Assign X postion
-
-  posStart = commandReceived.indexOf("Y", posEnd);
-  posEnd = commandReceived.indexOf(",", posStart);
-
-  p_PositionXYZ[2] = commandReceived.substring(posStart, posEnd).toDouble(); //Assign Y postion
-
-  posStart = commandReceived.indexOf("Z", posEnd);
-  posEnd = commandReceived.indexOf(",", posStart);
-
-  p_PositionXYZ[3] = commandReceived.substring(posStart, posEnd).toDouble(); //Assign Z postion
   
-  //p_PositionXYZ[2] = 14; //Assign Y postion
-  //p_PositionXYZ[2] = 14; //Assign Y postion
-  //p_PositionXYZ[3] = 0; //Assign Z postion  
+  //Check if correct command
+  if (-1 != commandReceived.indexOf("SERVOS_GOTO")){
+
+    //This function goes through the cmd message, looks for X Y Z, pulls them out as substrings and loads them into an array.
+    int posStart;
+    int posEnd;
+
+    //Parse X
+    posStart = commandReceived.indexOf("X", 0);
+    posEnd = commandReceived.indexOf(",", posStart);
+    p_PositionXYZ[1] = commandReceived.substring(posStart+1, posEnd).toDouble(); //Assign X postion
+    //Serial.print("substring:"); Serial.println(commandReceived.substring(posStart+1, posEnd)); //debug
+
+    //Parse Y
+    posStart = commandReceived.indexOf("Y", posEnd);
+    posEnd = commandReceived.indexOf(",", posStart);
+    p_PositionXYZ[2] = commandReceived.substring(posStart+1, posEnd).toDouble(); //Assign Y postion
+    //Serial.print("substring:"); Serial.println(commandReceived.substring(posStart+1, posEnd)); //debug
+
+    //Parse Z
+    posStart = commandReceived.indexOf("Z", posEnd);
+    posEnd = commandReceived.indexOf("#", posStart);
+    p_PositionXYZ[3] = commandReceived.substring(posStart+1, posEnd).toDouble(); //Assign Z postion
+    //Serial.print("substring:"); Serial.println(commandReceived.substring(posStart+1, posEnd)); //debug
+
+    Serial.print("(X,Y,Z): ["); Serial.print(p_PositionXYZ[1]);
+    Serial.print(","); Serial.print(p_PositionXYZ[2]);
+    Serial.print(","); Serial.print(p_PositionXYZ[3]); Serial.println("]"); 
+  }
+  
 }
 
 
