@@ -68,6 +68,8 @@ namespace ArmHMI_WinForms
 			textBox_goto_posY.Text = "12";
 			textBox_goto_posZ.Text = "0";
 
+			check_IssueOnPress.Checked = true;
+
 		}
 		private void MainScreen_FormClosing(object sender, FormClosingEventArgs e)
 		{
@@ -209,44 +211,97 @@ namespace ArmHMI_WinForms
 		private void Bnt_IssueXup_Click(object sender, EventArgs e)
 		{
 			float temp = float.Parse(textBox_goto_posX.Text);
-			temp = temp + 1f;
+			if (check_BigSteps.Checked){
+				temp = temp + 4f;
+			}else{
+				temp = temp + 1f;
+			}
+			
 			textBox_goto_posX.Text = temp.ToString();
-			Bnt_IssueGoToCommand.PerformClick();
+
+			if (check_IssueOnPress.Checked){
+				Bnt_IssueGoToCommand.PerformClick();
+			}
 		}
 		private void Bnt_IssueYup_Click(object sender, EventArgs e)
 		{
 			float temp = float.Parse(textBox_goto_posY.Text);
-			temp = temp + 1f;
+
+			if (check_BigSteps.Checked){
+				temp = temp + 4f;
+			}else{
+				temp = temp + 1f;
+			}
+
 			textBox_goto_posY.Text = temp.ToString();
-			Bnt_IssueGoToCommand.PerformClick();
+
+			if (check_IssueOnPress.Checked){
+				Bnt_IssueGoToCommand.PerformClick();
+			}
 		}
 		private void Bnt_IssueZup_Click(object sender, EventArgs e)
 		{
 			float temp = float.Parse(textBox_goto_posZ.Text);
-			temp = temp + 1f;
+
+			if (check_BigSteps.Checked){
+				temp = temp + 4f;
+			}else{
+				temp = temp + 1f;
+			}
+
 			textBox_goto_posZ.Text = temp.ToString();
-			Bnt_IssueGoToCommand.PerformClick();
+
+			if (check_IssueOnPress.Checked){
+				Bnt_IssueGoToCommand.PerformClick();
+			}
 		}
 		private void Bnt_IssueXdown_Click(object sender, EventArgs e)
 		{
 			float temp = float.Parse(textBox_goto_posX.Text);
-			temp = temp - 1f;
+
+			if (check_BigSteps.Checked){
+				temp = temp - 4f;
+			}else{
+				temp = temp - 1f;
+			}
+
 			textBox_goto_posX.Text = temp.ToString();
-			Bnt_IssueGoToCommand.PerformClick();
+
+			if (check_IssueOnPress.Checked){
+				Bnt_IssueGoToCommand.PerformClick();
+			}
 		}
 		private void Bnt_IssueYdown_Click(object sender, EventArgs e)
 		{
 			float temp = float.Parse(textBox_goto_posY.Text);
-			temp = temp - 1f;
+
+			if (check_BigSteps.Checked){
+				temp = temp - 4f;
+			}else{
+				temp = temp - 1f;
+			}
+
 			textBox_goto_posY.Text = temp.ToString();
-			Bnt_IssueGoToCommand.PerformClick();
+
+			if (check_IssueOnPress.Checked){
+				Bnt_IssueGoToCommand.PerformClick();
+			}
 		}
 		private void Bnt_IssueZdown_Click(object sender, EventArgs e)
 		{
 			float temp = float.Parse(textBox_goto_posZ.Text);
-			temp = temp - 1f;
+
+			if (check_BigSteps.Checked){
+				temp = temp - 4f;
+			}else{
+				temp = temp - 1f;
+			}
+
 			textBox_goto_posZ.Text = temp.ToString();
-			Bnt_IssueGoToCommand.PerformClick();
+
+			if (check_IssueOnPress.Checked) {
+				Bnt_IssueGoToCommand.PerformClick();
+			}
 		}
 
 
@@ -382,6 +437,5 @@ namespace ArmHMI_WinForms
 			richTextBox_textReceiver.Text = "";
 		}
 
-		
 	}
 }
