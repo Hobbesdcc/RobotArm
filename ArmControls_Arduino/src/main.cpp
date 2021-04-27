@@ -70,6 +70,7 @@ void loop() {
     GotoZ = positionXYZ[3]; //Load parsed value into Goto Z postion
 
     ReceiveCommands_Homing();
+    ReceiveCommands_ServosDisconnect();
   }
 
 
@@ -104,8 +105,21 @@ void loop() {
           CMD_ISSUED_HOME_Base = false; //reset 
         }
 
+        //Action: Servo Attach/Detach
+        if (CMD_ISSUED_Servos_Detach){
+          myServo1.detach();    // detaches the servo on pin 10 to the servo object, BASE
+          myServo2.detach();	  // detaches the servo on pin 09 to the servo object, BIG ARM 
+          myServo3.detach();	  // detaches the servo on pin 08 to the servo object, SMALL ARM
+          CMD_ISSUED_Servos_Detach = false; //reset 
+        }
+        if (CMD_ISSUED_Servos_Attach){
+          myServo1.attach(8);   // attaches the servo on pin 10 to the servo object, BASE
+          myServo2.attach(9);		// attaches the servo on pin 09 to the servo object, BIG ARM 
+          myServo3.attach(10);	// attaches the servo on pin 08 to the servo object, SMALL ARM
+          CMD_ISSUED_Servos_Attach = false; //reset 
+        }
 
-
+        
 
         //Old Value for edge detect
         GotoX_Old = GotoX;
@@ -363,6 +377,20 @@ void ReceiveCommands_Homing(){
     Serial.println(CMD_Home_Base);
   }
 }
+
+// == Function ================================
+void ReceiveCommands_ServosDisconnect(){
+  if (-1 != commandReceived.indexOf(CMD_Servos_Attach)){
+    CMD_ISSUED_Servos_Attach = true;
+    Serial.println(CMD_Servos_Attach);
+  }
+  if (-1 != commandReceived.indexOf(CMD_Servos_Detach)){
+    CMD_ISSUED_Servos_Detach = true;
+    Serial.println(CMD_Servos_Detach);
+  }
+}
+
+
 
 
 // == Join Function ===========================

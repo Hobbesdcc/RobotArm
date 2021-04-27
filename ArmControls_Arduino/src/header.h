@@ -100,6 +100,7 @@ void ReceiveCommands_RequestModeChange();
 void ReceiveCommands_RequestStateChange();
 void ReceiveCommands_GotoPositon(double[]);
 void ReceiveCommands_Homing();
+void ReceiveCommands_ServosDisconnect();
 
 
 //Serial Command varibles - HMI Commands from Serial Interface

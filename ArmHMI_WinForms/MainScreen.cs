@@ -158,6 +158,7 @@ namespace ArmHMI_WinForms
 			IssueSerialCommand(CMD_Home_Base);
 		}
 
+
 		//Events: Mode & State Command buttons ---------------------------------------------------------------------------
 		private void Bnt_Mode_Auto_Click(object sender, EventArgs e)
 		{
@@ -195,6 +196,14 @@ namespace ArmHMI_WinForms
 			cmdModified = cmdModified.Insert(cmdModified.IndexOf('Z') + 1, textBox_goto_posZ.Text);
 
 			IssueSerialCommand(cmdModified);
+		}
+		private void Bnt_AttachServos_Click(object sender, EventArgs e)
+		{
+			IssueSerialCommand(CMD_Servos_Attach);
+		}
+		private void Bnt_DetachServos_Click(object sender, EventArgs e)
+		{
+			IssueSerialCommand(CMD_Servos_Detach);
 		}
 
 
