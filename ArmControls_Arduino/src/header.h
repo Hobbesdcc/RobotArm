@@ -18,13 +18,13 @@ double JointA_CalibrationOffset = 0; //mounting plate for Servo might not be 90d
 double JointC_CalibrationOffset = 5; //mounting plate for Servo might not be 90degrees, so this is the offset
 
 double positionXYZ[3]; //PostionArray to allow command parseing in same function
-double GotoX = 0; //Goto X postion
-double GotoY = 0; //Goto Y postion
-double GotoZ = 0; //Goto Y postion
+double GotoX; //Goto X postion
+double GotoY; //Goto Y postion
+double GotoZ; //Goto Y postion
 
-double GotoX_Old = 0; //Goto X postion OLD for detecting change
-double GotoY_Old = 0; //Goto Y postion OLD for detecting change
-double GotoZ_Old = 0; //Goto Y postion OLD for detecting change
+double GotoX_Old; //Goto X postion OLD for detecting change
+double GotoY_Old; //Goto Y postion OLD for detecting change
+double GotoZ_Old; //Goto Y postion OLD for detecting change
 
 //Servo Min/Max Range in degrees:
 float Servo1_RangeLimitMin = 0;
@@ -63,7 +63,7 @@ State state = Idel;
 Mode mode = Manual;
 
 // Command Strings, Same KeyWords used on both sides (serial to Ardunio to C# Form)
-String CMD_Home_All				= "$HOME_ALL#";
+String CMD_Home_All			    = "$HOME_ALL#";
 String CMD_Home_AxisA			= "$HOME_AXIS_A#";
 String CMD_Home_AxisB			= "$HOME_AXIS_B#";
 String CMD_Home_Base			= "$HOME_Base#";
@@ -98,6 +98,7 @@ void ReceiveCommands_RequestModeChange();
 void ReceiveCommands_RequestModeChange();
 void ReceiveCommands_RequestStateChange();
 void ReceiveCommands_GotoPositon(double[]);
+//void ReceiveCommands_Homing();
 
 
 //Serial Command varibles - HMI Commands from Serial Interface
@@ -106,5 +107,15 @@ boolean newData = false;
 String bulidMessageString;
 char endMarker = '#';
 char receivedChar;
-String feedback;
 
+bool initStartedLoopDone = false;
+
+//*
+bool CMD_ISSUED_HOME_ALL;
+bool CMD_ISSUED_HOME_AxisA;
+bool CMD_ISSUED_HOME_AxisB;
+bool CMD_ISSUED_HOME_Base;
+bool CMD_ISSUED_Servos_GOTO;
+bool CMD_ISSUED_Servos_Attach;
+bool CMD_ISSUED_Servos_Detach;
+//*/

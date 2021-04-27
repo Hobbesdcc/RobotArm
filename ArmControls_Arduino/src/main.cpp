@@ -30,9 +30,7 @@ void setup() {
   SetServoAnagle(myServo1, 90, Servo1_RangeLimitMin, Servo1_RangeLimitMax); 
   SetServoAnagle(myServo2, 90-JointA_CalibrationOffset, Servo2_RangeLimitMin, Servo2_RangeLimitMax);
   SetServoAnagle(myServo3, 90-JointC_CalibrationOffset, Servo3_RangeLimitMin, Servo3_RangeLimitMax);
-
 }
-
 
 
 
@@ -41,8 +39,8 @@ void setup() {
 //================================== <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 void loop() {
 
-  //HMI Commands from Serial Interface -
-  // Read each char coming in and add it to bulidMessageString until endMarker seen
+  //HMI Commands from Serial Interface:
+  //Read each char coming in and add it to bulidMessageString until endMarker seen
   while (Serial.available() > 0 && newData == false) {
         receivedChar = Serial.read();
 
@@ -61,16 +59,7 @@ void loop() {
     commandReceived = bulidMessageString; //Load new command into "commandReceived"
     bulidMessageString = ""; //Clear bulid Message String for next message
     newData = false;
-
-    //load into feedback, Remove special characters from string, and print to serial for user feedback
-    //feedback = commandReceived;
-
-    //int begin = feedback.indexOf('$');
-    //int end = feedback.indexOf('#');
-    //feedback = feedback.substring(begin+1, end);
-    //Serial.print(">> Arduino Received: ["); Serial.print(feedback); Serial.println("]");
-    Serial.print(">> Arduino Received: ["); Serial.print(commandReceived); Serial.println("]");
-
+    Serial.print(">ACK:["); Serial.print(commandReceived); Serial.println("]");
 
     //Detect and process what command was sent
     ReceiveCommands_RequestStatus();        //Check if messages are Request Status
@@ -82,26 +71,31 @@ void loop() {
     GotoY = positionXYZ[2]; //Load parsed value into Goto Y postion
     GotoZ = positionXYZ[3]; //Load parsed value into Goto Z postion
 
-    //Serial.print("GotoX:"); Serial.println(GotoX); Serial.print("GotoY:"); Serial.println(GotoY); Serial.print("GotoZ:"); Serial.println(GotoZ); 
+    //ReceiveCommands_Homing();
   }
 
 
   //Only Run if Started
+  //Serial.print("state: "); Serial.println(state);
   if (state == Started){
-    
     switch(mode) {
-
       //###############################
       case Manual:
-        if (GotoX_Old != GotoX || GotoY_Old != GotoY || GotoZ_Old != GotoZ){
+        
+        if (initStartedLoopDone && CMD_ISSUED_Servos_GOTO){ // && (GotoX_Old != GotoX || GotoY_Old != GotoY || GotoZ_Old != GotoZ)
           Action_GOTO_Positon();
+          CMD_ISSUED_Servos_GOTO = false; //reset 
         }
+
+
+
 
         //Old Value for edge detect
         GotoX_Old = GotoX;
         GotoY_Old = GotoY;
         GotoZ_Old = GotoZ;
-
+        
+        initStartedLoopDone = true; //Allow to loop once on start without running some commands/code
         break;
 
       //###############################
@@ -115,7 +109,18 @@ void loop() {
     }
 
   }else{
+    initStartedLoopDone = false; //reset init Started Loop Done bit
     //Serial.println("[Nothing can be run when machine in Stopped State]");
+
+    //* //reset all internal issued commands
+    CMD_ISSUED_HOME_ALL       = false;
+    CMD_ISSUED_HOME_AxisA     = false;
+    CMD_ISSUED_HOME_AxisB     = false;
+    CMD_ISSUED_HOME_Base      = false;
+    CMD_ISSUED_Servos_GOTO    = false;
+    CMD_ISSUED_Servos_Attach  = false;
+    CMD_ISSUED_Servos_Detach  = false;
+    //*/
   }
   
 }//<EndOfLoop>
@@ -239,9 +244,9 @@ void ReceiveCommands_RequestStateChange(){
   if (-1 != commandReceived.indexOf(CMD_State_Reset)){
     if(state == Stopped || state == Idel){
       state = Idel;
-       Serial.println(CMD_State_Idel);
+      Serial.println(CMD_State_Idel);
     }else{
-      Serial.println("[ERROR: Must Be stopped/Idel State AND in Auto/Manual mode to reset to Idel]"); 
+      //Serial.println("[ERROR: Must Be stopped/Idel State AND in Auto/Manual mode to reset to Idel]"); 
     }
   }
   //Check if message request a State chanage, then check if thats possible
@@ -249,8 +254,10 @@ void ReceiveCommands_RequestStateChange(){
     if(state == Idel){
       state = Started;
       Serial.println(CMD_State_Started);
+    }else if (state == Started){
+      //Serial.println("[ERROR: Already in Started State]");
     }else{
-      //Serial.println("[ERROR: Must Be in Idel State to move to Started]"); //TODO need error handeler instead, this brekes the code some how
+      //Serial.println("[ERROR: Must Be in Idel State to move to Started]"); 
     }
   }
   //Check if message request a State chanage, then check if thats possible
@@ -259,7 +266,7 @@ void ReceiveCommands_RequestStateChange(){
       state = Stopped;
       Serial.println(CMD_State_Stopped);
     }else{
-    //Serial.println("[ERROR: you are already stopped]"); 
+      Serial.println("[ERROR: you are already stopped]"); 
     }
   }
 
@@ -268,38 +275,38 @@ void ReceiveCommands_RequestStateChange(){
 // == Function ================================
 void ReceiveCommands_GotoPositon(double p_PositionXYZ[]){
   
-  //Check if correct command
   if (-1 != commandReceived.indexOf("SERVOS_GOTO")){
+    if (state == Started){
+      //This function goes through the cmd message, looks for X Y Z, pulls them out as substrings and loads them into an array.
+      int posStart;
+      int posEnd;
 
-    //This function goes through the cmd message, looks for X Y Z, pulls them out as substrings and loads them into an array.
-    int posStart;
-    int posEnd;
+      //Parse X
+      posStart = commandReceived.indexOf("X", 0);
+      posEnd = commandReceived.indexOf(",", posStart);
+      p_PositionXYZ[1] = commandReceived.substring(posStart+1, posEnd).toDouble(); //Assign X postion
+      //Serial.print("substring:"); Serial.println(commandReceived.substring(posStart+1, posEnd)); //debug
 
-    //Parse X
-    posStart = commandReceived.indexOf("X", 0);
-    posEnd = commandReceived.indexOf(",", posStart);
-    p_PositionXYZ[1] = commandReceived.substring(posStart+1, posEnd).toDouble(); //Assign X postion
-    //Serial.print("substring:"); Serial.println(commandReceived.substring(posStart+1, posEnd)); //debug
+      //Parse Y
+      posStart = commandReceived.indexOf("Y", posEnd);
+      posEnd = commandReceived.indexOf(",", posStart);
+      p_PositionXYZ[2] = commandReceived.substring(posStart+1, posEnd).toDouble(); //Assign Y postion
+      //Serial.print("substring:"); Serial.println(commandReceived.substring(posStart+1, posEnd)); //debug
 
-    //Parse Y
-    posStart = commandReceived.indexOf("Y", posEnd);
-    posEnd = commandReceived.indexOf(",", posStart);
-    p_PositionXYZ[2] = commandReceived.substring(posStart+1, posEnd).toDouble(); //Assign Y postion
-    //Serial.print("substring:"); Serial.println(commandReceived.substring(posStart+1, posEnd)); //debug
+      //Parse Z
+      posStart = commandReceived.indexOf("Z", posEnd);
+      posEnd = commandReceived.indexOf("#", posStart);
+      p_PositionXYZ[3] = commandReceived.substring(posStart+1, posEnd).toDouble(); //Assign Z postion
+      //Serial.print("substring:"); Serial.println(commandReceived.substring(posStart+1, posEnd)); //debug
 
-    //Parse Z
-    posStart = commandReceived.indexOf("Z", posEnd);
-    posEnd = commandReceived.indexOf("#", posStart);
-    p_PositionXYZ[3] = commandReceived.substring(posStart+1, posEnd).toDouble(); //Assign Z postion
-    //Serial.print("substring:"); Serial.println(commandReceived.substring(posStart+1, posEnd)); //debug
+      Serial.print("(X,Y,Z): ["); Serial.print(p_PositionXYZ[1]);
+      Serial.print(","); Serial.print(p_PositionXYZ[2]);
+      Serial.print(","); Serial.print(p_PositionXYZ[3]); Serial.println("]");
 
-    Serial.print("(X,Y,Z): ["); Serial.print(p_PositionXYZ[1]);
-    Serial.print(","); Serial.print(p_PositionXYZ[2]);
-    Serial.print(","); Serial.print(p_PositionXYZ[3]); Serial.println("]"); 
-  }
-  
+      CMD_ISSUED_Servos_GOTO = true; //internal cmd issued (this is what triggers the command to happen)
+    }
+  } 
 }
-
 
 
 // == Join Function ===========================
