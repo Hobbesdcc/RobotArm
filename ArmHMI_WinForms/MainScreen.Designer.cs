@@ -77,6 +77,12 @@
 			this.textBox4 = new System.Windows.Forms.TextBox();
 			this.textBox5 = new System.Windows.Forms.TextBox();
 			this.textBox6 = new System.Windows.Forms.TextBox();
+			this.Bnt_IssueXup = new System.Windows.Forms.Button();
+			this.Bnt_IssueXdown = new System.Windows.Forms.Button();
+			this.Bnt_IssueYup = new System.Windows.Forms.Button();
+			this.Bnt_IssueYdown = new System.Windows.Forms.Button();
+			this.Bnt_IssueZup = new System.Windows.Forms.Button();
+			this.Bnt_IssueZdown = new System.Windows.Forms.Button();
 			this.groupBox_ModeSelect.SuspendLayout();
 			this.groupBox_ManualControls.SuspendLayout();
 			this.groupBox4.SuspendLayout();
@@ -428,6 +434,12 @@
 			// 
 			// groupBox1
 			// 
+			this.groupBox1.Controls.Add(this.Bnt_IssueZdown);
+			this.groupBox1.Controls.Add(this.Bnt_IssueYdown);
+			this.groupBox1.Controls.Add(this.Bnt_IssueXdown);
+			this.groupBox1.Controls.Add(this.Bnt_IssueZup);
+			this.groupBox1.Controls.Add(this.Bnt_IssueYup);
+			this.groupBox1.Controls.Add(this.Bnt_IssueXup);
 			this.groupBox1.Controls.Add(this.label5);
 			this.groupBox1.Controls.Add(this.label4);
 			this.groupBox1.Controls.Add(this.label3);
@@ -471,23 +483,23 @@
 			// 
 			// textBox_goto_posZ
 			// 
-			this.textBox_goto_posZ.Location = new System.Drawing.Point(66, 71);
+			this.textBox_goto_posZ.Location = new System.Drawing.Point(96, 71);
 			this.textBox_goto_posZ.Name = "textBox_goto_posZ";
-			this.textBox_goto_posZ.Size = new System.Drawing.Size(100, 20);
+			this.textBox_goto_posZ.Size = new System.Drawing.Size(80, 20);
 			this.textBox_goto_posZ.TabIndex = 21;
 			this.textBox_goto_posZ.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			// 
 			// textBox_goto_posY
 			// 
-			this.textBox_goto_posY.Location = new System.Drawing.Point(66, 45);
+			this.textBox_goto_posY.Location = new System.Drawing.Point(96, 45);
 			this.textBox_goto_posY.Name = "textBox_goto_posY";
-			this.textBox_goto_posY.Size = new System.Drawing.Size(100, 20);
+			this.textBox_goto_posY.Size = new System.Drawing.Size(80, 20);
 			this.textBox_goto_posY.TabIndex = 20;
 			this.textBox_goto_posY.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			// 
 			// Bnt_IssueGoToCommand
 			// 
-			this.Bnt_IssueGoToCommand.Location = new System.Drawing.Point(200, 34);
+			this.Bnt_IssueGoToCommand.Location = new System.Drawing.Point(215, 34);
 			this.Bnt_IssueGoToCommand.Name = "Bnt_IssueGoToCommand";
 			this.Bnt_IssueGoToCommand.Size = new System.Drawing.Size(100, 40);
 			this.Bnt_IssueGoToCommand.TabIndex = 18;
@@ -497,9 +509,9 @@
 			// 
 			// textBox_goto_posX
 			// 
-			this.textBox_goto_posX.Location = new System.Drawing.Point(66, 19);
+			this.textBox_goto_posX.Location = new System.Drawing.Point(96, 19);
 			this.textBox_goto_posX.Name = "textBox_goto_posX";
-			this.textBox_goto_posX.Size = new System.Drawing.Size(100, 20);
+			this.textBox_goto_posX.Size = new System.Drawing.Size(80, 20);
 			this.textBox_goto_posX.TabIndex = 17;
 			this.textBox_goto_posX.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			// 
@@ -571,6 +583,66 @@
 			this.textBox6.Size = new System.Drawing.Size(100, 20);
 			this.textBox6.TabIndex = 17;
 			this.textBox6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			// 
+			// Bnt_IssueXup
+			// 
+			this.Bnt_IssueXup.Location = new System.Drawing.Point(182, 19);
+			this.Bnt_IssueXup.Name = "Bnt_IssueXup";
+			this.Bnt_IssueXup.Size = new System.Drawing.Size(24, 20);
+			this.Bnt_IssueXup.TabIndex = 25;
+			this.Bnt_IssueXup.Text = ">";
+			this.Bnt_IssueXup.UseVisualStyleBackColor = true;
+			this.Bnt_IssueXup.Click += new System.EventHandler(this.Bnt_IssueXup_Click);
+			// 
+			// Bnt_IssueXdown
+			// 
+			this.Bnt_IssueXdown.Location = new System.Drawing.Point(66, 19);
+			this.Bnt_IssueXdown.Name = "Bnt_IssueXdown";
+			this.Bnt_IssueXdown.Size = new System.Drawing.Size(24, 20);
+			this.Bnt_IssueXdown.TabIndex = 26;
+			this.Bnt_IssueXdown.Text = "<";
+			this.Bnt_IssueXdown.UseVisualStyleBackColor = true;
+			this.Bnt_IssueXdown.Click += new System.EventHandler(this.Bnt_IssueXdown_Click);
+			// 
+			// Bnt_IssueYup
+			// 
+			this.Bnt_IssueYup.Location = new System.Drawing.Point(182, 45);
+			this.Bnt_IssueYup.Name = "Bnt_IssueYup";
+			this.Bnt_IssueYup.Size = new System.Drawing.Size(24, 20);
+			this.Bnt_IssueYup.TabIndex = 25;
+			this.Bnt_IssueYup.Text = ">";
+			this.Bnt_IssueYup.UseVisualStyleBackColor = true;
+			this.Bnt_IssueYup.Click += new System.EventHandler(this.Bnt_IssueYup_Click);
+			// 
+			// Bnt_IssueYdown
+			// 
+			this.Bnt_IssueYdown.Location = new System.Drawing.Point(66, 45);
+			this.Bnt_IssueYdown.Name = "Bnt_IssueYdown";
+			this.Bnt_IssueYdown.Size = new System.Drawing.Size(24, 20);
+			this.Bnt_IssueYdown.TabIndex = 26;
+			this.Bnt_IssueYdown.Text = "<";
+			this.Bnt_IssueYdown.UseVisualStyleBackColor = true;
+			this.Bnt_IssueYdown.Click += new System.EventHandler(this.Bnt_IssueYdown_Click);
+			// 
+			// Bnt_IssueZup
+			// 
+			this.Bnt_IssueZup.Location = new System.Drawing.Point(182, 71);
+			this.Bnt_IssueZup.Name = "Bnt_IssueZup";
+			this.Bnt_IssueZup.Size = new System.Drawing.Size(24, 20);
+			this.Bnt_IssueZup.TabIndex = 25;
+			this.Bnt_IssueZup.Text = ">";
+			this.Bnt_IssueZup.UseVisualStyleBackColor = true;
+			this.Bnt_IssueZup.Click += new System.EventHandler(this.Bnt_IssueZup_Click);
+			// 
+			// Bnt_IssueZdown
+			// 
+			this.Bnt_IssueZdown.Location = new System.Drawing.Point(66, 71);
+			this.Bnt_IssueZdown.Name = "Bnt_IssueZdown";
+			this.Bnt_IssueZdown.Size = new System.Drawing.Size(24, 20);
+			this.Bnt_IssueZdown.TabIndex = 26;
+			this.Bnt_IssueZdown.Text = "<";
+			this.Bnt_IssueZdown.UseVisualStyleBackColor = true;
+			this.Bnt_IssueZdown.Click += new System.EventHandler(this.Bnt_IssueZdown_Click);
 			// 
 			// MainScreen
 			// 
@@ -656,6 +728,12 @@
 		private System.Windows.Forms.TextBox textBox4;
 		private System.Windows.Forms.TextBox textBox5;
 		private System.Windows.Forms.TextBox textBox6;
+		public System.Windows.Forms.Button Bnt_IssueZdown;
+		public System.Windows.Forms.Button Bnt_IssueYdown;
+		public System.Windows.Forms.Button Bnt_IssueXdown;
+		public System.Windows.Forms.Button Bnt_IssueZup;
+		public System.Windows.Forms.Button Bnt_IssueYup;
+		public System.Windows.Forms.Button Bnt_IssueXup;
 	}
 }
 

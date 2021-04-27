@@ -188,6 +188,15 @@ namespace ArmHMI_WinForms
 		{
 			IssueSerialCommand(CMD_State_Reset);
 		}
+		private void Bnt_AttachServos_Click(object sender, EventArgs e)
+		{
+			IssueSerialCommand(CMD_Servos_Attach);
+		}
+		private void Bnt_DetachServos_Click(object sender, EventArgs e)
+		{
+			IssueSerialCommand(CMD_Servos_Detach);
+		}
+
 		private void Bnt_IssueGoToCommand_Click(object sender, EventArgs e)
 		{
 			//Modify the CMD_Servos_GOTO command to insert the X,Y,Z positons
@@ -197,13 +206,47 @@ namespace ArmHMI_WinForms
 
 			IssueSerialCommand(cmdModified);
 		}
-		private void Bnt_AttachServos_Click(object sender, EventArgs e)
+		private void Bnt_IssueXup_Click(object sender, EventArgs e)
 		{
-			IssueSerialCommand(CMD_Servos_Attach);
+			float temp = float.Parse(textBox_goto_posX.Text);
+			temp = temp + 1f;
+			textBox_goto_posX.Text = temp.ToString();
+			Bnt_IssueGoToCommand.PerformClick();
 		}
-		private void Bnt_DetachServos_Click(object sender, EventArgs e)
+		private void Bnt_IssueYup_Click(object sender, EventArgs e)
 		{
-			IssueSerialCommand(CMD_Servos_Detach);
+			float temp = float.Parse(textBox_goto_posY.Text);
+			temp = temp + 1f;
+			textBox_goto_posY.Text = temp.ToString();
+			Bnt_IssueGoToCommand.PerformClick();
+		}
+		private void Bnt_IssueZup_Click(object sender, EventArgs e)
+		{
+			float temp = float.Parse(textBox_goto_posZ.Text);
+			temp = temp + 1f;
+			textBox_goto_posZ.Text = temp.ToString();
+			Bnt_IssueGoToCommand.PerformClick();
+		}
+		private void Bnt_IssueXdown_Click(object sender, EventArgs e)
+		{
+			float temp = float.Parse(textBox_goto_posX.Text);
+			temp = temp - 1f;
+			textBox_goto_posX.Text = temp.ToString();
+			Bnt_IssueGoToCommand.PerformClick();
+		}
+		private void Bnt_IssueYdown_Click(object sender, EventArgs e)
+		{
+			float temp = float.Parse(textBox_goto_posY.Text);
+			temp = temp - 1f;
+			textBox_goto_posY.Text = temp.ToString();
+			Bnt_IssueGoToCommand.PerformClick();
+		}
+		private void Bnt_IssueZdown_Click(object sender, EventArgs e)
+		{
+			float temp = float.Parse(textBox_goto_posZ.Text);
+			temp = temp - 1f;
+			textBox_goto_posZ.Text = temp.ToString();
+			Bnt_IssueGoToCommand.PerformClick();
 		}
 
 
@@ -339,6 +382,6 @@ namespace ArmHMI_WinForms
 			richTextBox_textReceiver.Text = "";
 		}
 
-
+		
 	}
 }
