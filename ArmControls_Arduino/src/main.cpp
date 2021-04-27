@@ -145,15 +145,15 @@ void Action_GOTO_Positon(){
 
   //Check if Joint Values found are Real Numbers & Within Servo min/max limits
   if (isnan(JointA_degree) || isnan(JointA_degree)){
-    Serial.println("< ERRROR: Input values Invalid >");
+    Serial.println(F("< ERRROR: Input values Invalid >"));
     Serial.println("");
 
   } else if(JointA_degree < Servo1_RangeLimitMin ||  JointA_degree > Servo1_RangeLimitMax)  {
-    Serial.println("< ERROR: Joint A Value out of min/max range >");
+    Serial.println(F("< ERROR: Joint A Value out of min/max range >"));
     Serial.println("");
 
   } else if(JointC_degree < Servo2_RangeLimitMin ||  JointC_degree > Servo2_RangeLimitMax)  {
-    Serial.println("< ERROR: Joint B Value out of min/max range >");
+    Serial.println(F("< ERROR: Joint B Value out of min/max range >"));
     Serial.println("");
 
   } else {
@@ -161,7 +161,7 @@ void Action_GOTO_Positon(){
     SetServoAnagle(myServo2, JointA_degree-JointA_CalibrationOffset, Servo2_RangeLimitMin, Servo2_RangeLimitMax);
     SetServoAnagle(myServo3, 180-JointC_degree-JointC_CalibrationOffset, Servo2_RangeLimitMin, Servo2_RangeLimitMax);
 
-    Serial.println("< Arduino: Servos Axis Values Set >");
+    Serial.println(F("< Arduino: Servos Axis Values Set >"));
     Serial.println("");
     delay(ServoDelayTime);  //delay for servo to move
   }
@@ -181,7 +181,7 @@ void ReceiveCommands_RequestStatus(){
         break;
 
       default:
-        Serial.println("[ERROR: NO MODE DETECTED]"); 
+        Serial.println(F("[ERROR: NO MODE DETECTED]")); 
         break;
     }
   }
@@ -202,7 +202,7 @@ void ReceiveCommands_RequestStatus(){
         break;
 
       default:
-        Serial.println("[ERROR: NO STATE DETECTED]"); 
+        Serial.println(F("[ERROR: NO STATE DETECTED]")); 
         break;
     }
   }
@@ -217,10 +217,10 @@ void ReceiveCommands_RequestModeChange(){
       Serial.println(CMD_Mode_Manual);
     }
     else if(mode == Manual){
-    Serial.println("[ERROR: Already in Manual Mode]"); 
+    Serial.println(F("[ERROR: Already in Manual Mode]")); 
     }
     else{
-      Serial.println("[ERROR: Must Be in Idel/Stopped AND in Auto mode to change to Manaul Mode]"); 
+      Serial.println(F("[ERROR: Must Be in Idel/Stopped AND in Auto mode to change to Manaul Mode]")); 
     }
   }
   //Check if message request a mode chanage, then check if thats possible
@@ -230,10 +230,10 @@ void ReceiveCommands_RequestModeChange(){
       Serial.println(CMD_Mode_Auto);
     }
     else if(mode == Auto){
-      Serial.println("[ERROR: Already in Auto Mode]"); 
+      Serial.println(F("[ERROR: Already in Auto Mode]")); 
     }
     else{
-      Serial.println("[ERROR: Must Be in Idel/Stopped AND in Auto mode to change to Auto Mode]"); 
+      Serial.println(F("[ERROR: Must Be in Idel/Stopped AND in Auto mode to change to Auto Mode]")); 
     }
   }
 }
@@ -255,9 +255,9 @@ void ReceiveCommands_RequestStateChange(){
       state = Started;
       Serial.println(CMD_State_Started);
     }else if (state == Started){
-      //Serial.println("[ERROR: Already in Started State]");
+      Serial.println(F("[ERROR: Already in Started State]"));
     }else{
-      //Serial.println("[ERROR: Must Be in Idel State to move to Started]"); 
+      Serial.println(F("[ERROR: Must Be in Idel State to move to Started]")); 
     }
   }
   //Check if message request a State chanage, then check if thats possible
@@ -266,7 +266,7 @@ void ReceiveCommands_RequestStateChange(){
       state = Stopped;
       Serial.println(CMD_State_Stopped);
     }else{
-      Serial.println("[ERROR: you are already stopped]"); 
+      Serial.println(F("[ERROR: you are already stopped]")); 
     }
   }
 
