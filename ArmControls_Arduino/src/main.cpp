@@ -26,10 +26,8 @@ void setup() {
   Serial.println(Servo1_RangeLimitMin); 
   Serial.println(Servo1_RangeLimitMax); 
 
-  //Go home all servos (runs once on start) //parms SetServoAnagle(Servo servo, float ServoAnagle, float RangeLimitMin, float RangeLimitMax)
-  SetServoAnagle(myServo1, 90, Servo1_RangeLimitMin, Servo1_RangeLimitMax); 
-  SetServoAnagle(myServo2, 90-JointA_CalibrationOffset, Servo2_RangeLimitMin, Servo2_RangeLimitMax);
-  SetServoAnagle(myServo3, 90-JointC_CalibrationOffset, Servo3_RangeLimitMin, Servo3_RangeLimitMax);
+  //Go home all servos (runs once on start)
+  Homing(1,1,1); //AxisA,AxisB,Base
 }
 
 
@@ -71,7 +69,7 @@ void loop() {
     GotoY = positionXYZ[2]; //Load parsed value into Goto Y postion
     GotoZ = positionXYZ[3]; //Load parsed value into Goto Z postion
 
-    //ReceiveCommands_Homing();
+    ReceiveCommands_Homing();
   }
 
 
@@ -82,9 +80,28 @@ void loop() {
       //###############################
       case Manual:
         
+        //Action: GOTO Positon
         if (initStartedLoopDone && CMD_ISSUED_Servos_GOTO){ // && (GotoX_Old != GotoX || GotoY_Old != GotoY || GotoZ_Old != GotoZ)
           Action_GOTO_Positon();
           CMD_ISSUED_Servos_GOTO = false; //reset 
+        }
+
+        //Action: Homing
+        if (CMD_ISSUED_HOME_ALL){
+          Homing(1,1,1); //AxisA,AxisB,Base
+          CMD_ISSUED_HOME_ALL = false; //reset 
+        }
+        if (CMD_ISSUED_HOME_AxisA){
+          Homing(1,0,0); //AxisA,AxisB,Base
+          CMD_ISSUED_HOME_AxisA = false; //reset 
+        }
+        if (CMD_ISSUED_HOME_AxisB){
+          Homing(0,1,0); //AxisA,AxisB,Base
+          CMD_ISSUED_HOME_AxisB = false; //reset 
+        }
+        if (CMD_ISSUED_HOME_Base){
+          Homing(0,0,1); //AxisA,AxisB,Base
+          CMD_ISSUED_HOME_Base = false; //reset 
         }
 
 
@@ -129,6 +146,21 @@ void loop() {
 // ================================== = = = = = = = = = = = = = = = = ===
 //   FUNCTIONS ====================== = = = = = = = = = = = = = = = = ===
 // ================================== = = = = = = = = = = = = = = = = ===
+
+// == Function ================================
+void Homing(bool AxisA, bool AxisB, bool Base){
+  //parms SetServoAnagle(Servo servo, float ServoAnagle, float RangeLimitMin, float RangeLimitMax)
+  if (Base){
+    SetServoAnagle(myServo1, 90, Servo1_RangeLimitMin, Servo1_RangeLimitMax); 
+  }
+  if (AxisA){
+    SetServoAnagle(myServo2, 90-JointA_CalibrationOffset, Servo2_RangeLimitMin, Servo2_RangeLimitMax);
+  }
+  if (AxisB){
+    SetServoAnagle(myServo3, 90-JointC_CalibrationOffset, Servo3_RangeLimitMin, Servo3_RangeLimitMax);
+  }
+}
+
 
 // == Function ================================
 void Action_GOTO_Positon(){
@@ -306,6 +338,30 @@ void ReceiveCommands_GotoPositon(double p_PositionXYZ[]){
       CMD_ISSUED_Servos_GOTO = true; //internal cmd issued (this is what triggers the command to happen)
     }
   } 
+}
+
+// == Function ================================
+void ReceiveCommands_Homing(){
+  //Check if homing messeage detected, if so set issue cmd high (the thing that will trigger the command somewhere else)
+  if (-1 != commandReceived.indexOf(CMD_Home_All)){
+    CMD_ISSUED_HOME_ALL = true;
+    Serial.println(CMD_Home_All);
+  }
+  
+  if (-1 != commandReceived.indexOf(CMD_Home_AxisA)){
+    CMD_ISSUED_HOME_AxisA = true;
+    Serial.println(CMD_Home_AxisA);
+  }
+
+  if (-1 != commandReceived.indexOf(CMD_Home_AxisB)){
+    CMD_ISSUED_HOME_AxisB = true;
+    Serial.println(CMD_Home_AxisB);
+  }
+
+  if (-1 != commandReceived.indexOf(CMD_Home_Base)){
+    CMD_ISSUED_HOME_Base = true;
+    Serial.println(CMD_Home_Base);
+  }
 }
 
 

@@ -92,13 +92,14 @@ void Action_GOTO_Positon();
 void SetServoAnagle(Servo, float, float, float);
 void JointCalculations();
 String SerialInterface_Receiving();
+void Homing(bool, bool, bool);
 
 void ReceiveCommands_RequestStatus();
 void ReceiveCommands_RequestModeChange();
 void ReceiveCommands_RequestModeChange();
 void ReceiveCommands_RequestStateChange();
 void ReceiveCommands_GotoPositon(double[]);
-//void ReceiveCommands_Homing();
+void ReceiveCommands_Homing();
 
 
 //Serial Command varibles - HMI Commands from Serial Interface
