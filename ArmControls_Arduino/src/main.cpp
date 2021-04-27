@@ -190,25 +190,25 @@ void Action_GOTO_Positon(){
 
 
   //Check if Joint Values found are Real Numbers & Within Servo min/max limits
-  if (isnan(JointA_degree) || isnan(JointA_degree)){
+  if (isnan(JointA_degree) || isnan(JointA_degree) || isnan(BaseAxis_degree)){
     Serial.println(F("< ERRROR: Input values Invalid >"));
-    Serial.println("");
 
-  } else if(JointA_degree < Servo1_RangeLimitMin ||  JointA_degree > Servo1_RangeLimitMax)  {
+  } else if(BaseAxis_degree < Servo1_RangeLimitMin ||  BaseAxis_degree > Servo1_RangeLimitMax)  {
+    Serial.println(F("< ERROR: Base Axis Value out of min/max range >"));
+
+  } else if(JointA_degree < Servo2_RangeLimitMin ||  JointA_degree > Servo2_RangeLimitMax)  {
     Serial.println(F("< ERROR: Joint A Value out of min/max range >"));
-    Serial.println("");
 
-  } else if(JointC_degree < Servo2_RangeLimitMin ||  JointC_degree > Servo2_RangeLimitMax)  {
+  } else if(JointC_degree < Servo3_RangeLimitMin ||  JointC_degree > Servo3_RangeLimitMax)  {
     Serial.println(F("< ERROR: Joint B Value out of min/max range >"));
-    Serial.println("");
 
   } else {
     //Writes the FINAL joint values into the servos
+    SetServoAnagle(myServo1, BaseAxis_degree-BaseAxis_CalibrationOffset, Servo1_RangeLimitMin, Servo1_RangeLimitMax);
     SetServoAnagle(myServo2, JointA_degree-JointA_CalibrationOffset, Servo2_RangeLimitMin, Servo2_RangeLimitMax);
-    SetServoAnagle(myServo3, 180-JointC_degree-JointC_CalibrationOffset, Servo2_RangeLimitMin, Servo2_RangeLimitMax);
+    SetServoAnagle(myServo3, 180-JointC_degree-JointC_CalibrationOffset, Servo3_RangeLimitMin, Servo3_RangeLimitMax);
 
     Serial.println(F("< Arduino: Servos Axis Values Set >"));
-    Serial.println("");
     delay(ServoDelayTime);  //delay for servo to move
   }
 }
@@ -469,7 +469,16 @@ void JointCalculations(){
   //1.5708 radians ~= 90 degrees
   JointC = JointB - (1.5708 - (JointA)); //use this OR "JointC = TriDanglC - (1.5708 - (TriCanglB + TriDanglB));"
 
-  
+
+  // **********************************************************************
+  // << Base Axis Math: >>
+  // **********************************************************************
+
+  // *** Step X **** 
+  //Finding Angle the base axis should be
+  BaseAxis = atan2(GotoX,GotoZ);
+
+
   // **********************************************************************
   // << Send Joint A & Joint C calulated values to servos 
   // **********************************************************************
@@ -479,5 +488,6 @@ void JointCalculations(){
   JointA_degree = ((JointA * 57296 )/ 1000);
   JointB_degree = ((JointB * 57296 )/ 1000);
   JointC_degree = ((JointC * 57296 )/ 1000);
+  BaseAxis_degree = ((BaseAxis * 57296 )/ 1000);
   
 }

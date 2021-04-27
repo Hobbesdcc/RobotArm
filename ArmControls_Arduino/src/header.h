@@ -4,9 +4,9 @@
 Servo myservo;  //create servo object to control a servo
 
 //Joints:
-Servo myServo1;  //create servo object 1 to control a servo 
-Servo myServo2;  //create servo object 2 to control a servo
-Servo myServo3;  //create servo object 3 to control a servo
+Servo myServo1;  //create servo object 1 to control a servo (Base)
+Servo myServo2;  //create servo object 2 to control a servo (Big arm)
+Servo myServo3;  //create servo object 3 to control a servo (Small arm)
 
 //Setup values:
 double ServoDelayTime = 500; //Set time the Servo will delay after it is sent move command
@@ -16,6 +16,7 @@ double ArmB_Length = 12; //Arm B Length
 //Calibration Offsets:
 double JointA_CalibrationOffset = 0; //mounting plate for Servo might not be 90degrees, so this is the offset
 double JointC_CalibrationOffset = 5; //mounting plate for Servo might not be 90degrees, so this is the offset
+double BaseAxis_CalibrationOffset = 0; //mounting plate for Servo might not be 90degrees, so this is the offset
 
 double positionXYZ[3]; //PostionArray to allow command parseing in same function
 double GotoX; //Goto X postion
@@ -27,14 +28,14 @@ double GotoY_Old; //Goto Y postion OLD for detecting change
 double GotoZ_Old; //Goto Y postion OLD for detecting change
 
 //Servo Min/Max Range in degrees:
-float Servo1_RangeLimitMin = 0;
-float Servo1_RangeLimitMax = 180;
+float Servo1_RangeLimitMin = 0;   //(Base)
+float Servo1_RangeLimitMax = 180; //(Base)
 
-float Servo2_RangeLimitMin = 0;
-float Servo2_RangeLimitMax = 180;
+float Servo2_RangeLimitMin = 0;   //(Big arm)
+float Servo2_RangeLimitMax = 180; //(Big arm)
 
-float Servo3_RangeLimitMin = 0;
-float Servo3_RangeLimitMax = 180;
+float Servo3_RangeLimitMin = 0;   //(Small arm)
+float Servo3_RangeLimitMax = 180; //(Small arm)
 
 //Triangle A,B,C,E setup init values:
 double TriA_AnglA = 0; double TriA_AnglB = 0; double TriA_AnglC = 0;
@@ -52,9 +53,10 @@ double TriD_SideA = 0; double TriD_SideB = 0; double TriD_SideC = 0;
 double TriE_AnglA = 0; double TriE_AnglB = 0; double TriE_AnglC = 0;
 double TriE_SideA = 0; double TriE_SideB = 0; double TriE_SideC = 0;
 
-//Joint Angles A,B,C
+//Joint Angles A,B,C, & Base Axis
 double JointA = 0;        double JointB = 0;        double JointC = 0;
 double JointA_degree = 0; double JointB_degree = 0; double JointC_degree = 0;
+double BaseAxis = 0;      double BaseAxis_degree = 0;
 
 //Setup Enums for mode and state, and there defualt states
 enum State {Idel,Started,Stopped};
