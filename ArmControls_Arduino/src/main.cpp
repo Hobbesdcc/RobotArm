@@ -3,9 +3,9 @@
 #include <header.h>
 
 /*
+Dave Chamot
 Started: 2017-01-23
 Current: 2021-04-xx
-Dave Chamot
 */
 
 //See header fill for set up values!
@@ -119,7 +119,7 @@ void loop() {
           CMD_ISSUED_Servos_Attach = false; //reset 
         }
 
-        
+
 
         //Old Value for edge detect
         GotoX_Old = GotoX;

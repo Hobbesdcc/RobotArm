@@ -110,9 +110,7 @@ String bulidMessageString;
 char endMarker = '#';
 char receivedChar;
 
-bool initStartedLoopDone = false;
-
-//*
+//When a command comes it, these values are set high and trigger the actual command 
 bool CMD_ISSUED_HOME_ALL;
 bool CMD_ISSUED_HOME_AxisA;
 bool CMD_ISSUED_HOME_AxisB;
@@ -120,4 +118,6 @@ bool CMD_ISSUED_HOME_Base;
 bool CMD_ISSUED_Servos_GOTO;
 bool CMD_ISSUED_Servos_Attach;
 bool CMD_ISSUED_Servos_Detach;
-//*/
+
+//other
+bool initStartedLoopDone = false;
