@@ -121,24 +121,47 @@ namespace ArmHMI_WinForms
 			if (-1 != Serialdata.IndexOf(CMD_Mode_Manual))
 			{
 				textBox_Status_Mode.Invoke((MethodInvoker)(() => textBox_Status_Mode.Text = "MANUAL"));
+
+				groupBox_Manual1.Invoke((MethodInvoker)(() => groupBox_Manual1.Enabled = true));
+				groupBox_Manual2.Invoke((MethodInvoker)(() => groupBox_Manual2.Enabled = true));
+				groupBox_Manual3.Invoke((MethodInvoker)(() => groupBox_Manual3.Enabled = true));
+				groupBox_Manual4.Invoke((MethodInvoker)(() => groupBox_Manual4.Enabled = true));
+
+				groupBox_Automatic1.Invoke((MethodInvoker)(() => groupBox_Automatic1.Enabled = false));
+
+				panel_Manualbox.BackColor	= Color.OliveDrab;
+				panel_Autobox.BackColor		= Color.Gray;
 			}
 			if (-1 != Serialdata.IndexOf(CMD_Mode_Auto))
 			{
 				textBox_Status_Mode.Invoke((MethodInvoker)(() => textBox_Status_Mode.Text = "AUTOMATIC"));
+
+				groupBox_Manual1.Invoke((MethodInvoker)(() => groupBox_Manual1.Enabled = false));
+				groupBox_Manual2.Invoke((MethodInvoker)(() => groupBox_Manual2.Enabled = false));
+				groupBox_Manual3.Invoke((MethodInvoker)(() => groupBox_Manual3.Enabled = false));
+				groupBox_Manual4.Invoke((MethodInvoker)(() => groupBox_Manual4.Enabled = false));
+
+				groupBox_Automatic1.Invoke((MethodInvoker)(() => groupBox_Automatic1.Enabled = true));
+
+				panel_Manualbox.BackColor	= Color.Gray;
+				panel_Autobox.BackColor		= Color.OliveDrab;
 			}
 
 			//Check for mode change modes, if found, change text and remove that string from the string concat
 			if (-1 != Serialdata.IndexOf(CMD_State_Idel))
 			{
 				textBox_Status_State.Invoke((MethodInvoker)(() => textBox_Status_State.Text = "IDEL"));
+				panel_Machinebox.BackColor	= Color.CornflowerBlue;
 			}
 			if (-1 != Serialdata.IndexOf(CMD_State_Started))
 			{
 				textBox_Status_State.Invoke((MethodInvoker)(() => textBox_Status_State.Text = "STARTED"));
+				panel_Machinebox.BackColor = Color.OliveDrab;
 			}
 			if (-1 != Serialdata.IndexOf(CMD_State_Stopped))
 			{
 				textBox_Status_State.Invoke((MethodInvoker)(() => textBox_Status_State.Text = "STOPPED"));
+				panel_Machinebox.BackColor = Color.IndianRed;
 			}
 		}
 
@@ -362,6 +385,9 @@ namespace ArmHMI_WinForms
 
 					textBox_Status_State.Text = "null";
 					textBox_Status_Mode.Text = "null";
+					panel_Machinebox.BackColor = Color.Gray;
+					panel_Manualbox.BackColor = Color.Gray;
+					panel_Autobox.BackColor = Color.Gray;
 
 				}
 				catch (Exception error)

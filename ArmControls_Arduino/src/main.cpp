@@ -57,7 +57,18 @@ void loop() {
     commandReceived = bulidMessageString; //Load new command into "commandReceived"
     bulidMessageString = ""; //Clear bulid Message String for next message
     newData = false;
-    Serial.print(">ACK:["); Serial.print(commandReceived); Serial.println("]");
+    //Serial.print(">ACK:["); Serial.print(commandReceived); Serial.println("]");
+
+    //load into feedback, Remove special characters from string, and print to serial for user feedback
+    feedback = commandReceived;
+    int begin = feedback.indexOf('$');
+    int end = feedback.indexOf('#');
+    feedback = feedback.substring(begin+1, end);
+    Serial.print(">> Arduino Received: ["); Serial.print(feedback); Serial.println("]");
+
+
+
+
 
     //Detect and process what command was sent
     ReceiveCommands_RequestStatus();        //Check if messages are Request Status

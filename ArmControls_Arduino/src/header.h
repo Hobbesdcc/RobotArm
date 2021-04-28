@@ -111,6 +111,7 @@ boolean newData = false;
 String bulidMessageString;
 char endMarker = '#';
 char receivedChar;
+String feedback;
 
 //When a command comes it, these values are set high and trigger the actual command 
 bool CMD_ISSUED_HOME_ALL;
