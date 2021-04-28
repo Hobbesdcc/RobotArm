@@ -28,7 +28,7 @@ void setup() {
   Serial.println(Servo1_RangeLimitMax); 
 
   //Go home all servos (runs once on start)
-  Homing(1,1,1,1); //AxisA,AxisB,Base
+  Action_Homing(1,1,1,1); //Base,AxisA,AxisB,Grippper
 }
 
 
@@ -54,7 +54,10 @@ void loop() {
 
   //Once new command found, Run it thought all checks to understand and process it
   if (newData == true) {
-    
+
+    //Overview: Get message -> Parse it out -> go through ReceiveCommands_ functions to identify it -> 
+    // -> once identifyed set CMD_ISSUED_ high so it can be exectued later
+
     commandReceived = bulidMessageString; //Load new command into "commandReceived"
     bulidMessageString = ""; //Clear bulid Message String for next message
     newData = false;
@@ -68,16 +71,14 @@ void loop() {
     Serial.print(">> Arduino Received: ["); Serial.print(feedback); Serial.println("]");
 
 
-
-
-
-    //Detect and process what command was sent
+    //Identify and process the new command that was just parsed (each fuction looks for a diffrent command)
     ReceiveCommands_RequestStatus();        //Check if messages are Request Status
     ReceiveCommands_RequestModeChange();    //Check if messages are Request Mode Change
     ReceiveCommands_RequestStateChange();   //Check if messages are Request State Change
     ReceiveCommands_Homing();
     ReceiveCommands_ServosDisconnect();
     ReceiveCommands_Gripper();
+
     ReceiveCommands_GotoPositon(positionXYZ);   //Check if goto postion message sent, if so parse the XYZ from it.
     GotoX = positionXYZ[1]; //Load parsed value into Goto X postion
     GotoY = positionXYZ[2]; //Load parsed value into Goto Y postion
@@ -105,19 +106,19 @@ void loop() {
 
         //Action: Homing
         if (CMD_ISSUED_HOME_ALL){
-          Homing(1,1,1,1); //AxisA,AxisB,Base
+          Action_Homing(1,1,1,1); //AxisA,AxisB,Base
           CMD_ISSUED_HOME_ALL = false; //reset 
         }
         if (CMD_ISSUED_HOME_AxisA){
-          Homing(0,1,0,0); //AxisA,AxisB,Base
+          Action_Homing(0,1,0,0); //AxisA,AxisB,Base
           CMD_ISSUED_HOME_AxisA = false; //reset 
         }
         if (CMD_ISSUED_HOME_AxisB){
-          Homing(0,0,1,0); //AxisA,AxisB,Base
+          Action_Homing(0,0,1,0); //AxisA,AxisB,Base
           CMD_ISSUED_HOME_AxisB = false; //reset 
         }
         if (CMD_ISSUED_HOME_Base){
-          Homing(1,0,0,0); //AxisA,AxisB,Base
+          Action_Homing(1,0,0,0); //AxisA,AxisB,Base
           CMD_ISSUED_HOME_Base = false; //reset 
         }
 
@@ -137,7 +138,6 @@ void loop() {
           CMD_ISSUED_Servos_Attach = false; //reset 
         }
       
-
 
         //Old Value for edge detect
         GotoX_Old = GotoX;
@@ -182,22 +182,21 @@ void loop() {
 // ================================== = = = = = = = = = = = = = = = = ===
 
 // == Function ================================
-void Homing(bool Base, bool AxisA, bool AxisB, bool Gripper){
+void Action_Homing(bool Base, bool AxisA, bool AxisB, bool Gripper){
   //parms SetServoAnagle(Servo servo, float ServoAnagle, float RangeLimitMin, float RangeLimitMax)
   if (Base){
-    SetServoAnagle(myServo1, 90, Servo1_RangeLimitMin, Servo1_RangeLimitMax); 
+   Action_SetServoAnagle(myServo1, 90, Servo1_RangeLimitMin, Servo1_RangeLimitMax); 
   }
   if (AxisA){
-    SetServoAnagle(myServo2, 90-JointA_CalibrationOffset, Servo2_RangeLimitMin, Servo2_RangeLimitMax);
+    Action_SetServoAnagle(myServo2, 90-JointA_CalibrationOffset, Servo2_RangeLimitMin, Servo2_RangeLimitMax);
   }
   if (AxisB){
-    SetServoAnagle(myServo3, 90-JointC_CalibrationOffset, Servo3_RangeLimitMin, Servo3_RangeLimitMax);
+    Action_SetServoAnagle(myServo3, 90-JointC_CalibrationOffset, Servo3_RangeLimitMin, Servo3_RangeLimitMax);
   }
   if (Gripper){
-    SetServoAnagle(myServo4, 90, Servo4_RangeLimitMin, Servo4_RangeLimitMax);
+    Action_SetServoAnagle(myServo4, 90, Servo4_RangeLimitMin, Servo4_RangeLimitMax);
   }
 }
-
 
 // == Function ================================
 void Action_GOTO_Positon(){
@@ -227,9 +226,9 @@ void Action_GOTO_Positon(){
 
   } else {
     //Writes the FINAL joint values into the servos
-    SetServoAnagle(myServo1, BaseAxis_degree-BaseAxis_CalibrationOffset, Servo1_RangeLimitMin, Servo1_RangeLimitMax);
-    SetServoAnagle(myServo2, JointA_degree-JointA_CalibrationOffset, Servo2_RangeLimitMin, Servo2_RangeLimitMax);
-    SetServoAnagle(myServo3, 180-JointC_degree-JointC_CalibrationOffset, Servo3_RangeLimitMin, Servo3_RangeLimitMax);
+    Action_SetServoAnagle(myServo1, BaseAxis_degree-BaseAxis_CalibrationOffset, Servo1_RangeLimitMin, Servo1_RangeLimitMax);
+    Action_SetServoAnagle(myServo2, JointA_degree-JointA_CalibrationOffset, Servo2_RangeLimitMin, Servo2_RangeLimitMax);
+    Action_SetServoAnagle(myServo3, 180-JointC_degree-JointC_CalibrationOffset, Servo3_RangeLimitMin, Servo3_RangeLimitMax);
 
     Serial.println(F("< Arduino: Servos Axis Values Set >"));
     delay(ServoDelayTime);  //delay for servo to move
@@ -240,11 +239,11 @@ void Action_GOTO_Positon(){
 void Action_GripperOpenClose(){
   //Action: Servo Open/Close Gripper
   if (CMD_ISSUED_Servos_GripOpen){
-    SetServoAnagle(myServo4, 1, Servo4_RangeLimitMin, Servo4_RangeLimitMax);
+    Action_SetServoAnagle(myServo4, 1, Servo4_RangeLimitMin, Servo4_RangeLimitMax);
     CMD_ISSUED_Servos_GripOpen = false; //reset 
   }
   if (CMD_ISSUED_Servos_GripClose){
-    SetServoAnagle(myServo4, 90, Servo4_RangeLimitMin, Servo4_RangeLimitMax);
+    Action_SetServoAnagle(myServo4, 90, Servo4_RangeLimitMin, Servo4_RangeLimitMax);
     CMD_ISSUED_Servos_GripClose = false; //reset 
   }
 }

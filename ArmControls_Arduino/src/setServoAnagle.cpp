@@ -2,7 +2,7 @@
 #include <Servo.h> 
 
 // == Function ================================
-void SetServoAnagle(Servo servo, float ServoAnagle, float RangeLimitMin, float RangeLimitMax){
+void Action_SetServoAnagle(Servo servo, float ServoAnagle, float RangeLimitMin, float RangeLimitMax){
     //Functions to set servo if its in limits
     if(ServoAnagle > RangeLimitMin || ServoAnagle < RangeLimitMax){
       servo.write(ServoAnagle);

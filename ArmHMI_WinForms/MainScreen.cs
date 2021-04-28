@@ -46,8 +46,6 @@ namespace ArmHMI_WinForms
 		string CMD_Status_GetState		= "$STATUS_GETSTATE#";
 		string CMD_Status_GetMode		= "$STATUS_GETMODE#";
 
-		
-
 
 		//FORM ----------------------------------------------------------------------------------------------------------- 
 		public MainScreen()
