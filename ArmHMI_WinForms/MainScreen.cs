@@ -129,7 +129,6 @@ namespace ArmHMI_WinForms
 				groupBox_Manual1.Invoke((MethodInvoker)(() => groupBox_Manual1.Enabled = true));
 				groupBox_Manual2.Invoke((MethodInvoker)(() => groupBox_Manual2.Enabled = true));
 				groupBox_Manual3.Invoke((MethodInvoker)(() => groupBox_Manual3.Enabled = true));
-				groupBox_Manual4.Invoke((MethodInvoker)(() => groupBox_Manual4.Enabled = true));
 
 				groupBox_Automatic1.Invoke((MethodInvoker)(() => groupBox_Automatic1.Enabled = false));
 
@@ -143,7 +142,6 @@ namespace ArmHMI_WinForms
 				groupBox_Manual1.Invoke((MethodInvoker)(() => groupBox_Manual1.Enabled = false));
 				groupBox_Manual2.Invoke((MethodInvoker)(() => groupBox_Manual2.Enabled = false));
 				groupBox_Manual3.Invoke((MethodInvoker)(() => groupBox_Manual3.Enabled = false));
-				groupBox_Manual4.Invoke((MethodInvoker)(() => groupBox_Manual4.Enabled = false));
 
 				groupBox_Automatic1.Invoke((MethodInvoker)(() => groupBox_Automatic1.Enabled = true));
 
@@ -498,7 +496,5 @@ namespace ArmHMI_WinForms
 		{
 			richTextBox_textReceiver.Text = "";
 		}
-
-
 	}
 }

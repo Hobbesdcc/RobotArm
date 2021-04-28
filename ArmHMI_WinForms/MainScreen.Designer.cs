@@ -82,30 +82,34 @@
 			this.groupBox_Automatic1 = new System.Windows.Forms.GroupBox();
 			this.Bnt_AutoClearScript = new System.Windows.Forms.Button();
 			this.richTextBox_Auto = new System.Windows.Forms.RichTextBox();
-			this.groupBox_Manual4 = new System.Windows.Forms.GroupBox();
+			this.Bnt_CloseGrip = new System.Windows.Forms.Button();
+			this.Bnt_OpenGrip = new System.Windows.Forms.Button();
 			this.panel_Machinebox = new System.Windows.Forms.Panel();
 			this.panel_Manualbox = new System.Windows.Forms.Panel();
 			this.label9 = new System.Windows.Forms.Label();
 			this.Bnt_Script_TeachPoint = new System.Windows.Forms.Button();
 			this.groupBox_Manual3 = new System.Windows.Forms.GroupBox();
+			this.Bnt_Script_Loop = new System.Windows.Forms.Button();
+			this.label6 = new System.Windows.Forms.Label();
+			this.textBox_Script_Delay = new System.Windows.Forms.TextBox();
 			this.Bnt_Script_CloseGrip = new System.Windows.Forms.Button();
 			this.Bnt_Script_OpenGrip = new System.Windows.Forms.Button();
 			this.Bnt_Script_Delay = new System.Windows.Forms.Button();
 			this.panel_Autobox = new System.Windows.Forms.Panel();
 			this.label12 = new System.Windows.Forms.Label();
-			this.textBox_Script_Delay = new System.Windows.Forms.TextBox();
-			this.label6 = new System.Windows.Forms.Label();
-			this.Bnt_CloseGrip = new System.Windows.Forms.Button();
-			this.Bnt_OpenGrip = new System.Windows.Forms.Button();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.Bnt_Script_Loop = new System.Windows.Forms.Button();
+			this.button1 = new System.Windows.Forms.Button();
+			this.button2 = new System.Windows.Forms.Button();
+			this.button3 = new System.Windows.Forms.Button();
+			this.label7 = new System.Windows.Forms.Label();
+			this.label8 = new System.Windows.Forms.Label();
 			this.groupBox_ModeSelect.SuspendLayout();
 			this.groupBox_Manual1.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.groupBox5.SuspendLayout();
 			this.groupBox_MahineStates.SuspendLayout();
 			this.groupBox_Manual2.SuspendLayout();
-			this.groupBox_Manual4.SuspendLayout();
+			this.groupBox_Automatic1.SuspendLayout();
 			this.panel_Machinebox.SuspendLayout();
 			this.panel_Manualbox.SuspendLayout();
 			this.groupBox_Manual3.SuspendLayout();
@@ -155,6 +159,7 @@
 			// 
 			// groupBox_ModeSelect
 			// 
+			this.groupBox_ModeSelect.Controls.Add(this.label8);
 			this.groupBox_ModeSelect.Controls.Add(this.Bnt_GetMode);
 			this.groupBox_ModeSelect.Controls.Add(this.Bnt_Mode_Manual);
 			this.groupBox_ModeSelect.Controls.Add(this.textBox_Status_Mode);
@@ -211,7 +216,7 @@
 			this.Bnt_State_Stop.Name = "Bnt_State_Stop";
 			this.Bnt_State_Stop.Size = new System.Drawing.Size(100, 40);
 			this.Bnt_State_Stop.TabIndex = 1;
-			this.Bnt_State_Stop.Text = "Stop";
+			this.Bnt_State_Stop.Text = "STOP";
 			this.Bnt_State_Stop.UseVisualStyleBackColor = true;
 			this.Bnt_State_Stop.Click += new System.EventHandler(this.Bnt_State_Stop_Click);
 			// 
@@ -221,7 +226,7 @@
 			this.Bnt_State_Start.Name = "Bnt_State_Start";
 			this.Bnt_State_Start.Size = new System.Drawing.Size(100, 40);
 			this.Bnt_State_Start.TabIndex = 0;
-			this.Bnt_State_Start.Text = "Start";
+			this.Bnt_State_Start.Text = "START";
 			this.Bnt_State_Start.UseVisualStyleBackColor = true;
 			this.Bnt_State_Start.Click += new System.EventHandler(this.Bnt_State_Start_Click);
 			// 
@@ -240,7 +245,7 @@
 			// 
 			// Bnt_AttachServos
 			// 
-			this.Bnt_AttachServos.Location = new System.Drawing.Point(12, 55);
+			this.Bnt_AttachServos.Location = new System.Drawing.Point(12, 135);
 			this.Bnt_AttachServos.Name = "Bnt_AttachServos";
 			this.Bnt_AttachServos.Size = new System.Drawing.Size(150, 30);
 			this.Bnt_AttachServos.TabIndex = 2;
@@ -250,7 +255,7 @@
 			// 
 			// Bnt_DetachServos
 			// 
-			this.Bnt_DetachServos.Location = new System.Drawing.Point(168, 55);
+			this.Bnt_DetachServos.Location = new System.Drawing.Point(168, 135);
 			this.Bnt_DetachServos.Name = "Bnt_DetachServos";
 			this.Bnt_DetachServos.Size = new System.Drawing.Size(150, 30);
 			this.Bnt_DetachServos.TabIndex = 2;
@@ -447,14 +452,18 @@
 			this.Bnt_State_Reset.Name = "Bnt_State_Reset";
 			this.Bnt_State_Reset.Size = new System.Drawing.Size(100, 40);
 			this.Bnt_State_Reset.TabIndex = 1;
-			this.Bnt_State_Reset.Text = "Reset";
+			this.Bnt_State_Reset.Text = "RESET";
 			this.Bnt_State_Reset.UseVisualStyleBackColor = true;
 			this.Bnt_State_Reset.Click += new System.EventHandler(this.Bnt_State_Reset_Click);
 			// 
 			// groupBox_Manual2
 			// 
+			this.groupBox_Manual2.Controls.Add(this.Bnt_CloseGrip);
+			this.groupBox_Manual2.Controls.Add(this.Bnt_OpenGrip);
 			this.groupBox_Manual2.Controls.Add(this.check_BigSteps);
+			this.groupBox_Manual2.Controls.Add(this.Bnt_DetachServos);
 			this.groupBox_Manual2.Controls.Add(this.Bnt_IssueZdown);
+			this.groupBox_Manual2.Controls.Add(this.Bnt_AttachServos);
 			this.groupBox_Manual2.Controls.Add(this.check_IssueOnPress);
 			this.groupBox_Manual2.Controls.Add(this.Bnt_IssueYdown);
 			this.groupBox_Manual2.Controls.Add(this.Bnt_IssueXdown);
@@ -470,10 +479,10 @@
 			this.groupBox_Manual2.Controls.Add(this.textBox_goto_posX);
 			this.groupBox_Manual2.Location = new System.Drawing.Point(468, 185);
 			this.groupBox_Manual2.Name = "groupBox_Manual2";
-			this.groupBox_Manual2.Size = new System.Drawing.Size(330, 102);
+			this.groupBox_Manual2.Size = new System.Drawing.Size(330, 176);
 			this.groupBox_Manual2.TabIndex = 19;
 			this.groupBox_Manual2.TabStop = false;
-			this.groupBox_Manual2.Text = "Manual - Go To Postion";
+			this.groupBox_Manual2.Text = "Manual - Goto Postion and Servo Controls";
 			// 
 			// check_BigSteps
 			// 
@@ -602,7 +611,7 @@
 			// 
 			this.Bnt_IssueGoToCommand.Location = new System.Drawing.Point(205, 63);
 			this.Bnt_IssueGoToCommand.Name = "Bnt_IssueGoToCommand";
-			this.Bnt_IssueGoToCommand.Size = new System.Drawing.Size(100, 30);
+			this.Bnt_IssueGoToCommand.Size = new System.Drawing.Size(113, 30);
 			this.Bnt_IssueGoToCommand.TabIndex = 18;
 			this.Bnt_IssueGoToCommand.Text = "Issue Goto CMD";
 			this.Bnt_IssueGoToCommand.UseVisualStyleBackColor = true;
@@ -630,6 +639,10 @@
 			// 
 			// groupBox_Automatic1
 			// 
+			this.groupBox_Automatic1.Controls.Add(this.label7);
+			this.groupBox_Automatic1.Controls.Add(this.button3);
+			this.groupBox_Automatic1.Controls.Add(this.button1);
+			this.groupBox_Automatic1.Controls.Add(this.button2);
 			this.groupBox_Automatic1.Location = new System.Drawing.Point(804, 68);
 			this.groupBox_Automatic1.Name = "groupBox_Automatic1";
 			this.groupBox_Automatic1.Size = new System.Drawing.Size(330, 111);
@@ -639,7 +652,7 @@
 			// 
 			// Bnt_AutoClearScript
 			// 
-			this.Bnt_AutoClearScript.Location = new System.Drawing.Point(224, 489);
+			this.Bnt_AutoClearScript.Location = new System.Drawing.Point(222, 489);
 			this.Bnt_AutoClearScript.Name = "Bnt_AutoClearScript";
 			this.Bnt_AutoClearScript.Size = new System.Drawing.Size(100, 30);
 			this.Bnt_AutoClearScript.TabIndex = 22;
@@ -651,22 +664,29 @@
 			// 
 			this.richTextBox_Auto.Location = new System.Drawing.Point(6, 19);
 			this.richTextBox_Auto.Name = "richTextBox_Auto";
-			this.richTextBox_Auto.Size = new System.Drawing.Size(318, 464);
+			this.richTextBox_Auto.Size = new System.Drawing.Size(316, 464);
 			this.richTextBox_Auto.TabIndex = 21;
 			this.richTextBox_Auto.Text = "";
 			// 
-			// groupBox_Manual4
+			// Bnt_CloseGrip
 			// 
-			this.groupBox_Manual4.Controls.Add(this.Bnt_CloseGrip);
-			this.groupBox_Manual4.Controls.Add(this.Bnt_OpenGrip);
-			this.groupBox_Manual4.Controls.Add(this.Bnt_DetachServos);
-			this.groupBox_Manual4.Controls.Add(this.Bnt_AttachServos);
-			this.groupBox_Manual4.Location = new System.Drawing.Point(468, 551);
-			this.groupBox_Manual4.Name = "groupBox_Manual4";
-			this.groupBox_Manual4.Size = new System.Drawing.Size(330, 159);
-			this.groupBox_Manual4.TabIndex = 22;
-			this.groupBox_Manual4.TabStop = false;
-			this.groupBox_Manual4.Text = "Manual - Servo Controls";
+			this.Bnt_CloseGrip.Location = new System.Drawing.Point(168, 99);
+			this.Bnt_CloseGrip.Name = "Bnt_CloseGrip";
+			this.Bnt_CloseGrip.Size = new System.Drawing.Size(150, 30);
+			this.Bnt_CloseGrip.TabIndex = 7;
+			this.Bnt_CloseGrip.Text = "Close Grip";
+			this.Bnt_CloseGrip.UseVisualStyleBackColor = true;
+			this.Bnt_CloseGrip.Click += new System.EventHandler(this.Bnt_CloseGrip_Click);
+			// 
+			// Bnt_OpenGrip
+			// 
+			this.Bnt_OpenGrip.Location = new System.Drawing.Point(12, 99);
+			this.Bnt_OpenGrip.Name = "Bnt_OpenGrip";
+			this.Bnt_OpenGrip.Size = new System.Drawing.Size(150, 30);
+			this.Bnt_OpenGrip.TabIndex = 6;
+			this.Bnt_OpenGrip.Text = "Open Grip";
+			this.Bnt_OpenGrip.UseVisualStyleBackColor = true;
+			this.Bnt_OpenGrip.Click += new System.EventHandler(this.Bnt_OpenGrip_Click);
 			// 
 			// panel_Machinebox
 			// 
@@ -717,12 +737,41 @@
 			this.groupBox_Manual3.Controls.Add(this.Bnt_Script_OpenGrip);
 			this.groupBox_Manual3.Controls.Add(this.Bnt_Script_Delay);
 			this.groupBox_Manual3.Controls.Add(this.Bnt_Script_TeachPoint);
-			this.groupBox_Manual3.Location = new System.Drawing.Point(468, 293);
+			this.groupBox_Manual3.Location = new System.Drawing.Point(468, 367);
 			this.groupBox_Manual3.Name = "groupBox_Manual3";
-			this.groupBox_Manual3.Size = new System.Drawing.Size(330, 252);
+			this.groupBox_Manual3.Size = new System.Drawing.Size(330, 343);
 			this.groupBox_Manual3.TabIndex = 23;
 			this.groupBox_Manual3.TabStop = false;
 			this.groupBox_Manual3.Text = "Manual - Script Buliding";
+			// 
+			// Bnt_Script_Loop
+			// 
+			this.Bnt_Script_Loop.Location = new System.Drawing.Point(79, 196);
+			this.Bnt_Script_Loop.Name = "Bnt_Script_Loop";
+			this.Bnt_Script_Loop.Size = new System.Drawing.Size(166, 30);
+			this.Bnt_Script_Loop.TabIndex = 24;
+			this.Bnt_Script_Loop.Text = "Loop (use at end)";
+			this.Bnt_Script_Loop.UseVisualStyleBackColor = true;
+			this.Bnt_Script_Loop.Click += new System.EventHandler(this.Bnt_Script_Loop_Click);
+			// 
+			// label6
+			// 
+			this.label6.BackColor = System.Drawing.SystemColors.ControlDark;
+			this.label6.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.label6.Location = new System.Drawing.Point(3, 16);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(321, 30);
+			this.label6.TabIndex = 23;
+			this.label6.Text = "SCRIPT COMMAND LIST";
+			this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// textBox_Script_Delay
+			// 
+			this.textBox_Script_Delay.Location = new System.Drawing.Point(185, 93);
+			this.textBox_Script_Delay.Name = "textBox_Script_Delay";
+			this.textBox_Script_Delay.Size = new System.Drawing.Size(60, 20);
+			this.textBox_Script_Delay.TabIndex = 22;
+			this.textBox_Script_Delay.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			// 
 			// Bnt_Script_CloseGrip
 			// 
@@ -775,45 +824,6 @@
 			this.label12.Text = "Automatic Controls";
 			this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// textBox_Script_Delay
-			// 
-			this.textBox_Script_Delay.Location = new System.Drawing.Point(185, 93);
-			this.textBox_Script_Delay.Name = "textBox_Script_Delay";
-			this.textBox_Script_Delay.Size = new System.Drawing.Size(60, 20);
-			this.textBox_Script_Delay.TabIndex = 22;
-			this.textBox_Script_Delay.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			// 
-			// label6
-			// 
-			this.label6.BackColor = System.Drawing.SystemColors.ControlDark;
-			this.label6.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.label6.Location = new System.Drawing.Point(3, 16);
-			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(321, 30);
-			this.label6.TabIndex = 23;
-			this.label6.Text = "COMMAND LIST";
-			this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
-			// Bnt_CloseGrip
-			// 
-			this.Bnt_CloseGrip.Location = new System.Drawing.Point(168, 19);
-			this.Bnt_CloseGrip.Name = "Bnt_CloseGrip";
-			this.Bnt_CloseGrip.Size = new System.Drawing.Size(150, 30);
-			this.Bnt_CloseGrip.TabIndex = 7;
-			this.Bnt_CloseGrip.Text = "Close Grip";
-			this.Bnt_CloseGrip.UseVisualStyleBackColor = true;
-			this.Bnt_CloseGrip.Click += new System.EventHandler(this.Bnt_CloseGrip_Click);
-			// 
-			// Bnt_OpenGrip
-			// 
-			this.Bnt_OpenGrip.Location = new System.Drawing.Point(12, 19);
-			this.Bnt_OpenGrip.Name = "Bnt_OpenGrip";
-			this.Bnt_OpenGrip.Size = new System.Drawing.Size(150, 30);
-			this.Bnt_OpenGrip.TabIndex = 6;
-			this.Bnt_OpenGrip.Text = "Open Grip";
-			this.Bnt_OpenGrip.UseVisualStyleBackColor = true;
-			this.Bnt_OpenGrip.Click += new System.EventHandler(this.Bnt_OpenGrip_Click);
-			// 
 			// groupBox1
 			// 
 			this.groupBox1.Controls.Add(this.Bnt_AutoClearScript);
@@ -825,15 +835,54 @@
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Automatic Script";
 			// 
-			// Bnt_Script_Loop
+			// button1
 			// 
-			this.Bnt_Script_Loop.Location = new System.Drawing.Point(79, 196);
-			this.Bnt_Script_Loop.Name = "Bnt_Script_Loop";
-			this.Bnt_Script_Loop.Size = new System.Drawing.Size(166, 30);
-			this.Bnt_Script_Loop.TabIndex = 24;
-			this.Bnt_Script_Loop.Text = "Loop (use at end)";
-			this.Bnt_Script_Loop.UseVisualStyleBackColor = true;
-			this.Bnt_Script_Loop.Click += new System.EventHandler(this.Bnt_Script_Loop_Click);
+			this.button1.Location = new System.Drawing.Point(116, 22);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(100, 40);
+			this.button1.TabIndex = 3;
+			this.button1.Text = "Stop Script";
+			this.button1.UseVisualStyleBackColor = true;
+			// 
+			// button2
+			// 
+			this.button2.Location = new System.Drawing.Point(9, 22);
+			this.button2.Name = "button2";
+			this.button2.Size = new System.Drawing.Size(100, 40);
+			this.button2.TabIndex = 2;
+			this.button2.Text = "Start Script";
+			this.button2.UseVisualStyleBackColor = true;
+			// 
+			// button3
+			// 
+			this.button3.Location = new System.Drawing.Point(222, 22);
+			this.button3.Name = "button3";
+			this.button3.Size = new System.Drawing.Size(100, 40);
+			this.button3.TabIndex = 4;
+			this.button3.Text = "Reset Script";
+			this.button3.UseVisualStyleBackColor = true;
+			// 
+			// label7
+			// 
+			this.label7.BackColor = System.Drawing.SystemColors.ControlDark;
+			this.label7.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.label7.Location = new System.Drawing.Point(11, 65);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(313, 43);
+			this.label7.TabIndex = 23;
+			this.label7.Text = "DISCONNECTED";
+			this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// label8
+			// 
+			this.label8.BackColor = System.Drawing.SystemColors.ControlDark;
+			this.label8.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.label8.Location = new System.Drawing.Point(421, 72);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(28, 26);
+			this.label8.TabIndex = 25;
+			this.label8.Text = "v1.0";
+			this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// MainScreen
 			// 
@@ -845,7 +894,6 @@
 			this.Controls.Add(this.panel_Autobox);
 			this.Controls.Add(this.panel_Manualbox);
 			this.Controls.Add(this.groupBox_Manual3);
-			this.Controls.Add(this.groupBox_Manual4);
 			this.Controls.Add(this.groupBox_Automatic1);
 			this.Controls.Add(this.groupBox_Manual2);
 			this.Controls.Add(this.groupBox_MahineStates);
@@ -869,7 +917,7 @@
 			this.groupBox_MahineStates.PerformLayout();
 			this.groupBox_Manual2.ResumeLayout(false);
 			this.groupBox_Manual2.PerformLayout();
-			this.groupBox_Manual4.ResumeLayout(false);
+			this.groupBox_Automatic1.ResumeLayout(false);
 			this.panel_Machinebox.ResumeLayout(false);
 			this.panel_Machinebox.PerformLayout();
 			this.panel_Manualbox.ResumeLayout(false);
@@ -936,7 +984,6 @@
 		private System.Windows.Forms.CheckBox check_BigSteps;
 		private System.Windows.Forms.Label label11;
 		private System.Windows.Forms.GroupBox groupBox_Automatic1;
-		private System.Windows.Forms.GroupBox groupBox_Manual4;
 		private System.Windows.Forms.Panel panel_Machinebox;
 		private System.Windows.Forms.Panel panel_Manualbox;
 		private System.Windows.Forms.Label label9;
@@ -955,6 +1002,11 @@
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.GroupBox groupBox1;
 		public System.Windows.Forms.Button Bnt_Script_Loop;
+		private System.Windows.Forms.Label label7;
+		public System.Windows.Forms.Button button3;
+		public System.Windows.Forms.Button button1;
+		public System.Windows.Forms.Button button2;
+		private System.Windows.Forms.Label label8;
 	}
 }
 

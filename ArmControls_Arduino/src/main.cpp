@@ -19,15 +19,16 @@ void setup() {
 	Serial.println(); 
 
 	//Servo Motors Pins
-	myServo1.attach(8);   // attaches the servo on pin 10 to the servo object, BASE
+	myServo1.attach(8);   // attaches the servo on pin 08 to the servo object, BASE
 	myServo2.attach(9);		// attaches the servo on pin 09 to the servo object, BIG ARM 
-  myServo3.attach(10);	// attaches the servo on pin 08 to the servo object, SMALL ARM
+  myServo3.attach(10);	// attaches the servo on pin 10 to the servo object, SMALL ARM
+  myServo4.attach(11);	// attaches the servo on pin 11 to the servo object, Gripper
 
   Serial.println(Servo1_RangeLimitMin); 
   Serial.println(Servo1_RangeLimitMax); 
 
   //Go home all servos (runs once on start)
-  Homing(1,1,1); //AxisA,AxisB,Base
+  Homing(1,1,1,1); //AxisA,AxisB,Base
 }
 
 
@@ -74,14 +75,14 @@ void loop() {
     ReceiveCommands_RequestStatus();        //Check if messages are Request Status
     ReceiveCommands_RequestModeChange();    //Check if messages are Request Mode Change
     ReceiveCommands_RequestStateChange();   //Check if messages are Request State Change
-    
+    ReceiveCommands_Homing();
+    ReceiveCommands_ServosDisconnect();
+    ReceiveCommands_Gripper();
     ReceiveCommands_GotoPositon(positionXYZ);   //Check if goto postion message sent, if so parse the XYZ from it.
     GotoX = positionXYZ[1]; //Load parsed value into Goto X postion
     GotoY = positionXYZ[2]; //Load parsed value into Goto Y postion
     GotoZ = positionXYZ[3]; //Load parsed value into Goto Z postion
 
-    ReceiveCommands_Homing();
-    ReceiveCommands_ServosDisconnect();
   }
 
 
@@ -100,34 +101,47 @@ void loop() {
 
         //Action: Homing
         if (CMD_ISSUED_HOME_ALL){
-          Homing(1,1,1); //AxisA,AxisB,Base
+          Homing(1,1,1,1); //AxisA,AxisB,Base
           CMD_ISSUED_HOME_ALL = false; //reset 
         }
         if (CMD_ISSUED_HOME_AxisA){
-          Homing(1,0,0); //AxisA,AxisB,Base
+          Homing(0,1,0,0); //AxisA,AxisB,Base
           CMD_ISSUED_HOME_AxisA = false; //reset 
         }
         if (CMD_ISSUED_HOME_AxisB){
-          Homing(0,1,0); //AxisA,AxisB,Base
+          Homing(0,0,1,0); //AxisA,AxisB,Base
           CMD_ISSUED_HOME_AxisB = false; //reset 
         }
         if (CMD_ISSUED_HOME_Base){
-          Homing(0,0,1); //AxisA,AxisB,Base
+          Homing(1,0,0,0); //AxisA,AxisB,Base
           CMD_ISSUED_HOME_Base = false; //reset 
         }
 
         //Action: Servo Attach/Detach
         if (CMD_ISSUED_Servos_Detach){
-          myServo1.detach();    // detaches the servo on pin 10 to the servo object, BASE
+          myServo1.detach();    // detaches the servo on pin 08 to the servo object, BASE
           myServo2.detach();	  // detaches the servo on pin 09 to the servo object, BIG ARM 
-          myServo3.detach();	  // detaches the servo on pin 08 to the servo object, SMALL ARM
+          myServo3.detach();	  // detaches the servo on pin 10 to the servo object, SMALL ARM
+          myServo4.detach();	  // detaches the servo on pin 11 to the servo object, Gripper
           CMD_ISSUED_Servos_Detach = false; //reset 
         }
         if (CMD_ISSUED_Servos_Attach){
-          myServo1.attach(8);   // attaches the servo on pin 10 to the servo object, BASE
+          myServo1.attach(8);   // attaches the servo on pin 08 to the servo object, BASE
           myServo2.attach(9);		// attaches the servo on pin 09 to the servo object, BIG ARM 
-          myServo3.attach(10);	// attaches the servo on pin 08 to the servo object, SMALL ARM
+          myServo3.attach(10);	// attaches the servo on pin 10 to the servo object, SMALL ARM
+          myServo4.attach(11);	// attaches the servo on pin 11 to the servo object, Gripper
           CMD_ISSUED_Servos_Attach = false; //reset 
+        }
+
+
+        //Action: Servo Open/Close Gripper
+        if (CMD_ISSUED_Servos_GripOpen){
+          SetServoAnagle(myServo4, 1, Servo4_RangeLimitMin,Servo4_RangeLimitMax);
+          CMD_ISSUED_Servos_GripOpen = false; //reset 
+        }
+        if (CMD_ISSUED_Servos_GripClose){
+          SetServoAnagle(myServo4, 90, Servo4_RangeLimitMin,Servo4_RangeLimitMax);
+          CMD_ISSUED_Servos_GripClose = false; //reset 
         }
 
 
@@ -155,13 +169,15 @@ void loop() {
     //Serial.println("[Nothing can be run when machine in Stopped State]");
 
     //* //reset all internal issued commands
-    CMD_ISSUED_HOME_ALL       = false;
-    CMD_ISSUED_HOME_AxisA     = false;
-    CMD_ISSUED_HOME_AxisB     = false;
-    CMD_ISSUED_HOME_Base      = false;
-    CMD_ISSUED_Servos_GOTO    = false;
-    CMD_ISSUED_Servos_Attach  = false;
-    CMD_ISSUED_Servos_Detach  = false;
+    CMD_ISSUED_HOME_ALL         = false;
+    CMD_ISSUED_HOME_AxisA       = false;
+    CMD_ISSUED_HOME_AxisB       = false;
+    CMD_ISSUED_HOME_Base        = false;
+    CMD_ISSUED_Servos_GOTO      = false;
+    CMD_ISSUED_Servos_Attach    = false;
+    CMD_ISSUED_Servos_Detach    = false;
+    CMD_ISSUED_Servos_GripOpen  = false;
+    CMD_ISSUED_Servos_GripClose = false;
     //*/
   }
   
@@ -173,7 +189,7 @@ void loop() {
 // ================================== = = = = = = = = = = = = = = = = ===
 
 // == Function ================================
-void Homing(bool AxisA, bool AxisB, bool Base){
+void Homing(bool Base, bool AxisA, bool AxisB, bool Gripper){
   //parms SetServoAnagle(Servo servo, float ServoAnagle, float RangeLimitMin, float RangeLimitMax)
   if (Base){
     SetServoAnagle(myServo1, 90, Servo1_RangeLimitMin, Servo1_RangeLimitMax); 
@@ -183,6 +199,9 @@ void Homing(bool AxisA, bool AxisB, bool Base){
   }
   if (AxisB){
     SetServoAnagle(myServo3, 90-JointC_CalibrationOffset, Servo3_RangeLimitMin, Servo3_RangeLimitMax);
+  }
+  if (Gripper){
+    SetServoAnagle(myServo4, 90, Servo4_RangeLimitMin, Servo4_RangeLimitMax);
   }
 }
 
@@ -401,6 +420,19 @@ void ReceiveCommands_ServosDisconnect(){
   }
 }
 
+// == Function ================================
+void ReceiveCommands_Gripper(){
+  if (-1 != commandReceived.indexOf(CMD_Servos_OPENGRIP)){
+    CMD_ISSUED_Servos_GripOpen  = true;
+    //CMD_ISSUED_Servos_GripClose = false;
+    Serial.println(CMD_Servos_OPENGRIP);
+  }
+  if (-1 != commandReceived.indexOf(CMD_Servos_CLOSEGRIP)){
+    //MD_ISSUED_Servos_GripOpen  = false;
+    CMD_ISSUED_Servos_GripClose = true;
+    Serial.println(CMD_Servos_CLOSEGRIP);
+  }
+}
 
 
 

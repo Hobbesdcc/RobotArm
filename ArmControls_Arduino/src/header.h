@@ -7,6 +7,7 @@ Servo myservo;  //create servo object to control a servo
 Servo myServo1;  //create servo object 1 to control a servo (Base)
 Servo myServo2;  //create servo object 2 to control a servo (Big arm)
 Servo myServo3;  //create servo object 3 to control a servo (Small arm)
+Servo myServo4;  //create servo object 4 to control a servo (Gripper)
 
 //Setup values:
 double ServoDelayTime = 500; //Set time the Servo will delay after it is sent move command
@@ -30,12 +31,12 @@ double GotoZ_Old; //Goto Y postion OLD for detecting change
 //Servo Min/Max Range in degrees:
 float Servo1_RangeLimitMin = 0;   //(Base)
 float Servo1_RangeLimitMax = 180; //(Base)
-
 float Servo2_RangeLimitMin = 0;   //(Big arm)
 float Servo2_RangeLimitMax = 180; //(Big arm)
-
 float Servo3_RangeLimitMin = 0;   //(Small arm)
 float Servo3_RangeLimitMax = 180; //(Small arm)
+float Servo4_RangeLimitMin = 0;   //(Gripper)
+float Servo4_RangeLimitMax = 180; //(Gripper)
 
 //Triangle A,B,C,E setup init values:
 double TriA_AnglA = 0; double TriA_AnglB = 0; double TriA_AnglC = 0;
@@ -96,7 +97,7 @@ void Action_GOTO_Positon();
 void SetServoAnagle(Servo, float, float, float);
 void JointCalculations();
 String SerialInterface_Receiving();
-void Homing(bool, bool, bool);
+void Homing(bool, bool, bool, bool);
 
 void ReceiveCommands_RequestStatus();
 void ReceiveCommands_RequestModeChange();
@@ -105,6 +106,7 @@ void ReceiveCommands_RequestStateChange();
 void ReceiveCommands_GotoPositon(double[]);
 void ReceiveCommands_Homing();
 void ReceiveCommands_ServosDisconnect();
+void ReceiveCommands_Gripper();
 
 
 //Serial Command varibles - HMI Commands from Serial Interface
@@ -123,6 +125,8 @@ bool CMD_ISSUED_HOME_Base;
 bool CMD_ISSUED_Servos_GOTO;
 bool CMD_ISSUED_Servos_Attach;
 bool CMD_ISSUED_Servos_Detach;
+bool CMD_ISSUED_Servos_GripOpen;
+bool CMD_ISSUED_Servos_GripClose;
 
 //other
 bool initStartedLoopDone = false;
