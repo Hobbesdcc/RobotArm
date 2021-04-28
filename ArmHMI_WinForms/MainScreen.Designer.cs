@@ -78,38 +78,39 @@
 			this.textBox_goto_posY = new System.Windows.Forms.TextBox();
 			this.Bnt_IssueGoToCommand = new System.Windows.Forms.Button();
 			this.textBox_goto_posX = new System.Windows.Forms.TextBox();
-			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.label6 = new System.Windows.Forms.Label();
-			this.label7 = new System.Windows.Forms.Label();
-			this.label8 = new System.Windows.Forms.Label();
-			this.textBox4 = new System.Windows.Forms.TextBox();
-			this.textBox5 = new System.Windows.Forms.TextBox();
-			this.textBox6 = new System.Windows.Forms.TextBox();
-			this.textBox3 = new System.Windows.Forms.TextBox();
-			this.textBox2 = new System.Windows.Forms.TextBox();
 			this.label11 = new System.Windows.Forms.Label();
 			this.groupBox_Automatic1 = new System.Windows.Forms.GroupBox();
+			this.Bnt_AutoClearScript = new System.Windows.Forms.Button();
+			this.richTextBox_Auto = new System.Windows.Forms.RichTextBox();
 			this.groupBox_Manual4 = new System.Windows.Forms.GroupBox();
 			this.panel_Machinebox = new System.Windows.Forms.Panel();
 			this.panel_Manualbox = new System.Windows.Forms.Panel();
 			this.label9 = new System.Windows.Forms.Label();
-			this.button2 = new System.Windows.Forms.Button();
+			this.Bnt_Script_TeachPoint = new System.Windows.Forms.Button();
 			this.groupBox_Manual3 = new System.Windows.Forms.GroupBox();
+			this.Bnt_Script_CloseGrip = new System.Windows.Forms.Button();
+			this.Bnt_Script_OpenGrip = new System.Windows.Forms.Button();
+			this.Bnt_Script_Delay = new System.Windows.Forms.Button();
 			this.panel_Autobox = new System.Windows.Forms.Panel();
 			this.label12 = new System.Windows.Forms.Label();
+			this.textBox_Script_Delay = new System.Windows.Forms.TextBox();
+			this.label6 = new System.Windows.Forms.Label();
+			this.Bnt_CloseGrip = new System.Windows.Forms.Button();
+			this.Bnt_OpenGrip = new System.Windows.Forms.Button();
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.Bnt_Script_Loop = new System.Windows.Forms.Button();
 			this.groupBox_ModeSelect.SuspendLayout();
 			this.groupBox_Manual1.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.groupBox5.SuspendLayout();
 			this.groupBox_MahineStates.SuspendLayout();
 			this.groupBox_Manual2.SuspendLayout();
-			this.groupBox2.SuspendLayout();
-			this.groupBox_Automatic1.SuspendLayout();
 			this.groupBox_Manual4.SuspendLayout();
 			this.panel_Machinebox.SuspendLayout();
 			this.panel_Manualbox.SuspendLayout();
 			this.groupBox_Manual3.SuspendLayout();
 			this.panel_Autobox.SuspendLayout();
+			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// bnt_Home_All
@@ -239,9 +240,9 @@
 			// 
 			// Bnt_AttachServos
 			// 
-			this.Bnt_AttachServos.Location = new System.Drawing.Point(6, 19);
+			this.Bnt_AttachServos.Location = new System.Drawing.Point(12, 55);
 			this.Bnt_AttachServos.Name = "Bnt_AttachServos";
-			this.Bnt_AttachServos.Size = new System.Drawing.Size(100, 30);
+			this.Bnt_AttachServos.Size = new System.Drawing.Size(150, 30);
 			this.Bnt_AttachServos.TabIndex = 2;
 			this.Bnt_AttachServos.Text = "Attach Servos";
 			this.Bnt_AttachServos.UseVisualStyleBackColor = true;
@@ -249,9 +250,9 @@
 			// 
 			// Bnt_DetachServos
 			// 
-			this.Bnt_DetachServos.Location = new System.Drawing.Point(112, 19);
+			this.Bnt_DetachServos.Location = new System.Drawing.Point(168, 55);
 			this.Bnt_DetachServos.Name = "Bnt_DetachServos";
-			this.Bnt_DetachServos.Size = new System.Drawing.Size(100, 30);
+			this.Bnt_DetachServos.Size = new System.Drawing.Size(150, 30);
 			this.Bnt_DetachServos.TabIndex = 2;
 			this.Bnt_DetachServos.Text = "Detach Servos";
 			this.Bnt_DetachServos.UseVisualStyleBackColor = true;
@@ -615,93 +616,6 @@
 			this.textBox_goto_posX.TabIndex = 17;
 			this.textBox_goto_posX.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			// 
-			// groupBox2
-			// 
-			this.groupBox2.Controls.Add(this.label6);
-			this.groupBox2.Controls.Add(this.label7);
-			this.groupBox2.Controls.Add(this.label8);
-			this.groupBox2.Controls.Add(this.textBox4);
-			this.groupBox2.Controls.Add(this.textBox5);
-			this.groupBox2.Controls.Add(this.textBox6);
-			this.groupBox2.Location = new System.Drawing.Point(896, 656);
-			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(175, 101);
-			this.groupBox2.TabIndex = 20;
-			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "Current Positons";
-			// 
-			// label6
-			// 
-			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(8, 74);
-			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(57, 13);
-			this.label6.TabIndex = 24;
-			this.label6.Text = "Z Position:";
-			// 
-			// label7
-			// 
-			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(8, 48);
-			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(57, 13);
-			this.label7.TabIndex = 23;
-			this.label7.Text = "Y Position:";
-			// 
-			// label8
-			// 
-			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point(8, 22);
-			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(57, 13);
-			this.label8.TabIndex = 22;
-			this.label8.Text = "X Position:";
-			// 
-			// textBox4
-			// 
-			this.textBox4.Location = new System.Drawing.Point(66, 71);
-			this.textBox4.Name = "textBox4";
-			this.textBox4.ReadOnly = true;
-			this.textBox4.Size = new System.Drawing.Size(100, 20);
-			this.textBox4.TabIndex = 21;
-			this.textBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			// 
-			// textBox5
-			// 
-			this.textBox5.Location = new System.Drawing.Point(66, 45);
-			this.textBox5.Name = "textBox5";
-			this.textBox5.ReadOnly = true;
-			this.textBox5.Size = new System.Drawing.Size(100, 20);
-			this.textBox5.TabIndex = 20;
-			this.textBox5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			// 
-			// textBox6
-			// 
-			this.textBox6.Location = new System.Drawing.Point(66, 19);
-			this.textBox6.Name = "textBox6";
-			this.textBox6.ReadOnly = true;
-			this.textBox6.Size = new System.Drawing.Size(100, 20);
-			this.textBox6.TabIndex = 17;
-			this.textBox6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			// 
-			// textBox3
-			// 
-			this.textBox3.Location = new System.Drawing.Point(66, 19);
-			this.textBox3.Name = "textBox3";
-			this.textBox3.ReadOnly = true;
-			this.textBox3.Size = new System.Drawing.Size(100, 20);
-			this.textBox3.TabIndex = 17;
-			this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			// 
-			// textBox2
-			// 
-			this.textBox2.Location = new System.Drawing.Point(66, 45);
-			this.textBox2.Name = "textBox2";
-			this.textBox2.ReadOnly = true;
-			this.textBox2.Size = new System.Drawing.Size(100, 20);
-			this.textBox2.TabIndex = 20;
-			this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			// 
 			// label11
 			// 
 			this.label11.AutoSize = true;
@@ -716,22 +630,40 @@
 			// 
 			// groupBox_Automatic1
 			// 
-			this.groupBox_Automatic1.Controls.Add(this.textBox2);
-			this.groupBox_Automatic1.Controls.Add(this.textBox3);
 			this.groupBox_Automatic1.Location = new System.Drawing.Point(804, 68);
 			this.groupBox_Automatic1.Name = "groupBox_Automatic1";
-			this.groupBox_Automatic1.Size = new System.Drawing.Size(330, 576);
+			this.groupBox_Automatic1.Size = new System.Drawing.Size(330, 111);
 			this.groupBox_Automatic1.TabIndex = 21;
 			this.groupBox_Automatic1.TabStop = false;
 			this.groupBox_Automatic1.Text = "Automatic Mode Controls";
 			// 
+			// Bnt_AutoClearScript
+			// 
+			this.Bnt_AutoClearScript.Location = new System.Drawing.Point(224, 489);
+			this.Bnt_AutoClearScript.Name = "Bnt_AutoClearScript";
+			this.Bnt_AutoClearScript.Size = new System.Drawing.Size(100, 30);
+			this.Bnt_AutoClearScript.TabIndex = 22;
+			this.Bnt_AutoClearScript.Text = "Clear Script";
+			this.Bnt_AutoClearScript.UseVisualStyleBackColor = true;
+			this.Bnt_AutoClearScript.Click += new System.EventHandler(this.Bnt_AutoClearScript_Click);
+			// 
+			// richTextBox_Auto
+			// 
+			this.richTextBox_Auto.Location = new System.Drawing.Point(6, 19);
+			this.richTextBox_Auto.Name = "richTextBox_Auto";
+			this.richTextBox_Auto.Size = new System.Drawing.Size(318, 464);
+			this.richTextBox_Auto.TabIndex = 21;
+			this.richTextBox_Auto.Text = "";
+			// 
 			// groupBox_Manual4
 			// 
+			this.groupBox_Manual4.Controls.Add(this.Bnt_CloseGrip);
+			this.groupBox_Manual4.Controls.Add(this.Bnt_OpenGrip);
 			this.groupBox_Manual4.Controls.Add(this.Bnt_DetachServos);
 			this.groupBox_Manual4.Controls.Add(this.Bnt_AttachServos);
-			this.groupBox_Manual4.Location = new System.Drawing.Point(468, 650);
+			this.groupBox_Manual4.Location = new System.Drawing.Point(468, 551);
 			this.groupBox_Manual4.Name = "groupBox_Manual4";
-			this.groupBox_Manual4.Size = new System.Drawing.Size(330, 60);
+			this.groupBox_Manual4.Size = new System.Drawing.Size(330, 159);
 			this.groupBox_Manual4.TabIndex = 22;
 			this.groupBox_Manual4.TabStop = false;
 			this.groupBox_Manual4.Text = "Manual - Servo Controls";
@@ -766,24 +698,61 @@
 			this.label9.Text = "Manual Controls";
 			this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// button2
+			// Bnt_Script_TeachPoint
 			// 
-			this.button2.Location = new System.Drawing.Point(205, 19);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(100, 30);
-			this.button2.TabIndex = 2;
-			this.button2.Text = "Teach this point";
-			this.button2.UseVisualStyleBackColor = true;
+			this.Bnt_Script_TeachPoint.Location = new System.Drawing.Point(79, 52);
+			this.Bnt_Script_TeachPoint.Name = "Bnt_Script_TeachPoint";
+			this.Bnt_Script_TeachPoint.Size = new System.Drawing.Size(166, 30);
+			this.Bnt_Script_TeachPoint.TabIndex = 2;
+			this.Bnt_Script_TeachPoint.Text = "Teach this point";
+			this.Bnt_Script_TeachPoint.UseVisualStyleBackColor = true;
+			this.Bnt_Script_TeachPoint.Click += new System.EventHandler(this.Bnt_Script_TeachPoint_Click);
 			// 
 			// groupBox_Manual3
 			// 
-			this.groupBox_Manual3.Controls.Add(this.button2);
+			this.groupBox_Manual3.Controls.Add(this.Bnt_Script_Loop);
+			this.groupBox_Manual3.Controls.Add(this.label6);
+			this.groupBox_Manual3.Controls.Add(this.textBox_Script_Delay);
+			this.groupBox_Manual3.Controls.Add(this.Bnt_Script_CloseGrip);
+			this.groupBox_Manual3.Controls.Add(this.Bnt_Script_OpenGrip);
+			this.groupBox_Manual3.Controls.Add(this.Bnt_Script_Delay);
+			this.groupBox_Manual3.Controls.Add(this.Bnt_Script_TeachPoint);
 			this.groupBox_Manual3.Location = new System.Drawing.Point(468, 293);
 			this.groupBox_Manual3.Name = "groupBox_Manual3";
-			this.groupBox_Manual3.Size = new System.Drawing.Size(330, 351);
+			this.groupBox_Manual3.Size = new System.Drawing.Size(330, 252);
 			this.groupBox_Manual3.TabIndex = 23;
 			this.groupBox_Manual3.TabStop = false;
-			this.groupBox_Manual3.Text = "Manual - Teaching Points";
+			this.groupBox_Manual3.Text = "Manual - Script Buliding";
+			// 
+			// Bnt_Script_CloseGrip
+			// 
+			this.Bnt_Script_CloseGrip.Location = new System.Drawing.Point(79, 160);
+			this.Bnt_Script_CloseGrip.Name = "Bnt_Script_CloseGrip";
+			this.Bnt_Script_CloseGrip.Size = new System.Drawing.Size(166, 30);
+			this.Bnt_Script_CloseGrip.TabIndex = 5;
+			this.Bnt_Script_CloseGrip.Text = "Close Grip";
+			this.Bnt_Script_CloseGrip.UseVisualStyleBackColor = true;
+			this.Bnt_Script_CloseGrip.Click += new System.EventHandler(this.Bnt_Script_CloseGrip_Click);
+			// 
+			// Bnt_Script_OpenGrip
+			// 
+			this.Bnt_Script_OpenGrip.Location = new System.Drawing.Point(79, 124);
+			this.Bnt_Script_OpenGrip.Name = "Bnt_Script_OpenGrip";
+			this.Bnt_Script_OpenGrip.Size = new System.Drawing.Size(166, 30);
+			this.Bnt_Script_OpenGrip.TabIndex = 4;
+			this.Bnt_Script_OpenGrip.Text = "Open Grip";
+			this.Bnt_Script_OpenGrip.UseVisualStyleBackColor = true;
+			this.Bnt_Script_OpenGrip.Click += new System.EventHandler(this.Bnt_Script_OpenGrip_Click);
+			// 
+			// Bnt_Script_Delay
+			// 
+			this.Bnt_Script_Delay.Location = new System.Drawing.Point(79, 87);
+			this.Bnt_Script_Delay.Name = "Bnt_Script_Delay";
+			this.Bnt_Script_Delay.Size = new System.Drawing.Size(100, 30);
+			this.Bnt_Script_Delay.TabIndex = 3;
+			this.Bnt_Script_Delay.Text = "Delay (s)";
+			this.Bnt_Script_Delay.UseVisualStyleBackColor = true;
+			this.Bnt_Script_Delay.Click += new System.EventHandler(this.Bnt_Script_Delay_Click);
 			// 
 			// panel_Autobox
 			// 
@@ -806,18 +775,78 @@
 			this.label12.Text = "Automatic Controls";
 			this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
+			// textBox_Script_Delay
+			// 
+			this.textBox_Script_Delay.Location = new System.Drawing.Point(185, 93);
+			this.textBox_Script_Delay.Name = "textBox_Script_Delay";
+			this.textBox_Script_Delay.Size = new System.Drawing.Size(60, 20);
+			this.textBox_Script_Delay.TabIndex = 22;
+			this.textBox_Script_Delay.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			// 
+			// label6
+			// 
+			this.label6.BackColor = System.Drawing.SystemColors.ControlDark;
+			this.label6.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.label6.Location = new System.Drawing.Point(3, 16);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(321, 30);
+			this.label6.TabIndex = 23;
+			this.label6.Text = "COMMAND LIST";
+			this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// Bnt_CloseGrip
+			// 
+			this.Bnt_CloseGrip.Location = new System.Drawing.Point(168, 19);
+			this.Bnt_CloseGrip.Name = "Bnt_CloseGrip";
+			this.Bnt_CloseGrip.Size = new System.Drawing.Size(150, 30);
+			this.Bnt_CloseGrip.TabIndex = 7;
+			this.Bnt_CloseGrip.Text = "Close Grip";
+			this.Bnt_CloseGrip.UseVisualStyleBackColor = true;
+			this.Bnt_CloseGrip.Click += new System.EventHandler(this.Bnt_CloseGrip_Click);
+			// 
+			// Bnt_OpenGrip
+			// 
+			this.Bnt_OpenGrip.Location = new System.Drawing.Point(12, 19);
+			this.Bnt_OpenGrip.Name = "Bnt_OpenGrip";
+			this.Bnt_OpenGrip.Size = new System.Drawing.Size(150, 30);
+			this.Bnt_OpenGrip.TabIndex = 6;
+			this.Bnt_OpenGrip.Text = "Open Grip";
+			this.Bnt_OpenGrip.UseVisualStyleBackColor = true;
+			this.Bnt_OpenGrip.Click += new System.EventHandler(this.Bnt_OpenGrip_Click);
+			// 
+			// groupBox1
+			// 
+			this.groupBox1.Controls.Add(this.Bnt_AutoClearScript);
+			this.groupBox1.Controls.Add(this.richTextBox_Auto);
+			this.groupBox1.Location = new System.Drawing.Point(804, 185);
+			this.groupBox1.Name = "groupBox1";
+			this.groupBox1.Size = new System.Drawing.Size(330, 525);
+			this.groupBox1.TabIndex = 27;
+			this.groupBox1.TabStop = false;
+			this.groupBox1.Text = "Automatic Script";
+			// 
+			// Bnt_Script_Loop
+			// 
+			this.Bnt_Script_Loop.Location = new System.Drawing.Point(79, 196);
+			this.Bnt_Script_Loop.Name = "Bnt_Script_Loop";
+			this.Bnt_Script_Loop.Size = new System.Drawing.Size(166, 30);
+			this.Bnt_Script_Loop.TabIndex = 24;
+			this.Bnt_Script_Loop.Text = "Loop (use at end)";
+			this.Bnt_Script_Loop.UseVisualStyleBackColor = true;
+			this.Bnt_Script_Loop.Click += new System.EventHandler(this.Bnt_Script_Loop_Click);
+			// 
 			// MainScreen
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.SystemColors.ControlDark;
-			this.ClientSize = new System.Drawing.Size(1285, 836);
+			this.ClientSize = new System.Drawing.Size(1145, 721);
+			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.panel_Autobox);
 			this.Controls.Add(this.panel_Manualbox);
 			this.Controls.Add(this.groupBox_Manual3);
 			this.Controls.Add(this.groupBox_Manual4);
 			this.Controls.Add(this.groupBox_Automatic1);
-			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.groupBox_Manual2);
 			this.Controls.Add(this.groupBox_MahineStates);
 			this.Controls.Add(this.groupBox5);
@@ -840,18 +869,16 @@
 			this.groupBox_MahineStates.PerformLayout();
 			this.groupBox_Manual2.ResumeLayout(false);
 			this.groupBox_Manual2.PerformLayout();
-			this.groupBox2.ResumeLayout(false);
-			this.groupBox2.PerformLayout();
-			this.groupBox_Automatic1.ResumeLayout(false);
-			this.groupBox_Automatic1.PerformLayout();
 			this.groupBox_Manual4.ResumeLayout(false);
 			this.panel_Machinebox.ResumeLayout(false);
 			this.panel_Machinebox.PerformLayout();
 			this.panel_Manualbox.ResumeLayout(false);
 			this.panel_Manualbox.PerformLayout();
 			this.groupBox_Manual3.ResumeLayout(false);
+			this.groupBox_Manual3.PerformLayout();
 			this.panel_Autobox.ResumeLayout(false);
 			this.panel_Autobox.PerformLayout();
+			this.groupBox1.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -899,13 +926,6 @@
 		private System.Windows.Forms.TextBox textBox_goto_posY;
 		public System.Windows.Forms.Button Bnt_IssueGoToCommand;
 		private System.Windows.Forms.TextBox textBox_goto_posX;
-		private System.Windows.Forms.GroupBox groupBox2;
-		private System.Windows.Forms.Label label6;
-		private System.Windows.Forms.Label label7;
-		private System.Windows.Forms.Label label8;
-		private System.Windows.Forms.TextBox textBox4;
-		private System.Windows.Forms.TextBox textBox5;
-		private System.Windows.Forms.TextBox textBox6;
 		public System.Windows.Forms.Button Bnt_IssueZdown;
 		public System.Windows.Forms.Button Bnt_IssueYdown;
 		public System.Windows.Forms.Button Bnt_IssueXdown;
@@ -914,18 +934,27 @@
 		public System.Windows.Forms.Button Bnt_IssueXup;
 		private System.Windows.Forms.CheckBox check_IssueOnPress;
 		private System.Windows.Forms.CheckBox check_BigSteps;
-		private System.Windows.Forms.TextBox textBox3;
-		private System.Windows.Forms.TextBox textBox2;
 		private System.Windows.Forms.Label label11;
 		private System.Windows.Forms.GroupBox groupBox_Automatic1;
 		private System.Windows.Forms.GroupBox groupBox_Manual4;
 		private System.Windows.Forms.Panel panel_Machinebox;
 		private System.Windows.Forms.Panel panel_Manualbox;
 		private System.Windows.Forms.Label label9;
-		public System.Windows.Forms.Button button2;
+		public System.Windows.Forms.Button Bnt_Script_TeachPoint;
 		private System.Windows.Forms.GroupBox groupBox_Manual3;
 		private System.Windows.Forms.Panel panel_Autobox;
 		private System.Windows.Forms.Label label12;
+		private System.Windows.Forms.RichTextBox richTextBox_Auto;
+		public System.Windows.Forms.Button Bnt_AutoClearScript;
+		public System.Windows.Forms.Button Bnt_Script_Delay;
+		public System.Windows.Forms.Button Bnt_Script_CloseGrip;
+		public System.Windows.Forms.Button Bnt_Script_OpenGrip;
+		private System.Windows.Forms.TextBox textBox_Script_Delay;
+		public System.Windows.Forms.Button Bnt_CloseGrip;
+		public System.Windows.Forms.Button Bnt_OpenGrip;
+		private System.Windows.Forms.Label label6;
+		private System.Windows.Forms.GroupBox groupBox1;
+		public System.Windows.Forms.Button Bnt_Script_Loop;
 	}
 }
 

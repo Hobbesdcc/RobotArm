@@ -84,6 +84,8 @@ String CMD_Mode_Auto			= "$MODE_AUTO#";
 String CMD_Servos_Attach		= "$SERVOS_ATTACH#";
 String CMD_Servos_Detach		= "$SERVOS_DETACH#";
 String CMD_Servos_GOTO			= "$SERVOS_GOTO_X,Y,Z#";
+String CMD_Servos_OPENGRIP		= "$SERVOS_OPENGRIP#";
+String CMD_Servos_CLOSEGRIP		= "$SERVOS_CLOSEGRIP#";
 
 String CMD_Status_GetState		= "$STATUS_GETSTATE#";
 String CMD_Status_GetMode		= "$STATUS_GETMODE#";

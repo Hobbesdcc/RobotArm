@@ -40,6 +40,8 @@ namespace ArmHMI_WinForms
 		string CMD_Servos_Attach		= "$SERVOS_ATTACH#";
 		string CMD_Servos_Detach		= "$SERVOS_DETACH#";
 		string CMD_Servos_GOTO			= "$SERVOS_GOTO_X,Y,Z#";
+		string CMD_Servos_OPENGRIP		= "$SERVOS_OPENGRIP#";
+		string CMD_Servos_CLOSEGRIP		= "$SERVOS_CLOSEGRIP#";
 
 		string CMD_Status_GetState		= "$STATUS_GETSTATE#";
 		string CMD_Status_GetMode		= "$STATUS_GETMODE#";
@@ -67,8 +69,10 @@ namespace ArmHMI_WinForms
 			textBox_goto_posX.Text = "12";
 			textBox_goto_posY.Text = "12";
 			textBox_goto_posZ.Text = "0";
+			textBox_Script_Delay.Text = "0";
 
 			check_IssueOnPress.Checked = true;
+			
 
 		}
 		private void MainScreen_FormClosing(object sender, FormClosingEventArgs e)
@@ -221,6 +225,14 @@ namespace ArmHMI_WinForms
 		{
 			IssueSerialCommand(CMD_Servos_Detach);
 		}
+		private void Bnt_OpenGrip_Click(object sender, EventArgs e)
+		{
+			IssueSerialCommand(CMD_Servos_OPENGRIP);
+		}
+		private void Bnt_CloseGrip_Click(object sender, EventArgs e)
+		{
+			IssueSerialCommand(CMD_Servos_CLOSEGRIP);
+		}
 
 		private void Bnt_IssueGoToCommand_Click(object sender, EventArgs e)
 		{
@@ -327,6 +339,30 @@ namespace ArmHMI_WinForms
 			}
 		}
 
+		private void Bnt_AutoClearScript_Click(object sender, EventArgs e)
+		{
+			richTextBox_Auto.Text = "";
+		}
+		private void Bnt_Script_TeachPoint_Click(object sender, EventArgs e)
+		{
+			richTextBox_Auto.Text += "GOTO" + textBox_goto_posX.Text + "X," + textBox_goto_posY.Text + "Y," + textBox_goto_posZ.Text + "Z;\r\n";
+		}
+		private void Bnt_Script_OpenGrip_Click(object sender, EventArgs e)
+		{
+			richTextBox_Auto.Text += "OpenGrip;\r\n";
+		}
+		private void Bnt_Script_CloseGrip_Click(object sender, EventArgs e)
+		{
+			richTextBox_Auto.Text += "CloseGrip;\r\n";
+		}
+		private void Bnt_Script_Delay_Click(object sender, EventArgs e)
+		{
+			richTextBox_Auto.Text += "Delay(" + textBox_Script_Delay.Text + ");\r\n";
+		}
+		private void Bnt_Script_Loop_Click(object sender, EventArgs e)
+		{
+			richTextBox_Auto.Text += "Loop;\r\n";
+		}
 
 		//Events: Serial listener & Connect/disconnect Buttons -----------------------------------------------------------
 		private void Bnt_Serial_Connect_Click(object sender, EventArgs e)
@@ -462,6 +498,7 @@ namespace ArmHMI_WinForms
 		{
 			richTextBox_textReceiver.Text = "";
 		}
+
 
 	}
 }
