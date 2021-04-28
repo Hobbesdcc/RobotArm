@@ -96,7 +96,11 @@ void loop() {
         //Action: GOTO Positon
         if (initStartedLoopDone && CMD_ISSUED_Servos_GOTO){ // && (GotoX_Old != GotoX || GotoY_Old != GotoY || GotoZ_Old != GotoZ)
           Action_GOTO_Positon();
-          CMD_ISSUED_Servos_GOTO = false; //reset 
+        }
+        
+        //Action: Gripper Open/Close
+        if (CMD_ISSUED_Servos_GripOpen || CMD_ISSUED_Servos_GripClose){
+          Action_GripperOpenClose();
         }
 
         //Action: Homing
@@ -132,18 +136,7 @@ void loop() {
           myServo4.attach(11);	// attaches the servo on pin 11 to the servo object, Gripper
           CMD_ISSUED_Servos_Attach = false; //reset 
         }
-
-
-        //Action: Servo Open/Close Gripper
-        if (CMD_ISSUED_Servos_GripOpen){
-          SetServoAnagle(myServo4, 1, Servo4_RangeLimitMin,Servo4_RangeLimitMax);
-          CMD_ISSUED_Servos_GripOpen = false; //reset 
-        }
-        if (CMD_ISSUED_Servos_GripClose){
-          SetServoAnagle(myServo4, 90, Servo4_RangeLimitMin,Servo4_RangeLimitMax);
-          CMD_ISSUED_Servos_GripClose = false; //reset 
-        }
-
+      
 
 
         //Old Value for edge detect
@@ -240,6 +233,19 @@ void Action_GOTO_Positon(){
 
     Serial.println(F("< Arduino: Servos Axis Values Set >"));
     delay(ServoDelayTime);  //delay for servo to move
+  }
+  CMD_ISSUED_Servos_GOTO = false; //reset command
+}
+
+void Action_GripperOpenClose(){
+  //Action: Servo Open/Close Gripper
+  if (CMD_ISSUED_Servos_GripOpen){
+    SetServoAnagle(myServo4, 1, Servo4_RangeLimitMin, Servo4_RangeLimitMax);
+    CMD_ISSUED_Servos_GripOpen = false; //reset 
+  }
+  if (CMD_ISSUED_Servos_GripClose){
+    SetServoAnagle(myServo4, 90, Servo4_RangeLimitMin, Servo4_RangeLimitMax);
+    CMD_ISSUED_Servos_GripClose = false; //reset 
   }
 }
 

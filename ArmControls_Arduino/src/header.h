@@ -94,6 +94,7 @@ String CMD_Status_GetMode		= "$STATUS_GETMODE#";
 
 //Fuctions Declarations
 void Action_GOTO_Positon();
+void Action_GripperOpenClose();
 void SetServoAnagle(Servo, float, float, float);
 void JointCalculations();
 String SerialInterface_Receiving();
