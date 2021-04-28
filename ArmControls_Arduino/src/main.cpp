@@ -149,12 +149,27 @@ void loop() {
 
       //###############################
       case Auto:
-          break;
+
+        //Action: GOTO Positon
+        if (initStartedLoopDone && CMD_ISSUED_Servos_GOTO){ // && (GotoX_Old != GotoX || GotoY_Old != GotoY || GotoZ_Old != GotoZ)
+          Action_GOTO_Positon();
+        }
+        
+        //Action: Gripper Open/Close
+        if (CMD_ISSUED_Servos_GripOpen || CMD_ISSUED_Servos_GripClose){
+          Action_GripperOpenClose();
+        }
+        
+        //Old Value for edge detect
+        GotoX_Old = GotoX;
+        GotoY_Old = GotoY;
+        GotoZ_Old = GotoZ;
+        break;
 
       //###############################
       default :
-          Serial.println("[ERROR: No Mode detected]");
-          break;
+        Serial.println("[ERROR: No Mode detected]");
+        break;
     }
 
   }else{
@@ -236,6 +251,7 @@ void Action_GOTO_Positon(){
   CMD_ISSUED_Servos_GOTO = false; //reset command
 }
 
+// == Function ================================
 void Action_GripperOpenClose(){
   //Action: Servo Open/Close Gripper
   if (CMD_ISSUED_Servos_GripOpen){
@@ -441,7 +457,7 @@ void ReceiveCommands_Gripper(){
 
 
 
-// == Join Function ===========================
+// == Joint Function ===========================
 void JointCalculations(){
 
   // ======================================================================
