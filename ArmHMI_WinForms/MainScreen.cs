@@ -195,9 +195,10 @@ namespace ArmHMI_WinForms
 					if (scriptReset)
 					{
 						// if reset comes in, end for loop
-						posIndex = stringParse.Length + 1;
+						posIndex = stringParse.Length + 100;
 						label_ScriptStatus.Invoke((MethodInvoker)(() => label_ScriptStatus.Text = "RESET"));
 						scriptReset = false;
+						Thread.Sleep(5000);
 					}
 					else if (scriptAllowToRun)
 					{						
@@ -215,7 +216,7 @@ namespace ArmHMI_WinForms
 						}
 						else
 						{
-							//cmdBulidString += stringParse[posIndex];
+							//cmdBulidString += stringParse[posIndex];   //last ";" not added
 							cmdBulidString = cmdBulidString.TrimEnd();	 //remove any white space at end
 							cmdBulidString = cmdBulidString.TrimStart(); //remove any white space at Start
 							newCmdToSend = true; //once endMarker found, set newCmdToSend high
@@ -260,7 +261,7 @@ namespace ArmHMI_WinForms
 							}
 							else if (-1 != cmdBulidString.IndexOf("Loop"))
 							{
-								posIndex = 0; //Reset for Loop index, so you start script again
+								posIndex = -1; //Reset for Loop index, so you start script again
 								Thread.Sleep(1000);
 							}
 							else
@@ -553,7 +554,7 @@ namespace ArmHMI_WinForms
 			richTextBox_Auto.ReadOnly = false;
 			groupBox_Manual3.Enabled = true;
 
-			scriptReset = false; //Reset Script
+			scriptReset = true; //Reset Script
 			scriptAllowToRun = true;
 		}
 
