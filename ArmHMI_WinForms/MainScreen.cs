@@ -8,17 +8,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Ports;
+using System.Threading;
 
 namespace ArmHMI_WinForms
 {
 	public partial class MainScreen : Form
 	{
+		//Parseing serial Messages
 		string serialDataIn;
 		bool bulidingStringInProgress;
 		char endCharacter = (char)35; //"#"
 		char startCharacter = (char)36; //"$"
 		StringBuilder stringBuilder = new StringBuilder();
 		string currentLine = string.Empty;
+
+		//script control
+		bool scriptAllowToRun = false;
+		bool scriptReset = false;
 
 		// Command Strings, Same KeyWords used on both sides (serial to Ardunio to C# Form)
 		string CMD_Home_All				= "$HOME_ALL#";
@@ -90,7 +96,7 @@ namespace ArmHMI_WinForms
 		}
 
 
-		// Fuction =======================================================================================================
+		// Fuctions =======================================================================================================
 		private void IssueSerialCommand(String cmd)
 		{
 			//Check if port is open, if so send the inputed string coming from the fuction call
@@ -99,7 +105,8 @@ namespace ArmHMI_WinForms
 				try
 				{
 					serialPort1.Write(cmd);
-					textBox_StatusBar.Text = cmd;
+					//textBox_StatusBar.Text = cmd;
+					textBox_StatusBar.Invoke((MethodInvoker)(() => textBox_StatusBar.Text = cmd));
 				}
 				catch (Exception error)
 				{
@@ -132,6 +139,8 @@ namespace ArmHMI_WinForms
 
 				panel_Manualbox.BackColor	= Color.OliveDrab;
 				panel_Autobox.BackColor		= Color.Gray;
+
+				scriptAllowToRun = false; //Dont allow script to run in Manaul mode
 			}
 			if (-1 != Serialdata.IndexOf(CMD_Mode_Auto))
 			{
@@ -145,6 +154,8 @@ namespace ArmHMI_WinForms
 
 				panel_Manualbox.BackColor	= Color.Gray;
 				panel_Autobox.BackColor		= Color.OliveDrab;
+
+				scriptAllowToRun = true; //allow script to run in auto mode
 			}
 
 			//Check for mode change modes, if found, change text and remove that string from the string concat
@@ -163,6 +174,49 @@ namespace ArmHMI_WinForms
 				textBox_Status_State.Invoke((MethodInvoker)(() => textBox_Status_State.Text = "STOPPED"));
 				panel_Machinebox.BackColor = Color.IndianRed;
 			}
+		}
+
+		private async Task<int> AutoScriptRunner(int value)
+		{
+			int x = 0; // just need for something to return idk why
+			int posIndex = 0;
+			string stringParse = richTextBox_Auto.Text;
+			string cmdBulidString = "";
+			char endMarker = ';';
+			bool newCmdToSend = false; 
+
+			return await Task.Factory.StartNew(() =>
+			{
+				//for (int i = 0; i < stringParse.Length; i++)
+				for (int i = 0; i < 100; i++)
+				{
+					if (scriptReset)
+					{
+						i = 100 + 1; // if reset comes in, end for loop
+						label_ScriptStatus.Invoke((MethodInvoker)(() => label_ScriptStatus.Text = "RESET"));
+						scriptReset = false;
+					}
+					else if (scriptAllowToRun)
+					{
+
+						//stringParse.Substring(posIndex, 1);
+						//stringParse.Remove(0, 1);
+						//stringParse = richTextBox_Auto.Text;
+						label_ScriptStatus.Invoke((MethodInvoker)(() => label_ScriptStatus.Text = posIndex.ToString()));
+
+						Thread.Sleep(100);
+						posIndex++;
+					}
+					else
+					{
+						i = i - 1; //delay forloop if paused
+						label_ScriptStatus.Invoke((MethodInvoker)(() => label_ScriptStatus.Text = "PAUSE"));
+					}
+				}
+				label_ScriptStatus.Invoke((MethodInvoker)(() => label_ScriptStatus.Text = "FINISHED"));
+				return x;
+			});
+
 		}
 
 		//Events: Buttons Commands --------------------------------------------------------------------------------------- 
@@ -341,7 +395,7 @@ namespace ArmHMI_WinForms
 		}
 		private void Bnt_Script_TeachPoint_Click(object sender, EventArgs e)
 		{
-			richTextBox_Auto.Text += "GOTO" + textBox_goto_posX.Text + "X," + textBox_goto_posY.Text + "Y," + textBox_goto_posZ.Text + "Z;\r\n";
+			richTextBox_Auto.Text += "GOTO_" + textBox_goto_posX.Text + "X," + textBox_goto_posY.Text + "Y," + textBox_goto_posZ.Text + "Z;\r\n";
 		}
 		private void Bnt_Script_OpenGrip_Click(object sender, EventArgs e)
 		{
@@ -358,6 +412,51 @@ namespace ArmHMI_WinForms
 		private void Bnt_Script_Loop_Click(object sender, EventArgs e)
 		{
 			richTextBox_Auto.Text += "Loop;\r\n";
+		}
+
+		private void Bnt_Script_Start_Click(object sender, EventArgs e)
+		{
+			//Check if Allowed to run
+			if (scriptAllowToRun)
+			{
+				Bnt_Script_Start.Enabled = false;
+				Bnt_Script_Pause.Enabled = true;
+				Bnt_Script_Reset.Enabled = false;
+				richTextBox_Auto.ReadOnly = true;
+
+				Task<int> task = AutoScriptRunner(1); //Start Async Fuction
+			}
+			else
+			{
+				label_ScriptStatus.Text = "ERROR: Need to be in Auto Mode";
+			}
+
+		}
+		private void Bnt_Script_Pause_Click(object sender, EventArgs e)
+		{
+			//Toggle pause for script "allowScriptToRun" Pause
+			if (scriptAllowToRun)
+			{
+				textBox_StatusBar.Text = "Script Paused";
+				scriptAllowToRun = false;
+				Bnt_Script_Reset.Enabled = true;
+			}
+			else
+			{
+				textBox_StatusBar.Text = "Un-Paused";
+				scriptAllowToRun = true;
+				Bnt_Script_Reset.Enabled = false;
+			}
+		}
+		private void Bnt_Script_Reset_Click(object sender, EventArgs e)
+		{
+			Bnt_Script_Start.Enabled = true;
+			Bnt_Script_Pause.Enabled = false;
+			Bnt_Script_Reset.Enabled = false;
+			richTextBox_Auto.ReadOnly = false;
+
+			scriptReset = true; //Reset Script
+			scriptAllowToRun = true;
 		}
 
 		//Events: Serial listener & Connect/disconnect Buttons -----------------------------------------------------------
@@ -493,6 +592,9 @@ namespace ArmHMI_WinForms
 		private void Bnt_ClearTextReceiver_Click(object sender, EventArgs e)
 		{
 			richTextBox_textReceiver.Text = "";
+			textBox_StatusBar.Text = "";
 		}
+
+
 	}
 }

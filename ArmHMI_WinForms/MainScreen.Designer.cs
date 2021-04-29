@@ -98,10 +98,10 @@
 			this.panel_Autobox = new System.Windows.Forms.Panel();
 			this.label12 = new System.Windows.Forms.Label();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.button1 = new System.Windows.Forms.Button();
-			this.button2 = new System.Windows.Forms.Button();
-			this.button3 = new System.Windows.Forms.Button();
-			this.label7 = new System.Windows.Forms.Label();
+			this.Bnt_Script_Pause = new System.Windows.Forms.Button();
+			this.Bnt_Script_Start = new System.Windows.Forms.Button();
+			this.Bnt_Script_Reset = new System.Windows.Forms.Button();
+			this.label_ScriptStatus = new System.Windows.Forms.Label();
 			this.label8 = new System.Windows.Forms.Label();
 			this.groupBox_ModeSelect.SuspendLayout();
 			this.groupBox_Manual1.SuspendLayout();
@@ -639,10 +639,10 @@
 			// 
 			// groupBox_Automatic1
 			// 
-			this.groupBox_Automatic1.Controls.Add(this.label7);
-			this.groupBox_Automatic1.Controls.Add(this.button3);
-			this.groupBox_Automatic1.Controls.Add(this.button1);
-			this.groupBox_Automatic1.Controls.Add(this.button2);
+			this.groupBox_Automatic1.Controls.Add(this.label_ScriptStatus);
+			this.groupBox_Automatic1.Controls.Add(this.Bnt_Script_Reset);
+			this.groupBox_Automatic1.Controls.Add(this.Bnt_Script_Pause);
+			this.groupBox_Automatic1.Controls.Add(this.Bnt_Script_Start);
 			this.groupBox_Automatic1.Location = new System.Drawing.Point(804, 68);
 			this.groupBox_Automatic1.Name = "groupBox_Automatic1";
 			this.groupBox_Automatic1.Size = new System.Drawing.Size(330, 111);
@@ -835,43 +835,46 @@
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Automatic Script";
 			// 
-			// button1
+			// Bnt_Script_Pause
 			// 
-			this.button1.Location = new System.Drawing.Point(116, 22);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(100, 40);
-			this.button1.TabIndex = 3;
-			this.button1.Text = "Stop Script";
-			this.button1.UseVisualStyleBackColor = true;
+			this.Bnt_Script_Pause.Location = new System.Drawing.Point(116, 22);
+			this.Bnt_Script_Pause.Name = "Bnt_Script_Pause";
+			this.Bnt_Script_Pause.Size = new System.Drawing.Size(100, 40);
+			this.Bnt_Script_Pause.TabIndex = 3;
+			this.Bnt_Script_Pause.Text = "Pause Script";
+			this.Bnt_Script_Pause.UseVisualStyleBackColor = true;
+			this.Bnt_Script_Pause.Click += new System.EventHandler(this.Bnt_Script_Pause_Click);
 			// 
-			// button2
+			// Bnt_Script_Start
 			// 
-			this.button2.Location = new System.Drawing.Point(9, 22);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(100, 40);
-			this.button2.TabIndex = 2;
-			this.button2.Text = "Start Script";
-			this.button2.UseVisualStyleBackColor = true;
+			this.Bnt_Script_Start.Location = new System.Drawing.Point(9, 22);
+			this.Bnt_Script_Start.Name = "Bnt_Script_Start";
+			this.Bnt_Script_Start.Size = new System.Drawing.Size(100, 40);
+			this.Bnt_Script_Start.TabIndex = 2;
+			this.Bnt_Script_Start.Text = "Start Script";
+			this.Bnt_Script_Start.UseVisualStyleBackColor = true;
+			this.Bnt_Script_Start.Click += new System.EventHandler(this.Bnt_Script_Start_Click);
 			// 
-			// button3
+			// Bnt_Script_Reset
 			// 
-			this.button3.Location = new System.Drawing.Point(222, 22);
-			this.button3.Name = "button3";
-			this.button3.Size = new System.Drawing.Size(100, 40);
-			this.button3.TabIndex = 4;
-			this.button3.Text = "Reset Script";
-			this.button3.UseVisualStyleBackColor = true;
+			this.Bnt_Script_Reset.Location = new System.Drawing.Point(222, 22);
+			this.Bnt_Script_Reset.Name = "Bnt_Script_Reset";
+			this.Bnt_Script_Reset.Size = new System.Drawing.Size(100, 40);
+			this.Bnt_Script_Reset.TabIndex = 4;
+			this.Bnt_Script_Reset.Text = "Reset Script";
+			this.Bnt_Script_Reset.UseVisualStyleBackColor = true;
+			this.Bnt_Script_Reset.Click += new System.EventHandler(this.Bnt_Script_Reset_Click);
 			// 
-			// label7
+			// label_ScriptStatus
 			// 
-			this.label7.BackColor = System.Drawing.SystemColors.ControlDark;
-			this.label7.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.label7.Location = new System.Drawing.Point(11, 65);
-			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(313, 43);
-			this.label7.TabIndex = 23;
-			this.label7.Text = "DISCONNECTED";
-			this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.label_ScriptStatus.BackColor = System.Drawing.SystemColors.ControlDark;
+			this.label_ScriptStatus.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.label_ScriptStatus.Location = new System.Drawing.Point(9, 61);
+			this.label_ScriptStatus.Name = "label_ScriptStatus";
+			this.label_ScriptStatus.Size = new System.Drawing.Size(313, 47);
+			this.label_ScriptStatus.TabIndex = 23;
+			this.label_ScriptStatus.Text = "[ SCRIPT STATUS ]";
+			this.label_ScriptStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// label8
 			// 
@@ -1002,10 +1005,10 @@
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.GroupBox groupBox1;
 		public System.Windows.Forms.Button Bnt_Script_Loop;
-		private System.Windows.Forms.Label label7;
-		public System.Windows.Forms.Button button3;
-		public System.Windows.Forms.Button button1;
-		public System.Windows.Forms.Button button2;
+		private System.Windows.Forms.Label label_ScriptStatus;
+		public System.Windows.Forms.Button Bnt_Script_Reset;
+		public System.Windows.Forms.Button Bnt_Script_Pause;
+		public System.Windows.Forms.Button Bnt_Script_Start;
 		private System.Windows.Forms.Label label8;
 	}
 }
