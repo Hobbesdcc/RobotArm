@@ -74,6 +74,11 @@ namespace ArmHMI_WinForms
 			textBox_goto_posY.Text = "12";
 			textBox_goto_posZ.Text = "0";
 			textBox_Script_Delay.Text = "0";
+			textBox_Script_Delay.Text = "2";
+
+			textBox_TeachX.Text = "12";
+			textBox_TeachY.Text = "12";
+			textBox_TeachZ.Text = "0";
 
 			check_IssueOnPress.Checked = true;
 			
@@ -133,7 +138,6 @@ namespace ArmHMI_WinForms
 
 				groupBox_Manual1.Invoke((MethodInvoker)(() => groupBox_Manual1.Enabled = true));
 				groupBox_Manual2.Invoke((MethodInvoker)(() => groupBox_Manual2.Enabled = true));
-				groupBox_Manual3.Invoke((MethodInvoker)(() => groupBox_Manual3.Enabled = true));
 
 				groupBox_Automatic1.Invoke((MethodInvoker)(() => groupBox_Automatic1.Enabled = false));
 
@@ -148,7 +152,6 @@ namespace ArmHMI_WinForms
 
 				groupBox_Manual1.Invoke((MethodInvoker)(() => groupBox_Manual1.Enabled = false));
 				groupBox_Manual2.Invoke((MethodInvoker)(() => groupBox_Manual2.Enabled = false));
-				groupBox_Manual3.Invoke((MethodInvoker)(() => groupBox_Manual3.Enabled = false));
 
 				groupBox_Automatic1.Invoke((MethodInvoker)(() => groupBox_Automatic1.Enabled = true));
 
@@ -179,91 +182,109 @@ namespace ArmHMI_WinForms
 		private async Task<bool> AutoScriptRunner()
 		{
 			bool done = false; // return done
-			int posIndex = 0;
 			string stringParse = richTextBox_Auto.Text;
 			string cmdBulidString = "";
 			char endMarker = ';';
 			bool newCmdToSend = false;
 
-			Console.WriteLine("Length: " + stringParse.Length);
-			Console.WriteLine("scriptReset:" + scriptReset);
-			Console.WriteLine("scriptReset:" + scriptReset);
-
 			return await Task.Factory.StartNew(() =>
 			{
-				Console.WriteLine("StartNew");
-				for (int i = 0; i < stringParse.Length; i++)
+				for (int posIndex = 0; posIndex < stringParse.Length; posIndex++)
 				{
-					Console.WriteLine("runing "+ i);
+					
 					if (scriptReset)
 					{
-						i = stringParse.Length + 1; // if reset comes in, end for loop
+						// if reset comes in, end for loop
+						posIndex = stringParse.Length + 1;
 						label_ScriptStatus.Invoke((MethodInvoker)(() => label_ScriptStatus.Text = "RESET"));
 						scriptReset = false;
 					}
 					else if (scriptAllowToRun)
-					{
+					{						
+						//Check each Char is string position for endMarker, if not end add char to cmdBulidString
 						if (stringParse[posIndex] != endMarker)
 						{
-							cmdBulidString += stringParse[posIndex];
+							if (stringParse[posIndex] == (char)13 || stringParse[posIndex] == (char)10) //if not carriage return OR Line Feed
+							{
+								//Do nothing //Console.WriteLine("DETECTED: " + stringParse[posIndex]);
+							}
+							else
+							{
+								cmdBulidString += stringParse[posIndex]; //add char to string
+							}
 						}
 						else
 						{
-							cmdBulidString += stringParse[posIndex];
-							newCmdToSend = true;
+							//cmdBulidString += stringParse[posIndex];
+							cmdBulidString = cmdBulidString.TrimEnd();	 //remove any white space at end
+							cmdBulidString = cmdBulidString.TrimStart(); //remove any white space at Start
+							newCmdToSend = true; //once endMarker found, set newCmdToSend high
+							Console.WriteLine("> newCmdToSend: " + cmdBulidString);
 						}
 
-						//If message has been parsed
+						//If message has been parsed, ID it and send command, then reset for next line
 						if (newCmdToSend)
 						{
+							label_ScriptStatus.Invoke((MethodInvoker)(() => label_ScriptStatus.Text = cmdBulidString));
 							if (-1 != cmdBulidString.IndexOf("GOTO"))
 							{
-								label_ScriptStatus.Invoke((MethodInvoker)(() => label_ScriptStatus.Text = cmdBulidString));
-								Console.WriteLine("made here2");
-								//$SERVOS_GOTO_X,Y,Z#
+								//Modify string to build correct command. to insert the $ and # at start/end
+								//"$SERVOS_GOTO_X,Y,Z#"
+								cmdBulidString = cmdBulidString.Insert(0, "$SERVOS_");
+								cmdBulidString = cmdBulidString.Insert(cmdBulidString.Length, "#");
+
+								IssueSerialCommand(cmdBulidString); //Issue Command
+
+								Thread.Sleep(1000);
 							}
 							else if (-1 != cmdBulidString.IndexOf("OpenGrip"))
 							{
-
+								IssueSerialCommand(CMD_Servos_OPENGRIP); //Issue Command
+								Thread.Sleep(1000);
 							}
 							else if (-1 != cmdBulidString.IndexOf("CloseGrip"))
 							{
-
+								IssueSerialCommand(CMD_Servos_CLOSEGRIP); //Issue Command
+								Thread.Sleep(1000);
 							}
 							else if (-1 != cmdBulidString.IndexOf("Delay"))
 							{
+								//Pull Number out of string (Substring)
+								int start = cmdBulidString.IndexOf("(");
+								String subString = cmdBulidString.Substring(start+1, cmdBulidString.Length-start-2);
+
+								//use that number to set delay
+								int time = Int32.Parse(subString);
+								Thread.Sleep(1000 * time);  //milliseconds * Sec (this is the delay Command)
 
 							}
 							else if (-1 != cmdBulidString.IndexOf("Loop"))
 							{
-
+								posIndex = 0; //Reset for Loop index, so you start script again
+								Thread.Sleep(1000);
 							}
 							else
 							{
 								label_ScriptStatus.Invoke((MethodInvoker)(() => label_ScriptStatus.Text = "ERROR: Parse Failed, char: " + posIndex));
 							}
 
+							newCmdToSend = false;
+							cmdBulidString = ""; //reset String so it can be used again
 						}
 
-						//stringParse.Substring(posIndex, 1);
-						//stringParse.Remove(0, 1);
-						//stringParse = richTextBox_Auto.Text;
-						label_ScriptStatus.Invoke((MethodInvoker)(() => label_ScriptStatus.Text = posIndex.ToString()));
-
-						Thread.Sleep(100);
-						posIndex++;
 					}
 					else
 					{
-						i = i - 1; //delay forloop if paused
+						posIndex -= 1; //delay forloop if paused
 						label_ScriptStatus.Invoke((MethodInvoker)(() => label_ScriptStatus.Text = "PAUSE"));
 					}
 				}
 
 				scriptReset = false;
 				label_ScriptStatus.Invoke((MethodInvoker)(() => label_ScriptStatus.Text = "FINISHED"));
-
-				return done = true;
+				
+				done = true;
+				return done;
 			});
 
 		}
@@ -444,7 +465,11 @@ namespace ArmHMI_WinForms
 		}
 		private void Bnt_Script_TeachPoint_Click(object sender, EventArgs e)
 		{
-			richTextBox_Auto.Text += "GOTO_" + textBox_goto_posX.Text + "X," + textBox_goto_posY.Text + "Y," + textBox_goto_posZ.Text + "Z;\r\n";
+			richTextBox_Auto.Text += "GOTO_X" + textBox_goto_posX.Text + ",Y" + textBox_goto_posY.Text + ",Z" + textBox_goto_posZ.Text + ";\r\n";
+		}
+		private void button1_Click(object sender, EventArgs e)
+		{
+			richTextBox_Auto.Text += "GOTO_X" + textBox_TeachX.Text + ",Y" + textBox_TeachY.Text + ",Z" + textBox_TeachZ.Text + ";\r\n";
 		}
 		private void Bnt_Script_OpenGrip_Click(object sender, EventArgs e)
 		{
@@ -472,6 +497,7 @@ namespace ArmHMI_WinForms
 				Bnt_Script_Pause.Enabled = true;
 				Bnt_Script_Reset.Enabled = false;
 				richTextBox_Auto.ReadOnly = true;
+				groupBox_Manual3.Enabled = false;
 
 
 				//Async task, like normal fuction call the task that returns a bool (in this case)
@@ -487,6 +513,8 @@ namespace ArmHMI_WinForms
 					Bnt_Script_Pause.Enabled = false;
 					Bnt_Script_Reset.Enabled = false;
 					richTextBox_Auto.ReadOnly = false;
+					groupBox_Manual3.Enabled = true;
+
 
 					scriptReset = false; //Reset Script
 					scriptAllowToRun = true;
@@ -523,6 +551,7 @@ namespace ArmHMI_WinForms
 			Bnt_Script_Pause.Enabled = false;
 			Bnt_Script_Reset.Enabled = false;
 			richTextBox_Auto.ReadOnly = false;
+			groupBox_Manual3.Enabled = true;
 
 			scriptReset = false; //Reset Script
 			scriptAllowToRun = true;

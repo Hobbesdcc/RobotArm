@@ -95,7 +95,7 @@ void loop() {
       case Manual:
         
         //Action: GOTO Positon
-        if (initStartedLoopDone && CMD_ISSUED_Servos_GOTO){ // && (GotoX_Old != GotoX || GotoY_Old != GotoY || GotoZ_Old != GotoZ)
+        if (initStartedLoopDone && CMD_ISSUED_Servos_GOTO){
           Action_GOTO_Positon();
         }
         
@@ -151,7 +151,7 @@ void loop() {
       case Auto:
 
         //Action: GOTO Positon
-        if (initStartedLoopDone && CMD_ISSUED_Servos_GOTO){ // && (GotoX_Old != GotoX || GotoY_Old != GotoY || GotoZ_Old != GotoZ)
+        if (CMD_ISSUED_Servos_GOTO){ 
           Action_GOTO_Positon();
         }
         
