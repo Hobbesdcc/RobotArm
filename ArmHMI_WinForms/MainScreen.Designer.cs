@@ -94,22 +94,22 @@
 			this.label9 = new System.Windows.Forms.Label();
 			this.Bnt_Script_TeachPoint = new System.Windows.Forms.Button();
 			this.groupBox_Manual3 = new System.Windows.Forms.GroupBox();
+			this.textBox_TeachZ = new System.Windows.Forms.TextBox();
+			this.label13 = new System.Windows.Forms.Label();
+			this.textBox_TeachY = new System.Windows.Forms.TextBox();
+			this.label10 = new System.Windows.Forms.Label();
+			this.textBox_TeachX = new System.Windows.Forms.TextBox();
 			this.Bnt_Script_Loop = new System.Windows.Forms.Button();
 			this.label6 = new System.Windows.Forms.Label();
 			this.textBox_Script_Delay = new System.Windows.Forms.TextBox();
 			this.Bnt_Script_CloseGrip = new System.Windows.Forms.Button();
 			this.Bnt_Script_OpenGrip = new System.Windows.Forms.Button();
 			this.Bnt_Script_Delay = new System.Windows.Forms.Button();
+			this.Bnt_Script_TeachThisPoint = new System.Windows.Forms.Button();
+			this.label7 = new System.Windows.Forms.Label();
 			this.panel_Autobox = new System.Windows.Forms.Panel();
 			this.label12 = new System.Windows.Forms.Label();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.button1 = new System.Windows.Forms.Button();
-			this.textBox_TeachX = new System.Windows.Forms.TextBox();
-			this.label7 = new System.Windows.Forms.Label();
-			this.textBox_TeachY = new System.Windows.Forms.TextBox();
-			this.label10 = new System.Windows.Forms.Label();
-			this.textBox_TeachZ = new System.Windows.Forms.TextBox();
-			this.label13 = new System.Windows.Forms.Label();
 			this.groupBox_ModeSelect.SuspendLayout();
 			this.groupBox_Manual1.SuspendLayout();
 			this.groupBox4.SuspendLayout();
@@ -800,7 +800,7 @@
 			this.groupBox_Manual3.Controls.Add(this.Bnt_Script_CloseGrip);
 			this.groupBox_Manual3.Controls.Add(this.Bnt_Script_OpenGrip);
 			this.groupBox_Manual3.Controls.Add(this.Bnt_Script_Delay);
-			this.groupBox_Manual3.Controls.Add(this.button1);
+			this.groupBox_Manual3.Controls.Add(this.Bnt_Script_TeachThisPoint);
 			this.groupBox_Manual3.Controls.Add(this.Bnt_Script_TeachPoint);
 			this.groupBox_Manual3.Controls.Add(this.label7);
 			this.groupBox_Manual3.Location = new System.Drawing.Point(468, 367);
@@ -809,6 +809,48 @@
 			this.groupBox_Manual3.TabIndex = 23;
 			this.groupBox_Manual3.TabStop = false;
 			this.groupBox_Manual3.Text = "Script Buliding";
+			// 
+			// textBox_TeachZ
+			// 
+			this.textBox_TeachZ.Location = new System.Drawing.Point(185, 137);
+			this.textBox_TeachZ.Name = "textBox_TeachZ";
+			this.textBox_TeachZ.Size = new System.Drawing.Size(61, 20);
+			this.textBox_TeachZ.TabIndex = 29;
+			this.textBox_TeachZ.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			// 
+			// label13
+			// 
+			this.label13.AutoSize = true;
+			this.label13.Location = new System.Drawing.Point(165, 90);
+			this.label13.Name = "label13";
+			this.label13.Size = new System.Drawing.Size(17, 13);
+			this.label13.TabIndex = 28;
+			this.label13.Text = "X:";
+			// 
+			// textBox_TeachY
+			// 
+			this.textBox_TeachY.Location = new System.Drawing.Point(185, 111);
+			this.textBox_TeachY.Name = "textBox_TeachY";
+			this.textBox_TeachY.Size = new System.Drawing.Size(60, 20);
+			this.textBox_TeachY.TabIndex = 27;
+			this.textBox_TeachY.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			// 
+			// label10
+			// 
+			this.label10.AutoSize = true;
+			this.label10.Location = new System.Drawing.Point(165, 115);
+			this.label10.Name = "label10";
+			this.label10.Size = new System.Drawing.Size(17, 13);
+			this.label10.TabIndex = 26;
+			this.label10.Text = "Y:";
+			// 
+			// textBox_TeachX
+			// 
+			this.textBox_TeachX.Location = new System.Drawing.Point(185, 86);
+			this.textBox_TeachX.Name = "textBox_TeachX";
+			this.textBox_TeachX.Size = new System.Drawing.Size(60, 20);
+			this.textBox_TeachX.TabIndex = 25;
+			this.textBox_TeachX.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			// 
 			// Bnt_Script_Loop
 			// 
@@ -869,6 +911,25 @@
 			this.Bnt_Script_Delay.UseVisualStyleBackColor = true;
 			this.Bnt_Script_Delay.Click += new System.EventHandler(this.Bnt_Script_Delay_Click);
 			// 
+			// Bnt_Script_TeachThisPoint
+			// 
+			this.Bnt_Script_TeachThisPoint.Location = new System.Drawing.Point(79, 85);
+			this.Bnt_Script_TeachThisPoint.Name = "Bnt_Script_TeachThisPoint";
+			this.Bnt_Script_TeachThisPoint.Size = new System.Drawing.Size(80, 80);
+			this.Bnt_Script_TeachThisPoint.TabIndex = 2;
+			this.Bnt_Script_TeachThisPoint.Text = "Teach this point";
+			this.Bnt_Script_TeachThisPoint.UseVisualStyleBackColor = true;
+			this.Bnt_Script_TeachThisPoint.Click += new System.EventHandler(this.Bnt_Script_TeachThisPoint_Click);
+			// 
+			// label7
+			// 
+			this.label7.AutoSize = true;
+			this.label7.Location = new System.Drawing.Point(165, 141);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(17, 13);
+			this.label7.TabIndex = 22;
+			this.label7.Text = "Z:";
+			// 
 			// panel_Autobox
 			// 
 			this.panel_Autobox.BackColor = System.Drawing.Color.Gray;
@@ -900,67 +961,6 @@
 			this.groupBox1.TabIndex = 27;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Automatic Script";
-			// 
-			// button1
-			// 
-			this.button1.Location = new System.Drawing.Point(79, 85);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(80, 80);
-			this.button1.TabIndex = 2;
-			this.button1.Text = "Teach this point";
-			this.button1.UseVisualStyleBackColor = true;
-			this.button1.Click += new System.EventHandler(this.button1_Click);
-			// 
-			// textBox_TeachX
-			// 
-			this.textBox_TeachX.Location = new System.Drawing.Point(185, 86);
-			this.textBox_TeachX.Name = "textBox_TeachX";
-			this.textBox_TeachX.Size = new System.Drawing.Size(60, 20);
-			this.textBox_TeachX.TabIndex = 25;
-			this.textBox_TeachX.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			// 
-			// label7
-			// 
-			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(165, 141);
-			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(17, 13);
-			this.label7.TabIndex = 22;
-			this.label7.Text = "Z:";
-			// 
-			// textBox_TeachY
-			// 
-			this.textBox_TeachY.Location = new System.Drawing.Point(185, 111);
-			this.textBox_TeachY.Name = "textBox_TeachY";
-			this.textBox_TeachY.Size = new System.Drawing.Size(60, 20);
-			this.textBox_TeachY.TabIndex = 27;
-			this.textBox_TeachY.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			// 
-			// label10
-			// 
-			this.label10.AutoSize = true;
-			this.label10.Location = new System.Drawing.Point(165, 115);
-			this.label10.Name = "label10";
-			this.label10.Size = new System.Drawing.Size(17, 13);
-			this.label10.TabIndex = 26;
-			this.label10.Text = "Y:";
-			// 
-			// textBox_TeachZ
-			// 
-			this.textBox_TeachZ.Location = new System.Drawing.Point(185, 137);
-			this.textBox_TeachZ.Name = "textBox_TeachZ";
-			this.textBox_TeachZ.Size = new System.Drawing.Size(61, 20);
-			this.textBox_TeachZ.TabIndex = 29;
-			this.textBox_TeachZ.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			// 
-			// label13
-			// 
-			this.label13.AutoSize = true;
-			this.label13.Location = new System.Drawing.Point(165, 90);
-			this.label13.Name = "label13";
-			this.label13.Size = new System.Drawing.Size(17, 13);
-			this.label13.TabIndex = 28;
-			this.label13.Text = "X:";
 			// 
 			// MainScreen
 			// 
@@ -1090,7 +1090,7 @@
 		private System.Windows.Forms.TextBox textBox_TeachY;
 		private System.Windows.Forms.Label label10;
 		private System.Windows.Forms.TextBox textBox_TeachX;
-		public System.Windows.Forms.Button button1;
+		public System.Windows.Forms.Button Bnt_Script_TeachThisPoint;
 		private System.Windows.Forms.Label label7;
 	}
 }

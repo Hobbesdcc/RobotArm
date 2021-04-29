@@ -17,7 +17,7 @@ namespace ArmHMI_WinForms
 		//Parseing serial Messages
 		string serialDataIn;
 		bool bulidingStringInProgress;
-		char endCharacter = (char)35; //"#"
+		char endCharacter = (char)35;   //"#"
 		char startCharacter = (char)36; //"$"
 		StringBuilder stringBuilder = new StringBuilder();
 		string currentLine = string.Empty;
@@ -126,7 +126,7 @@ namespace ArmHMI_WinForms
 		
 		private void PaseSerialCommand(String Serialdata)
 		{
-			Console.WriteLine("currentLine: " + Serialdata);
+			//Console.WriteLine("currentLine: " + Serialdata);
 
 			//Check for mode change modes, if found, change text and remove that string from the string concat
 			//So bc called this fuction/method from another thread "Cross thread operation not valid"
@@ -198,7 +198,7 @@ namespace ArmHMI_WinForms
 						posIndex = stringParse.Length + 100;
 						label_ScriptStatus.Invoke((MethodInvoker)(() => label_ScriptStatus.Text = "RESET"));
 						scriptReset = false;
-						Thread.Sleep(5000);
+						Thread.Sleep(1000);
 					}
 					else if (scriptAllowToRun)
 					{						
@@ -220,7 +220,6 @@ namespace ArmHMI_WinForms
 							cmdBulidString = cmdBulidString.TrimEnd();	 //remove any white space at end
 							cmdBulidString = cmdBulidString.TrimStart(); //remove any white space at Start
 							newCmdToSend = true; //once endMarker found, set newCmdToSend high
-							Console.WriteLine("> newCmdToSend: " + cmdBulidString);
 						}
 
 						//If message has been parsed, ID it and send command, then reset for next line
@@ -307,7 +306,22 @@ namespace ArmHMI_WinForms
 		{
 			IssueSerialCommand(CMD_Home_Base);
 		}
-
+		private void Bnt_AttachServos_Click(object sender, EventArgs e)
+		{
+			IssueSerialCommand(CMD_Servos_Attach);
+		}
+		private void Bnt_DetachServos_Click(object sender, EventArgs e)
+		{
+			IssueSerialCommand(CMD_Servos_Detach);
+		}
+		private void Bnt_OpenGrip_Click(object sender, EventArgs e)
+		{
+			IssueSerialCommand(CMD_Servos_OPENGRIP);
+		}
+		private void Bnt_CloseGrip_Click(object sender, EventArgs e)
+		{
+			IssueSerialCommand(CMD_Servos_CLOSEGRIP);
+		}
 
 		//Events: Mode & State Command buttons ---------------------------------------------------------------------------
 		private void Bnt_Mode_Auto_Click(object sender, EventArgs e)
@@ -338,23 +352,8 @@ namespace ArmHMI_WinForms
 		{
 			IssueSerialCommand(CMD_State_Reset);
 		}
-		private void Bnt_AttachServos_Click(object sender, EventArgs e)
-		{
-			IssueSerialCommand(CMD_Servos_Attach);
-		}
-		private void Bnt_DetachServos_Click(object sender, EventArgs e)
-		{
-			IssueSerialCommand(CMD_Servos_Detach);
-		}
-		private void Bnt_OpenGrip_Click(object sender, EventArgs e)
-		{
-			IssueSerialCommand(CMD_Servos_OPENGRIP);
-		}
-		private void Bnt_CloseGrip_Click(object sender, EventArgs e)
-		{
-			IssueSerialCommand(CMD_Servos_CLOSEGRIP);
-		}
 
+		//Events: Issue Command buttons ---------------------------------------------------------------------------------
 		private void Bnt_IssueGoToCommand_Click(object sender, EventArgs e)
 		{
 			//Modify the CMD_Servos_GOTO command to insert the X,Y,Z positons
@@ -460,6 +459,7 @@ namespace ArmHMI_WinForms
 			}
 		}
 
+		//Events: Script Command buttons ---------------------------------------------------------------------------------
 		private void Bnt_AutoClearScript_Click(object sender, EventArgs e)
 		{
 			richTextBox_Auto.Text = "";
@@ -468,7 +468,7 @@ namespace ArmHMI_WinForms
 		{
 			richTextBox_Auto.Text += "GOTO_X" + textBox_goto_posX.Text + ",Y" + textBox_goto_posY.Text + ",Z" + textBox_goto_posZ.Text + ";\r\n";
 		}
-		private void button1_Click(object sender, EventArgs e)
+		private void Bnt_Script_TeachThisPoint_Click(object sender, EventArgs e)
 		{
 			richTextBox_Auto.Text += "GOTO_X" + textBox_TeachX.Text + ",Y" + textBox_TeachY.Text + ",Z" + textBox_TeachZ.Text + ";\r\n";
 		}
@@ -489,6 +489,7 @@ namespace ArmHMI_WinForms
 			richTextBox_Auto.Text += "Loop;\r\n";
 		}
 
+		//Events: Script START/PAUSE/RESET buttons -----------------------------------------------------------------------
 		private async void Bnt_Script_Start_Click(object sender, EventArgs e)
 		{
 			//Check if Allowed to run
@@ -519,8 +520,6 @@ namespace ArmHMI_WinForms
 
 					scriptReset = false; //Reset Script
 					scriptAllowToRun = true;
-
-					Console.WriteLine("mytask Done: " + done);
 				}
 
 			}
@@ -557,6 +556,7 @@ namespace ArmHMI_WinForms
 			scriptReset = true; //Reset Script
 			scriptAllowToRun = true;
 		}
+
 
 		//Events: Serial listener & Connect/disconnect Buttons -----------------------------------------------------------
 		private void Bnt_Serial_Connect_Click(object sender, EventArgs e)
@@ -652,7 +652,6 @@ namespace ArmHMI_WinForms
 					stringBuilder.Clear();
 					bulidingStringInProgress = false;
 
-					//Console.WriteLine("currentLine: " + currentLine);
 					PaseSerialCommand(currentLine);
 				}
 				//if not start or end Character & bulidingStringInProgress is set true, just keep on buliding
@@ -693,7 +692,6 @@ namespace ArmHMI_WinForms
 			richTextBox_textReceiver.Text = "";
 			textBox_StatusBar.Text = "";
 		}
-
 
 	}
 }
