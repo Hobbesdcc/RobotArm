@@ -176,28 +176,74 @@ namespace ArmHMI_WinForms
 			}
 		}
 
-		private async Task<int> AutoScriptRunner(int value)
+		private async Task<bool> AutoScriptRunner()
 		{
-			int x = 0; // just need for something to return idk why
+			bool done = false; // return done
 			int posIndex = 0;
 			string stringParse = richTextBox_Auto.Text;
 			string cmdBulidString = "";
 			char endMarker = ';';
-			bool newCmdToSend = false; 
+			bool newCmdToSend = false;
+
+			Console.WriteLine("Length: " + stringParse.Length);
+			Console.WriteLine("scriptReset:" + scriptReset);
+			Console.WriteLine("scriptReset:" + scriptReset);
 
 			return await Task.Factory.StartNew(() =>
 			{
-				//for (int i = 0; i < stringParse.Length; i++)
-				for (int i = 0; i < 100; i++)
+				Console.WriteLine("StartNew");
+				for (int i = 0; i < stringParse.Length; i++)
 				{
+					Console.WriteLine("runing "+ i);
 					if (scriptReset)
 					{
-						i = 100 + 1; // if reset comes in, end for loop
+						i = stringParse.Length + 1; // if reset comes in, end for loop
 						label_ScriptStatus.Invoke((MethodInvoker)(() => label_ScriptStatus.Text = "RESET"));
 						scriptReset = false;
 					}
 					else if (scriptAllowToRun)
 					{
+						if (stringParse[posIndex] != endMarker)
+						{
+							cmdBulidString += stringParse[posIndex];
+						}
+						else
+						{
+							cmdBulidString += stringParse[posIndex];
+							newCmdToSend = true;
+						}
+
+						//If message has been parsed
+						if (newCmdToSend)
+						{
+							if (-1 != cmdBulidString.IndexOf("GOTO"))
+							{
+								label_ScriptStatus.Invoke((MethodInvoker)(() => label_ScriptStatus.Text = cmdBulidString));
+								Console.WriteLine("made here2");
+								//$SERVOS_GOTO_X,Y,Z#
+							}
+							else if (-1 != cmdBulidString.IndexOf("OpenGrip"))
+							{
+
+							}
+							else if (-1 != cmdBulidString.IndexOf("CloseGrip"))
+							{
+
+							}
+							else if (-1 != cmdBulidString.IndexOf("Delay"))
+							{
+
+							}
+							else if (-1 != cmdBulidString.IndexOf("Loop"))
+							{
+
+							}
+							else
+							{
+								label_ScriptStatus.Invoke((MethodInvoker)(() => label_ScriptStatus.Text = "ERROR: Parse Failed, char: " + posIndex));
+							}
+
+						}
 
 						//stringParse.Substring(posIndex, 1);
 						//stringParse.Remove(0, 1);
@@ -213,8 +259,11 @@ namespace ArmHMI_WinForms
 						label_ScriptStatus.Invoke((MethodInvoker)(() => label_ScriptStatus.Text = "PAUSE"));
 					}
 				}
+
+				scriptReset = false;
 				label_ScriptStatus.Invoke((MethodInvoker)(() => label_ScriptStatus.Text = "FINISHED"));
-				return x;
+
+				return done = true;
 			});
 
 		}
@@ -414,7 +463,7 @@ namespace ArmHMI_WinForms
 			richTextBox_Auto.Text += "Loop;\r\n";
 		}
 
-		private void Bnt_Script_Start_Click(object sender, EventArgs e)
+		private async void Bnt_Script_Start_Click(object sender, EventArgs e)
 		{
 			//Check if Allowed to run
 			if (scriptAllowToRun)
@@ -424,7 +473,27 @@ namespace ArmHMI_WinForms
 				Bnt_Script_Reset.Enabled = false;
 				richTextBox_Auto.ReadOnly = true;
 
-				Task<int> task = AutoScriptRunner(1); //Start Async Fuction
+
+				//Async task, like normal fuction call the task that returns a bool (in this case)
+				Task<bool> mytask; //init bool 
+				mytask = AutoScriptRunner(); //Start Async Fuction
+
+				//when the async task is done, it will retrun the bool
+				bool done = await mytask;
+
+				if (done)
+				{
+					Bnt_Script_Start.Enabled = true;
+					Bnt_Script_Pause.Enabled = false;
+					Bnt_Script_Reset.Enabled = false;
+					richTextBox_Auto.ReadOnly = false;
+
+					scriptReset = false; //Reset Script
+					scriptAllowToRun = true;
+
+					Console.WriteLine("mytask Done: " + done);
+				}
+
 			}
 			else
 			{
@@ -455,7 +524,7 @@ namespace ArmHMI_WinForms
 			Bnt_Script_Reset.Enabled = false;
 			richTextBox_Auto.ReadOnly = false;
 
-			scriptReset = true; //Reset Script
+			scriptReset = false; //Reset Script
 			scriptAllowToRun = true;
 		}
 
