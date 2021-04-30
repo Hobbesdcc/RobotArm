@@ -10,7 +10,7 @@ Servo myServo3;  //create servo object 3 to control a servo (Small arm)
 Servo myServo4;  //create servo object 4 to control a servo (Gripper)
 
 //Power relay
-const int RELAY_PIN = 1;
+const int RELAY_PIN = 2;
 
 //Setup values:
 double ServoDelayTime = 500; //Set time the Servo will delay after it is sent move command
@@ -38,8 +38,8 @@ float Servo2_RangeLimitMin = 0;   //(Big arm)
 float Servo2_RangeLimitMax = 180; //(Big arm)
 float Servo3_RangeLimitMin = 0;   //(Small arm)
 float Servo3_RangeLimitMax = 180; //(Small arm)
-float Servo4_RangeLimitMin = 0;   //(Gripper)
-float Servo4_RangeLimitMax = 180; //(Gripper)
+float Servo4_RangeLimitMin = 4;   //(Gripper)
+float Servo4_RangeLimitMax = 61;  //(Gripper)
 
 //Triangle A,B,C,E setup init values:
 double TriA_AnglA = 0; double TriA_AnglB = 0; double TriA_AnglC = 0;

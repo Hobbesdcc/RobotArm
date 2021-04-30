@@ -39,7 +39,7 @@ void setup() {
 //= Main Loop ====================== <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 //================================== <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 void loop() {
-
+  
   //HMI Commands from Serial Interface:
   //Read each char coming in and add it to bulidMessageString until endMarker seen
   while (Serial.available() > 0 && newData == false) {
@@ -93,7 +93,7 @@ void loop() {
   //Serial.print("state: "); Serial.println(state);
   if (state == Started){
 
-    digitalWrite(RELAY_PIN, HIGH); // Toggle relay ON, allowing power to servo motors
+    digitalWrite(RELAY_PIN, LOW); // Toggle relay ON, allowing power to servo motors
 
     switch(mode) {
       //###############################
@@ -178,7 +178,7 @@ void loop() {
     }
 
   }else{
-    digitalWrite(RELAY_PIN, LOW); //Toggle relay OFF, dis-allowing power to servo motors.
+    digitalWrite(RELAY_PIN, HIGH); //Toggle relay OFF, dis-allowing power to servo motors.
 
     initStartedLoopDone = false; //reset init Started Loop Done bit
     //Serial.println("[Nothing can be run when machine in Stopped State]");
@@ -216,7 +216,7 @@ void Action_Homing(bool Base, bool AxisA, bool AxisB, bool Gripper){
     Action_SetServoAnagle(myServo3, 90-JointC_CalibrationOffset, Servo3_RangeLimitMin, Servo3_RangeLimitMax);
   }
   if (Gripper){
-    Action_SetServoAnagle(myServo4, 90, Servo4_RangeLimitMin, Servo4_RangeLimitMax);
+    Action_SetServoAnagle(myServo4, 5, Servo4_RangeLimitMin, Servo4_RangeLimitMax);
   }
 }
 
@@ -262,11 +262,11 @@ void Action_GOTO_Positon(){
 void Action_GripperOpenClose(){
   //Action: Servo Open/Close Gripper
   if (CMD_ISSUED_Servos_GripOpen){
-    Action_SetServoAnagle(myServo4, 1, Servo4_RangeLimitMin, Servo4_RangeLimitMax);
+    Action_SetServoAnagle(myServo4, 65, Servo4_RangeLimitMin, Servo4_RangeLimitMax);
     CMD_ISSUED_Servos_GripOpen = false; //reset 
   }
   if (CMD_ISSUED_Servos_GripClose){
-    Action_SetServoAnagle(myServo4, 90, Servo4_RangeLimitMin, Servo4_RangeLimitMax);
+    Action_SetServoAnagle(myServo4, 5, Servo4_RangeLimitMin, Servo4_RangeLimitMax);
     CMD_ISSUED_Servos_GripClose = false; //reset 
   }
 }
