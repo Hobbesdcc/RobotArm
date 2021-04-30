@@ -29,12 +29,12 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainScreen));
 			this.bnt_Home_All = new System.Windows.Forms.Button();
 			this.bnt_Home_AxisA = new System.Windows.Forms.Button();
 			this.bnt_Home_AxisB = new System.Windows.Forms.Button();
 			this.bnt_Home_Base = new System.Windows.Forms.Button();
 			this.groupBox_ModeSelect = new System.Windows.Forms.GroupBox();
-			this.label8 = new System.Windows.Forms.Label();
 			this.Bnt_GetMode = new System.Windows.Forms.Button();
 			this.Bnt_Mode_Manual = new System.Windows.Forms.Button();
 			this.textBox_Status_Mode = new System.Windows.Forms.TextBox();
@@ -110,6 +110,7 @@
 			this.panel_Autobox = new System.Windows.Forms.Panel();
 			this.label12 = new System.Windows.Forms.Label();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.pictureBox1 = new System.Windows.Forms.PictureBox();
 			this.groupBox_ModeSelect.SuspendLayout();
 			this.groupBox_Manual1.SuspendLayout();
 			this.groupBox4.SuspendLayout();
@@ -122,6 +123,7 @@
 			this.groupBox_Manual3.SuspendLayout();
 			this.panel_Autobox.SuspendLayout();
 			this.groupBox1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// bnt_Home_All
@@ -166,28 +168,16 @@
 			// 
 			// groupBox_ModeSelect
 			// 
-			this.groupBox_ModeSelect.Controls.Add(this.label8);
 			this.groupBox_ModeSelect.Controls.Add(this.Bnt_GetMode);
 			this.groupBox_ModeSelect.Controls.Add(this.Bnt_Mode_Manual);
 			this.groupBox_ModeSelect.Controls.Add(this.textBox_Status_Mode);
 			this.groupBox_ModeSelect.Controls.Add(this.Bnt_Mode_Auto);
-			this.groupBox_ModeSelect.Location = new System.Drawing.Point(12, 610);
+			this.groupBox_ModeSelect.Location = new System.Drawing.Point(138, 611);
 			this.groupBox_ModeSelect.Name = "groupBox_ModeSelect";
-			this.groupBox_ModeSelect.Size = new System.Drawing.Size(450, 100);
+			this.groupBox_ModeSelect.Size = new System.Drawing.Size(324, 100);
 			this.groupBox_ModeSelect.TabIndex = 8;
 			this.groupBox_ModeSelect.TabStop = false;
 			this.groupBox_ModeSelect.Text = "Mode Selection";
-			// 
-			// label8
-			// 
-			this.label8.BackColor = System.Drawing.SystemColors.ControlDark;
-			this.label8.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.label8.Location = new System.Drawing.Point(421, 72);
-			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(28, 26);
-			this.label8.TabIndex = 25;
-			this.label8.Text = "v1.0";
-			this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// Bnt_GetMode
 			// 
@@ -438,9 +428,9 @@
 			this.groupBox_MahineStates.Controls.Add(this.Bnt_State_Reset);
 			this.groupBox_MahineStates.Controls.Add(this.Bnt_State_Stop);
 			this.groupBox_MahineStates.Controls.Add(this.Bnt_State_Start);
-			this.groupBox_MahineStates.Location = new System.Drawing.Point(12, 504);
+			this.groupBox_MahineStates.Location = new System.Drawing.Point(138, 504);
 			this.groupBox_MahineStates.Name = "groupBox_MahineStates";
-			this.groupBox_MahineStates.Size = new System.Drawing.Size(450, 100);
+			this.groupBox_MahineStates.Size = new System.Drawing.Size(324, 100);
 			this.groupBox_MahineStates.TabIndex = 9;
 			this.groupBox_MahineStates.TabStop = false;
 			this.groupBox_MahineStates.Text = "Machine State";
@@ -962,12 +952,24 @@
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Automatic Script";
 			// 
+			// pictureBox1
+			// 
+			this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+			this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+			this.pictureBox1.Location = new System.Drawing.Point(12, 504);
+			this.pictureBox1.Name = "pictureBox1";
+			this.pictureBox1.Size = new System.Drawing.Size(126, 207);
+			this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+			this.pictureBox1.TabIndex = 20;
+			this.pictureBox1.TabStop = false;
+			// 
 			// MainScreen
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.SystemColors.ControlDark;
-			this.ClientSize = new System.Drawing.Size(1145, 721);
+			this.ClientSize = new System.Drawing.Size(1145, 720);
+			this.Controls.Add(this.pictureBox1);
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.panel_Autobox);
 			this.Controls.Add(this.panel_Manualbox);
@@ -981,7 +983,7 @@
 			this.Controls.Add(this.panel_Machinebox);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
 			this.Name = "MainScreen";
-			this.Text = "Robot Arm HMI";
+			this.Text = "Robot Arm HMI - v1.0";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainScreen_FormClosing);
 			this.Load += new System.EventHandler(this.MainScreen_Load);
 			this.groupBox_ModeSelect.ResumeLayout(false);
@@ -1005,6 +1007,7 @@
 			this.panel_Autobox.ResumeLayout(false);
 			this.panel_Autobox.PerformLayout();
 			this.groupBox1.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -1084,7 +1087,6 @@
 		public System.Windows.Forms.Button Bnt_Script_Reset;
 		public System.Windows.Forms.Button Bnt_Script_Pause;
 		public System.Windows.Forms.Button Bnt_Script_Start;
-		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.TextBox textBox_TeachZ;
 		private System.Windows.Forms.Label label13;
 		private System.Windows.Forms.TextBox textBox_TeachY;
@@ -1092,6 +1094,7 @@
 		private System.Windows.Forms.TextBox textBox_TeachX;
 		public System.Windows.Forms.Button Bnt_Script_TeachThisPoint;
 		private System.Windows.Forms.Label label7;
+		private System.Windows.Forms.PictureBox pictureBox1;
 	}
 }
 
