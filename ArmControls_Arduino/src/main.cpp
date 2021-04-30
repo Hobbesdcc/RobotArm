@@ -207,7 +207,7 @@ void loop() {
 void Action_Homing(bool Base, bool AxisA, bool AxisB, bool Gripper){
   //parms SetServoAnagle(Servo servo, float ServoAnagle, float RangeLimitMin, float RangeLimitMax)
   if (Base){
-   Action_SetServoAnagle(myServo1, 90, Servo1_RangeLimitMin, Servo1_RangeLimitMax); 
+   Action_SetServoAnagle(myServo1, 90-BaseAxis_CalibrationOffset, Servo1_RangeLimitMin, Servo1_RangeLimitMax); 
   }
   if (AxisA){
     Action_SetServoAnagle(myServo2, 90-JointA_CalibrationOffset, Servo2_RangeLimitMin, Servo2_RangeLimitMax);

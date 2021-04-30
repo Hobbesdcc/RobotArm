@@ -20,7 +20,7 @@ double ArmB_Length = 12; //Arm B Length
 //Calibration Offsets:
 double JointA_CalibrationOffset = 0; //mounting plate for Servo might not be 90degrees, so this is the offset
 double JointC_CalibrationOffset = 5; //mounting plate for Servo might not be 90degrees, so this is the offset
-double BaseAxis_CalibrationOffset = 0; //mounting plate for Servo might not be 90degrees, so this is the offset
+double BaseAxis_CalibrationOffset = -10; //mounting plate for Servo might not be 90degrees, so this is the offset
 
 double positionXYZ[3]; //PostionArray to allow command parseing in same function
 double GotoX; //Goto X postion
