@@ -23,9 +23,11 @@ void setup() {
 	myServo2.attach(9);		// attaches the servo on pin 09 to the servo object, BIG ARM 
   myServo3.attach(10);	// attaches the servo on pin 10 to the servo object, SMALL ARM
   myServo4.attach(11);	// attaches the servo on pin 11 to the servo object, Gripper
+  
+  pinMode(RELAY_PIN, OUTPUT); // Power relay (turn on when started)
 
   Serial.println(Servo1_RangeLimitMin); 
-  Serial.println(Servo1_RangeLimitMax); 
+  Serial.println(Servo1_RangeLimitMax);
 
   //Go home all servos (runs once on start)
   Action_Homing(1,1,1,1); //Base,AxisA,AxisB,Grippper
@@ -90,6 +92,9 @@ void loop() {
   //Only Run if Started
   //Serial.print("state: "); Serial.println(state);
   if (state == Started){
+
+    digitalWrite(RELAY_PIN, HIGH); // Toggle relay ON, allowing power to servo motors
+
     switch(mode) {
       //###############################
       case Manual:
@@ -173,6 +178,8 @@ void loop() {
     }
 
   }else{
+    digitalWrite(RELAY_PIN, LOW); //Toggle relay OFF, dis-allowing power to servo motors.
+
     initStartedLoopDone = false; //reset init Started Loop Done bit
     //Serial.println("[Nothing can be run when machine in Stopped State]");
 

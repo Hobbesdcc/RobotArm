@@ -3,11 +3,14 @@
 //Test servo:
 Servo myservo;  //create servo object to control a servo
 
-//Joints:
+//Servo Motors:
 Servo myServo1;  //create servo object 1 to control a servo (Base)
 Servo myServo2;  //create servo object 2 to control a servo (Big arm)
 Servo myServo3;  //create servo object 3 to control a servo (Small arm)
 Servo myServo4;  //create servo object 4 to control a servo (Gripper)
+
+//Power relay
+const int RELAY_PIN = 1;
 
 //Setup values:
 double ServoDelayTime = 500; //Set time the Servo will delay after it is sent move command
