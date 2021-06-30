@@ -567,7 +567,7 @@ namespace ArmHMI_WinForms
 
 				//Open Serial Port
 				serialPort1.BaudRate = 9600;
-				serialPort1.PortName = "COM5";
+				serialPort1.PortName = "COM" + OutputText_ComPort.Text;
 				serialPort1.Open();
 
 				//GUI Output info about comms

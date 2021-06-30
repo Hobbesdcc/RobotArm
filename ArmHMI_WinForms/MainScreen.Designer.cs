@@ -111,6 +111,8 @@
 			this.label12 = new System.Windows.Forms.Label();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
+			this.label8 = new System.Windows.Forms.Label();
+			this.OutputText_ComPort = new System.Windows.Forms.TextBox();
 			this.groupBox_ModeSelect.SuspendLayout();
 			this.groupBox_Manual1.SuspendLayout();
 			this.groupBox4.SuspendLayout();
@@ -325,7 +327,7 @@
 			// 
 			this.Bnt_Serial_StartListen.Location = new System.Drawing.Point(6, 19);
 			this.Bnt_Serial_StartListen.Name = "Bnt_Serial_StartListen";
-			this.Bnt_Serial_StartListen.Size = new System.Drawing.Size(150, 30);
+			this.Bnt_Serial_StartListen.Size = new System.Drawing.Size(138, 30);
 			this.Bnt_Serial_StartListen.TabIndex = 12;
 			this.Bnt_Serial_StartListen.Text = "Connect";
 			this.Bnt_Serial_StartListen.UseVisualStyleBackColor = true;
@@ -333,9 +335,9 @@
 			// 
 			// Bnt_Serial_StopListen
 			// 
-			this.Bnt_Serial_StopListen.Location = new System.Drawing.Point(6, 55);
+			this.Bnt_Serial_StopListen.Location = new System.Drawing.Point(150, 19);
 			this.Bnt_Serial_StopListen.Name = "Bnt_Serial_StopListen";
-			this.Bnt_Serial_StopListen.Size = new System.Drawing.Size(150, 30);
+			this.Bnt_Serial_StopListen.Size = new System.Drawing.Size(144, 30);
 			this.Bnt_Serial_StopListen.TabIndex = 13;
 			this.Bnt_Serial_StopListen.Text = "Disconnect";
 			this.Bnt_Serial_StopListen.UseVisualStyleBackColor = true;
@@ -359,9 +361,9 @@
 			// 
 			this.label_status.BackColor = System.Drawing.SystemColors.ControlDark;
 			this.label_status.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.label_status.Location = new System.Drawing.Point(162, 19);
+			this.label_status.Location = new System.Drawing.Point(0, 52);
 			this.label_status.Name = "label_status";
-			this.label_status.Size = new System.Drawing.Size(132, 62);
+			this.label_status.Size = new System.Drawing.Size(444, 43);
 			this.label_status.TabIndex = 15;
 			this.label_status.Text = "DISCONNECTED";
 			this.label_status.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -385,6 +387,8 @@
 			// 
 			// groupBox5
 			// 
+			this.groupBox5.Controls.Add(this.OutputText_ComPort);
+			this.groupBox5.Controls.Add(this.label8);
 			this.groupBox5.Controls.Add(this.textBox_StatusBar);
 			this.groupBox5.Controls.Add(this.Bnt_ClearTextReceiver);
 			this.groupBox5.Controls.Add(this.textBox_textSent);
@@ -963,6 +967,23 @@
 			this.pictureBox1.TabIndex = 20;
 			this.pictureBox1.TabStop = false;
 			// 
+			// label8
+			// 
+			this.label8.AutoSize = true;
+			this.label8.Location = new System.Drawing.Point(6, 61);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(41, 13);
+			this.label8.TabIndex = 21;
+			this.label8.Text = "COM#:";
+			// 
+			// OutputText_ComPort
+			// 
+			this.OutputText_ComPort.Location = new System.Drawing.Point(50, 58);
+			this.OutputText_ComPort.Name = "OutputText_ComPort";
+			this.OutputText_ComPort.Size = new System.Drawing.Size(50, 20);
+			this.OutputText_ComPort.TabIndex = 23;
+			this.OutputText_ComPort.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			// 
 			// MainScreen
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1095,6 +1116,8 @@
 		public System.Windows.Forms.Button Bnt_Script_TeachThisPoint;
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.PictureBox pictureBox1;
+		private System.Windows.Forms.Label label8;
+		private System.Windows.Forms.TextBox OutputText_ComPort;
 	}
 }
 
