@@ -35,7 +35,7 @@ https://www.prusaprinters.org/prints/70258-ara-another-robot-arm
 * If you are in MNAUAL mode, you can use any of the Manual controls.
 * You must STOP and RESET the system to switch to AUTOMATIC mode.
 * When in AUTOMATIC mode you can use the Automatic controls.
-* (hit: the Machine Control will be GREEN in Started, BLUE in Idle, RED in stopped)
+* (hint: the Machine Control will be GREEN in Started, BLUE in Idle, RED in stopped)
 
 &nbsp;
 
@@ -45,7 +45,7 @@ https://www.prusaprinters.org/prints/70258-ara-another-robot-arm
 * You can also click on other commands in the Script building section to add them to the list.
 * Once you are happy with the Script, Stop system, go to Automatic mode, start system.
 * NOW you can "Start Script".
-* (hit, the Scripts are just text, you can edit them, or copy them in/out)
+* (hint: the Scripts are just text, you can edit them, or copy them in/out)
 
 ## Example Script:
 ```
