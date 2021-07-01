@@ -1,6 +1,12 @@
-# RobotArm
+# ARA - Another Robot Arm!
 
-Personal project to design bulid and control a simple Robotic Arm.
+Project to design bulid and control a simple Robotic Arm.
+
+I gave myself a challenge to create a small robot arm and control it in one month! April 2021.
+I used a lot other projects in the 3d printing space for inspiration and understanding. (EEZYbotARM, MeArm, an many others, Thanks!)
+
+This Arm was created in OnShape, controlled with and Arduino, and has an HMI (human machine interface) Created in WinForms.
+With the controls you can do manual movements, but you can also teach each position, and play it back as a looping script!
 
 Find more info about this project here: 
 https://www.prusaprinters.org/prints/70258-ara-another-robot-arm
