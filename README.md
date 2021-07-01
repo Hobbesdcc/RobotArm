@@ -1,5 +1,12 @@
 # ARA - Another Robot Arm!
 
+<p align="center">
+  <img width="600" src="Media\cover.jpg">
+</p>
+
+
+
+## Overview:
 Project to design bulid and control a simple Robotic Arm.
 
 I gave myself a challenge to create a small robot arm and control it in one month! April 2021.
@@ -8,11 +15,18 @@ I used a lot other projects in the 3d printing space for inspiration and underst
 This Arm was created in OnShape, controlled with and Arduino, and has an HMI (human machine interface) Created in WinForms.
 With the controls you can do manual movements, but you can also teach each position, and play it back as a looping script!
 
-Find more info about this project here: 
+Find more info & models for this project here: 
 https://www.prusaprinters.org/prints/70258-ara-another-robot-arm
 
 
+&nbsp;
+
 ## Controls overview:
+
+<p align="center">
+  <img width="600" src="Media\hmi.png">
+</p>
+
 * Download Arduino code to Arduino. (I used VScode set up with PlatformIO)
 * Download and run "ArmHMI_WinForms.exe" winform application.
 * Input COM port Number and Hit Connect.
@@ -21,6 +35,8 @@ https://www.prusaprinters.org/prints/70258-ara-another-robot-arm
 * If you are in MNAUAL mode, you can use any of the Manual controls.
 * you must STOP and RESET the system to switch to AUTOMATIC mode.
 * When in AUTOMATIC mode you can use the Automatic controls.
+
+&nbsp;
 
 ## Script Builder:
 * To build a script, go to Manual mode.
