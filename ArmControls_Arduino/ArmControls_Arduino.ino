@@ -1,5 +1,18 @@
 #include <Servo.h>
 
+
+/*
+Author: Dave Chamot
+v0.0: 2017-01-23
+v1.0: 2021-07-01
+v1.1: 2023-02-17
+*/
+
+
+//-----------------------------------------------------------------//
+//                         Declarations                            //
+//-----------------------------------------------------------------//
+
 //Test servo:
 Servo myservo;  //create servo object to control a servo
 
@@ -69,30 +82,30 @@ State state = Idel;
 Mode mode = Manual;
 
 // Command Strings, Same KeyWords used on both sides (serial to Ardunio to C# Form)
-String CMD_Home_All			    = "$HOME_ALL#";
-String CMD_Home_AxisA			= "$HOME_AXIS_A#";
-String CMD_Home_AxisB			= "$HOME_AXIS_B#";
-String CMD_Home_Base			= "$HOME_Base#";
+String CMD_Home_All			      = "$HOME_ALL#";
+String CMD_Home_AxisA			    = "$HOME_AXIS_A#";
+String CMD_Home_AxisB			    = "$HOME_AXIS_B#";
+String CMD_Home_Base			    = "$HOME_Base#";
 
-String CMD_State_Idel			= "$STATE_IDEL#";
-String CMD_State_Started		= "$STATE_STARTED#";
-String CMD_State_Stopped		= "$STATE_STOPPED#";
+String CMD_State_Idel			    = "$STATE_IDEL#";
+String CMD_State_Started		  = "$STATE_STARTED#";
+String CMD_State_Stopped		  = "$STATE_STOPPED#";
 
-String CMD_State_Start			= "$STATE_START#";
-String CMD_State_Stop			= "$STATE_STOP#";
-String CMD_State_Reset			= "$STATE_RESET#";
+String CMD_State_Start			  = "$STATE_START#";
+String CMD_State_Stop			    = "$STATE_STOP#";
+String CMD_State_Reset			  = "$STATE_RESET#";
 
-String CMD_Mode_Manual			= "$MODE_MANUAL#";
-String CMD_Mode_Auto			= "$MODE_AUTO#";
+String CMD_Mode_Manual			  = "$MODE_MANUAL#";
+String CMD_Mode_Auto			    = "$MODE_AUTO#";
 
-String CMD_Servos_Attach		= "$SERVOS_ATTACH#";
-String CMD_Servos_Detach		= "$SERVOS_DETACH#";
-String CMD_Servos_GOTO			= "$SERVOS_GOTO_X,Y,Z#";
+String CMD_Servos_Attach		  = "$SERVOS_ATTACH#";
+String CMD_Servos_Detach		  = "$SERVOS_DETACH#";
+String CMD_Servos_GOTO		    = "$SERVOS_GOTO_X,Y,Z#";
 String CMD_Servos_OPENGRIP		= "$SERVOS_OPENGRIP#";
-String CMD_Servos_CLOSEGRIP		= "$SERVOS_CLOSEGRIP#";
+String CMD_Servos_CLOSEGRIP	  = "$SERVOS_CLOSEGRIP#";
 
 String CMD_Status_GetState		= "$STATUS_GETSTATE#";
-String CMD_Status_GetMode		= "$STATUS_GETMODE#";
+String CMD_Status_GetMode		  = "$STATUS_GETMODE#";
 
 
 //Fuctions Declarations
@@ -136,6 +149,14 @@ bool CMD_ISSUED_Servos_GripClose;
 //other
 bool initStartedLoopDone = false;
 
+
+
+
+
+//-----------------------------------------------------------------//
+//                            Setup                                //
+//-----------------------------------------------------------------//
+
 //= SETUP ===========================
 void setup() {
 	Serial.begin(9600);
@@ -161,13 +182,13 @@ void setup() {
 
 
 
-//================================== <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-//= Main Loop ====================== <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-//================================== <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+//-----------------------------------------------------------------//
+//                           Main Loop                             //
+//-----------------------------------------------------------------//
 void loop() {
   
   //HMI Commands from Serial Interface:
-  //Read each char coming in and add it to bulidMessageString until endMarker seen
+  //Read each char coming in and add it to bulidMessageString until endMarker is found
   while (Serial.available() > 0 && newData == false) {
         receivedChar = Serial.read();
 
@@ -183,8 +204,9 @@ void loop() {
   //Once new command found, Run it thought all checks to understand and process it
   if (newData == true) {
 
-    //Overview: Get message -> Parse it out -> go through ReceiveCommands_ functions to identify it -> 
-    // -> once identifyed set CMD_ISSUED_ high so it can be exectued later
+    //Overview: 
+    // Get message -> Parse it out -> go through ReceiveCommands_ functions to identify it -> 
+    // once identifyed set CMD_ISSUED_ high so it can be exectued later
 
     commandReceived = bulidMessageString; //Load new command into "commandReceived"
     bulidMessageString = ""; //Clear bulid Message String for next message
@@ -325,9 +347,14 @@ void loop() {
 }//<EndOfLoop>
 
 
-// ================================== = = = = = = = = = = = = = = = = ===
-//   FUNCTIONS ====================== = = = = = = = = = = = = = = = = ===
-// ================================== = = = = = = = = = = = = = = = = ===
+
+
+
+
+
+//-----------------------------------------------------------------//
+//                          FUNCTIONS                              //
+//-----------------------------------------------------------------//
 
 // == Function ================================
 void Action_Homing(bool Base, bool AxisA, bool AxisB, bool Gripper){
@@ -588,6 +615,37 @@ void ReceiveCommands_Gripper(){
   }
 }
 
+// == Function ================================
+void Action_SetServoAnagle(Servo servo, float ServoAnagle, float RangeLimitMin, float RangeLimitMax){
+    //Functions to set servo if its in limits
+    if(ServoAnagle > RangeLimitMin || ServoAnagle < RangeLimitMax){
+      servo.write(ServoAnagle);
+      //Serial.println("< Function: Set servo angle > ");
+      //Serial.println("");
+    }else
+    {
+      Serial.print("[Function Error] ServoAnagle value: ");
+      Serial.print(ServoAnagle);
+      Serial.println(" out of min/max range!");
+      Serial.println("");
+    }
+  }
+
+// == Function ================================
+String SerialInterface_Receiving(){
+  String cmdReceived;
+
+  //Loop waiting for input
+  while(cmdReceived.length() < 1) 
+  {
+    if (Serial.available() > 0) 
+    { 
+    cmdReceived = Serial.readString();
+    }
+  }
+
+  return cmdReceived; 
+}
 
 
 // == Joint Function ===========================
@@ -687,38 +745,4 @@ void JointCalculations(){
   JointC_degree = ((JointC * 57296 )/ 1000);
   BaseAxis_degree = ((BaseAxis * 57296 )/ 1000);
   
-}
-
-
-// == Function ================================
-void Action_SetServoAnagle(Servo servo, float ServoAnagle, float RangeLimitMin, float RangeLimitMax){
-    //Functions to set servo if its in limits
-    if(ServoAnagle > RangeLimitMin || ServoAnagle < RangeLimitMax){
-      servo.write(ServoAnagle);
-      //Serial.println("< Function: Set servo angle > ");
-      //Serial.println("");
-    }else
-    {
-      Serial.print("[Function Error] ServoAnagle value: ");
-      Serial.print(ServoAnagle);
-      Serial.println(" out of min/max range!");
-      Serial.println("");
-    }  
-   
-  }
-
-// == Function ================================
-String SerialInterface_Receiving(){
-  String cmdReceived;
-
-  //Loop waiting for input
-  while(cmdReceived.length() < 1) 
-  {
-    if (Serial.available() > 0) 
-    { 
-    cmdReceived = Serial.readString();
-    }
-  }
-
-  return cmdReceived; 
 }
