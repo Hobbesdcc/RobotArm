@@ -1,7 +1,0 @@
-{
-    "board": "arduino:avr:uno",
-    "programmer": "avrisp",
-    "port": "COM5",
-    "output": "../Arduino/build",
-    "sketch": "ArmControl\\ArmControl.ino"
-}
