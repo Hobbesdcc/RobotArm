@@ -27,12 +27,12 @@ https://www.prusaprinters.org/prints/70258-ara-another-robot-arm
   <img width="600" src="Media\hmi.png">
 </p>
 
-* Download Arduino code to Arduino. (I used VScode set up with PlatformIO)
-* Download and run "ArmHMI_WinForms.exe" winform application.
-* Input COM port Number and Hit Connect.
-* STOP and then RESET the system to return it to "IDEL" state.
-* When in Idle, you can hit START. This should engage the relay and servos.
-* If you are in MNAUAL mode, you can use any of the Manual controls.
+* Upload "ArmControls_Arduino.ino" program to Arduino.
+* Run "ArmHMI_WinForms.exe" winform application.
+* Input the "COM port" number your Arduino is connected too, and Hit "Connect".
+* Click, "STOP" and then "RESET" to return system to "IDEL" state.
+* When in "IDEL", you can hit "START". This should engage the safe relay, powering on the servos.
+* If you are in MANUAL mode, you can use any of the Manual controls.
 * You must STOP and RESET the system to switch to AUTOMATIC mode.
 * When in AUTOMATIC mode you can use the Automatic controls.
 * (hint: the Machine Control will be GREEN in Started, BLUE in Idle, RED in stopped)
