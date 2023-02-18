@@ -63,3 +63,21 @@ GOTO_X12,Y0,Z5;
 CloseGrip;
 Loop;
 ```
+&nbsp;
+
+## Wire Diagram & Parts List:
+
+* Arduino & Jumper wires
+* Power Supply (for Servos)
+* 3x Axis Servos (MG996R)
+* 1x  end effector Servo (Micro Servo)
+* 5v Relay Module (used for safety, enables the servos)
+* ~20x Machine Screws (#6-32 x 3/4in - flat head Philips)
+* 1x Machine Screw (#6-32 x 1in - For the Major Center axis between Servos!)
+* 4x Machine Nuts (#6-32 - optional for base plate)
+* 3d printable models & assembly: https://www.printables.com/model/70258-ara-another-robot-arm
+
+<p align="center">
+  <img width="600" src="Media\WireDiagram.png">
+</p>
+
